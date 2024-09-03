@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     public Transform Target;
     public float Distance;
     public bool Alive = true;
+    public float ProbBloqueo = 0.75f;
 
     public void Awake()
     {
@@ -41,6 +42,9 @@ public class Enemy : MonoBehaviour
             case Estados.atacar:
                 EstadoAtacar();
                 break;
+            case Estados.Bloquear:
+                EstadoBloquear();
+                break;
             case Estados.muerto:
                 EstadoMuerto();
                 break;
@@ -59,6 +63,8 @@ public class Enemy : MonoBehaviour
                 break;
             case Estados.atacar:
                 break;
+            case Estados.Bloquear:
+                break;
             case Estados.muerto:
                 Alive = false;
                 break;
@@ -73,6 +79,7 @@ public class Enemy : MonoBehaviour
         {
             CambiarEstado (Estados.atacar);
         }
+
     }
 
     public virtual void EstadoSeguir()
@@ -85,6 +92,8 @@ public class Enemy : MonoBehaviour
         {
             CambiarEstado(Estados.Patrulla);
         }
+
+
     }
 
     public virtual void EstadoAtacar()
@@ -93,7 +102,44 @@ public class Enemy : MonoBehaviour
         {
             CambiarEstado (Estados.Seguir);
         }
+
+        if (Player.instance.atacando)
+        {
+            
+            float Bloqueo = Random.Range(0.0f, 1.0f);
+
+            
+            if (Bloqueo <= ProbBloqueo) 
+            {
+                CambiarEstado(Estados.Bloquear); 
+            }
+        }
     }
+
+    public virtual void EstadoBloquear()
+    {
+        if (Distance < disSeguir)
+        {
+            CambiarEstado(Estados.atacar);
+        }
+
+        if (Distance > disAtacar + 0.5f)
+        {
+            CambiarEstado(Estados.Seguir);
+        }
+
+        if (Distance < disAtacar)
+        {
+            CambiarEstado(Estados.atacar);
+        }
+
+        else if (Distance > disEscape)
+        {
+            CambiarEstado(Estados.Patrulla);
+        }
+    }
+
+
     public virtual void EstadoMuerto()
     {
 
@@ -129,5 +175,6 @@ public enum Estados
     Patrulla = 0,
     Seguir = 1,
     atacar = 2,
-    muerto = 3
+    muerto = 3,
+    Bloquear = 4,
 }
