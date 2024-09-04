@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     public float ProbBloqueo = 0.30f;
     private float bloquearTime; 
     private float bloquearDuration = 1.0f;
-    private float tiempoUltimoBloqueo = 0f; // Tiempo del último intento de bloqueo
+    private float tiempoUltimoBloqueo = 0f;
     private float intervaloBloqueo = 5f;
 
     public void Awake()
@@ -120,7 +120,7 @@ public class Enemy : MonoBehaviour
                 CambiarEstado(Estados.Bloquear);
             }
 
-            tiempoUltimoBloqueo = Time.time; // Actualiza el tiempo del último bloqueo
+            tiempoUltimoBloqueo = Time.time; 
         }
     }
 
