@@ -9951,7 +9951,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vidaActual: 0
   vidaMax: 10
-  "da\xF1oArma": 3
+  "da\xF1oArma": 5
+  "da\xF1oLigero": 2
+  "da\xF1oFuerte": 10
+  "tipoDa\xF1o": base
   anim: {fileID: 1386732485}
   imagenBarraVida: {fileID: 2084221077}
   dinero: {fileID: 1593250599}

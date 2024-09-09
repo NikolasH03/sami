@@ -17,11 +17,13 @@ public class Idle : StateMachineBehaviour
         {
             Player.instance.anim.Play("Attack1");
             Player.instance.numero_golpesDebiles++;
+            logicaEnemigo.instance.tipoDeDaño("ligero");
         }
         if (Player.instance.atacandoFuerte)
         {
             Player.instance.anim.Play("HeavyAttack1");
             Player.instance.numero_golpesFuertes++;
+            logicaEnemigo.instance.tipoDeDaño("fuerte");
         }
       
         if (Player.instance.anim.GetBool("blocking"))

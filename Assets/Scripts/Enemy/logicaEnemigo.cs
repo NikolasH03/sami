@@ -6,13 +6,21 @@ public class logicaEnemigo : MonoBehaviour
 {
     [SerializeField] float vidaActual;
     [SerializeField] float vidaMax;
-    [SerializeField] float dañoArma;
+    [SerializeField] int dañoArma;
+    [SerializeField] int dañoLigero;
+    [SerializeField] int dañoFuerte;
+    [SerializeField] string tipoDaño;
     [SerializeField] Animator anim;
     [SerializeField] Image imagenBarraVida;
     [SerializeField] Money dinero;
+    public static logicaEnemigo instance;
     public void Start()
     {
         vidaActual = vidaMax;
+    }
+    private void Awake()
+    {
+        instance = this;
     }
     public void OnTriggerEnter(Collider other)
     {
@@ -20,7 +28,17 @@ public class logicaEnemigo : MonoBehaviour
         
        if (other.gameObject.tag == "arma")
        {
-            vidaActual -= dañoArma;
+            
+            if (tipoDaño == "ligero")
+            {
+                vidaActual -= dañoLigero;
+            }
+            else if (tipoDaño == "fuerte")
+            {
+                vidaActual -= dañoFuerte;
+            }
+           
+
             imagenBarraVida.fillAmount = vidaActual / vidaMax;
 
             if (vidaActual <= 0)
@@ -46,4 +64,10 @@ public class logicaEnemigo : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+    public void tipoDeDaño(string ataque)
+    {
+        tipoDaño= ataque;
+       
+    }
+
 }
