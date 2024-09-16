@@ -35,6 +35,9 @@ public class Player: MonoBehaviour
     //esquive
     public bool isDashing;
 
+    //timer para parry
+    public float tiempoTranscurrido;  
+
     //Lock On system
     private Transform currentTarget;
     public Transform player;
@@ -52,6 +55,7 @@ public class Player: MonoBehaviour
 
         ColliderArma.enabled=false;
         ColliderPierna.enabled = false;
+        tiempoTranscurrido = 0f;
     }
 
     private void Awake()
@@ -194,6 +198,10 @@ public class Player: MonoBehaviour
         {
                
              anim.SetBool("blocking", true);
+            tiempoTranscurrido += Time.deltaTime;
+            
+
+
         }
         
         else if (Input.GetKeyUp(KeyCode.Space))
@@ -207,6 +215,10 @@ public class Player: MonoBehaviour
 
 
 
+    }
+    public void ResetTimer()
+    {
+        tiempoTranscurrido = 0f;
     }
     public void bloquearDespuesDeGolpe()
     {

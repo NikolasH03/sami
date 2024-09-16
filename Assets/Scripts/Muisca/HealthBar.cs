@@ -16,6 +16,7 @@ public class HealthBar : MonoBehaviour
     public float tiempoUltimoRelleno; // Variable para rastrear el tiempo del último relleno
     public bool dañoEstamina;
     public static HealthBar instance;
+    public float tiempoParry;
 
     //variables para salida forzosa del bloqueo
     public float tiempoDeBloqueo = 10f; // Tiempo en segundos para bloquear la entrada
@@ -81,24 +82,38 @@ public class HealthBar : MonoBehaviour
         {
             if (player.anim.GetBool("blocking"))
             {
+                Debug.Log("Tiempo: " + Mathf.FloorToInt(player.tiempoTranscurrido * 1000) + " milisegundos");
+                tiempoParry = player.tiempoTranscurrido;
 
-                if (estaminaActual > 0)
+                if (tiempoParry <= 15)
                 {
-                    estaminaActual -= dañoBase;
-                    imagenEstamina.fillAmount = estaminaActual / estaminaMax;
-                    player.anim.Play("Standing Block React");
-                    Player.instance.GetComponent<Collider>().enabled = false;
-                    
-                    
-
+                    player.anim.Play("parry");
+                    player.ResetTimer();
                 }
+                else
+                {
+                    if (estaminaActual > 0)
+                    {
+
+                        estaminaActual -= dañoBase;
+                        imagenEstamina.fillAmount = estaminaActual / estaminaMax;
+                        player.anim.Play("Standing Block React");
+                        Player.instance.GetComponent<Collider>().enabled = false;
+
+
+
+                    }
+
+
+                    if (estaminaActual <= 0)
+                    {
+                        player.anim.Play("Damage");
+                        Player.instance.GetComponent<Collider>().enabled = true;
+                    }
+                }
+               
+
                 
-
-                if (estaminaActual <= 0)
-                {      
-                    player.anim.Play("Damage");
-                    Player.instance.GetComponent<Collider>().enabled = true;
-                }
 
             }
             else
