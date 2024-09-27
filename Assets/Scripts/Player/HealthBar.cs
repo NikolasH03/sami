@@ -12,7 +12,6 @@ public class HealthBar : MonoBehaviour
     public float curacionEstamina = 2;
     public Image imagenBarraVida;
     public Image imagenEstamina;
-    [SerializeField] Player player;
     public float tiempoUltimoRelleno; // Variable para rastrear el tiempo del último relleno
     public bool dañoEstamina;
     public static HealthBar instance;
@@ -26,12 +25,20 @@ public class HealthBar : MonoBehaviour
     //Variables para despues de morir
     public bool playerDied;
 
+    // otros codigos necesarios
+    [SerializeField] cambiarPersona protagonista;
+    [SerializeField] Player protagonista1;
+    [SerializeField] Player protagonista2;
+
+    public bool detectaAtaque;
     private void Awake()
     {
         instance = this;
     }
     void Start()
     {
+     
+
         vidaActual = vidaMax;
         estaminaActual = estaminaMax;
 
@@ -43,6 +50,7 @@ public class HealthBar : MonoBehaviour
     }
     private void Update()
     {
+
         // Calcular el tiempo transcurrido desde el último relleno
         float tiempoTranscurrido = Time.time - tiempoUltimoRelleno;
         if(estaminaActual < 0)
@@ -68,6 +76,11 @@ public class HealthBar : MonoBehaviour
             // Actualizar el tiempo del último relleno
             tiempoUltimoRelleno = Time.time;
         }
+
+        if (detectaAtaque)
+        {
+            controladorDaño();
+        }
         
        
         
@@ -75,87 +88,143 @@ public class HealthBar : MonoBehaviour
     }
 
 
-    public void OnTriggerEnter(Collider other)
+    public void controladorDaño()
     {
         
-        if (other.gameObject.tag == "hostile")
-        {
-            if (player.anim.GetBool("blocking"))
+            if (protagonista.protagonistaUno)
             {
-                Debug.Log("Tiempo: " + Mathf.FloorToInt(player.tiempoTranscurrido * 1000) + " milisegundos");
-                tiempoParry = player.tiempoTranscurrido*1000;
-
-                if (tiempoParry <= 2)
+                if (protagonista1.anim.GetBool("blocking"))
                 {
-                    player.anim.Play("parry");
-                    player.ResetTimer();
+                    Debug.Log("Tiempo: " + Mathf.FloorToInt(protagonista1.tiempoTranscurrido * 1000) + " milisegundos");
+                    tiempoParry = protagonista1.tiempoTranscurrido * 1000;
+
+                    if (tiempoParry <= 2)
+                    {
+                        protagonista1.anim.Play("parry");
+                        protagonista1.ResetTimer();
+                        detectaAtaque = false;
+                    }
+                    else
+                    {
+                        if (estaminaActual > 0)
+                        {
+
+                            estaminaActual -= dañoBase;
+                            imagenEstamina.fillAmount = estaminaActual / estaminaMax;
+                            protagonista1.anim.Play("daño_bloqueando");
+                            Player.instance.GetComponent<Collider>().enabled = false;
+                            detectaAtaque = false;
+
+
+                    }
+
+
+                        if (estaminaActual <= 0)
+                        {
+                            protagonista1.anim.Play("daño");
+                            Player.instance.GetComponent<Collider>().enabled = true;
+                            detectaAtaque = false;
+                        }
+                    }
+
+
+
+
                 }
                 else
                 {
-                    if (estaminaActual > 0)
+
+                    protagonista1.canMove = false;
+                    vidaActual -= dañoBase;
+                    imagenBarraVida.fillAmount = vidaActual / vidaMax;
+
+                    if (vidaActual <= 0)
                     {
 
-                        estaminaActual -= dañoBase;
-                        imagenEstamina.fillAmount = estaminaActual / estaminaMax;
-                        player.anim.Play("daño_bloqueando");
                         Player.instance.GetComponent<Collider>().enabled = false;
+                        protagonista1.anim.Play("morir");
+                        detectaAtaque = false;
 
 
-
-                    }
-
-
-                    if (estaminaActual <= 0)
-                    {
-                        player.anim.Play("daño");
-                        Player.instance.GetComponent<Collider>().enabled = true;
-                    }
                 }
-               
+                    else
+                    {
+                        Player.instance.GetComponent<Collider>().enabled = false;
+                        protagonista1.anim.Play("daño");
+                        detectaAtaque = false;
 
-                
+                }
 
+                }
             }
             else
             {
-   
-                player.canMove = false;
-                vidaActual -= dañoBase;
-                imagenBarraVida.fillAmount = vidaActual / vidaMax;
-
-                if (vidaActual <= 0)
+                if (protagonista2.anim.GetBool("blocking"))
                 {
+                    Debug.Log("Tiempo: " + Mathf.FloorToInt(protagonista2.tiempoTranscurrido * 1000) + " milisegundos");
+                    tiempoParry = protagonista2.tiempoTranscurrido * 1000;
 
-                    Player.instance.GetComponent<Collider>().enabled = false;
-                    player.anim.Play("morir");
-                   
+                    if (tiempoParry <= 2)
+                    {
+                        protagonista2.anim.Play("parry");
+                        protagonista2.ResetTimer();
+                    detectaAtaque = false;
+                }
+                    else
+                    {
+                        if (estaminaActual > 0)
+                        {
+
+                            estaminaActual -= dañoBase;
+                            imagenEstamina.fillAmount = estaminaActual / estaminaMax;
+                            protagonista2.anim.Play("daño_bloqueando");
+                            Player.instance.GetComponent<Collider>().enabled = false;
+                        detectaAtaque = false;
+
+
+                    }
+
+
+                        if (estaminaActual <= 0)
+                        {
+                            protagonista2.anim.Play("daño");
+                            Player.instance.GetComponent<Collider>().enabled = true;
+                        detectaAtaque = false;
+                    }
+                    }
+
+
 
 
                 }
                 else
                 {
-                    Player.instance.GetComponent<Collider>().enabled = false;
-                    player.anim.Play("daño");
-                   
-                }
-                
-            }
-           
 
-           
-        }
+                    protagonista2.canMove = false;
+                    vidaActual -= dañoBase;
+                    imagenBarraVida.fillAmount = vidaActual / vidaMax;
+
+                    if (vidaActual <= 0)
+                    {
+
+                        Player.instance.GetComponent<Collider>().enabled = false;
+                        protagonista2.anim.Play("morir");
+                    detectaAtaque = false;
+
+
+                }
+                    else
+                    {
+                        Player.instance.GetComponent<Collider>().enabled = false;
+                        protagonista2.anim.Play("daño");
+                    detectaAtaque = false;
+                }
+
+                }
+            }        
       
     }
-    public void playerDead()
-    {
-        playerDied=true;
-        player.canMove = true;
-    }
-    public void FinishDamage()
-    {
-        Player.instance.GetComponent<Collider>().enabled = true;
-        player.canMove = true;
-    }
+   
    
 
 

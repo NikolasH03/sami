@@ -20,9 +20,9 @@ public class Enemy : MonoBehaviour
     private float tiempoUltimoBloqueo = 0f;
     private float intervaloBloqueo = 5f;
 
-    public void Awake()
+    public void Start()
     {
-        if(autoselectTarget) 
+        if (autoselectTarget)
         {
             Target = GameObject.FindGameObjectWithTag("Player").transform;
         }
@@ -31,6 +31,11 @@ public class Enemy : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (autoselectTarget)
+        {
+            Target = GameObject.FindGameObjectWithTag("Player").transform;
+        }
+
         CheckEstado();
     }
 

@@ -20,7 +20,7 @@ public class Transition2 : StateMachineBehaviour
         }
         else if (Input.GetMouseButton(1))
         {
-            Player.instance.anim.Play("Hurricane");
+            Player.instance.anim.Play("combo1");
         }
     }
 

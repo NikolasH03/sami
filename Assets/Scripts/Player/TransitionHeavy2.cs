@@ -21,7 +21,7 @@ public class TransitionHeavy2 : StateMachineBehaviour
         }
         else if (Input.GetMouseButton(0))
         {
-            Player.instance.anim.Play("Armada");
+            Player.instance.anim.Play("combo2");
         }
 
         

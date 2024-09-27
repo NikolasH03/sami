@@ -28,7 +28,6 @@ public class logicaEnemigo : MonoBehaviour
         
        if (other.gameObject.tag == "arma")
        {
-            Debug.Log("detecta el arma");
             if (tipoDaño == "ligero")
             {
                 vidaActual -= dañoLigero;

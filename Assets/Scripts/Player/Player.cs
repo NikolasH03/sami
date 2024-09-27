@@ -44,15 +44,13 @@ public class Player: MonoBehaviour
 
     //instancias y herencias
     public static Player instance;
-    [SerializeField] HealthBar healthbar;
     //[SerializeField] LockOnSystem lockOn;
     [SerializeField] cambiarArma cambioArma;
-    [SerializeField] cambiarPersona protagonista;
+   
 
     private void Start()
     {
         Cursor.visible = false;
-        anim = GetComponent<Animator>();
         canMove = true;
 
         ColliderArma.enabled=false;
@@ -68,6 +66,7 @@ public class Player: MonoBehaviour
 
     void Update()
     {
+       
         if (!canMove)
         {
             return; 
@@ -157,6 +156,7 @@ public class Player: MonoBehaviour
 
         if (numeroArma == 1)
         {
+            anim.SetBool("distance", false);
             
             if (Input.GetMouseButton(0) && !atacando)
             {
@@ -181,11 +181,11 @@ public class Player: MonoBehaviour
         }
         else if (numeroArma == 2)
         {
-            if (Input.GetMouseButtonDown(1) && !atacando)
-            {
-                anim.Play("Rifle Aiming Idle");
-            }
-                
+            anim.SetBool("distance", true);
+
+    
+
+
         }
 
        

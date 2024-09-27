@@ -16,16 +16,17 @@ public class Enemigo_Z : Enemy
     public float grado;
     public float speedWalk = 2;
 
-    private void Awake()
-    {
-        base.Awake();
-        agent = GetComponent<NavMeshAgent>();
+    //private void Awake()
+    //{
+    //    base.Start();
+    //    agent = GetComponent<NavMeshAgent>();
         
-    }
+    //}
 
     private void Start()
     {
-        //animator = GetComponent<Animator>();
+        base.Start();
+        agent = GetComponent<NavMeshAgent>();
     }
     public override void EstadoPatrulla()
     {
