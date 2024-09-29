@@ -19,8 +19,7 @@ public class HealthBar : MonoBehaviour
 
     //variables para salida forzosa del bloqueo
     public float tiempoDeBloqueo = 10f; // Tiempo en segundos para bloquear la entrada
-    public MonoBehaviour[] componentesAEsperarEntrada; // Componentes que manejan la entrada del usuario
-    private bool bloqueoActivo = false;
+
 
     //Variables para despues de morir
     public bool playerDied;
@@ -112,7 +111,7 @@ public class HealthBar : MonoBehaviour
                             estaminaActual -= dañoBase;
                             imagenEstamina.fillAmount = estaminaActual / estaminaMax;
                             protagonista1.anim.Play("daño_bloqueando");
-                            Player.instance.GetComponent<Collider>().enabled = false;
+                            protagonista1.GetComponent<Collider>().enabled = false;
                             detectaAtaque = false;
 
 
@@ -122,7 +121,7 @@ public class HealthBar : MonoBehaviour
                         if (estaminaActual <= 0)
                         {
                             protagonista1.anim.Play("daño");
-                            Player.instance.GetComponent<Collider>().enabled = true;
+                            protagonista1.GetComponent<Collider>().enabled = true;
                             detectaAtaque = false;
                         }
                     }
@@ -141,7 +140,7 @@ public class HealthBar : MonoBehaviour
                     if (vidaActual <= 0)
                     {
 
-                        Player.instance.GetComponent<Collider>().enabled = false;
+                        protagonista1.GetComponent<Collider>().enabled = false;
                         protagonista1.anim.Play("morir");
                         detectaAtaque = false;
 
@@ -149,7 +148,7 @@ public class HealthBar : MonoBehaviour
                 }
                     else
                     {
-                        Player.instance.GetComponent<Collider>().enabled = false;
+                        protagonista1.GetComponent<Collider>().enabled = false;
                         protagonista1.anim.Play("daño");
                         detectaAtaque = false;
 
@@ -178,7 +177,7 @@ public class HealthBar : MonoBehaviour
                             estaminaActual -= dañoBase;
                             imagenEstamina.fillAmount = estaminaActual / estaminaMax;
                             protagonista2.anim.Play("daño_bloqueando");
-                            Player.instance.GetComponent<Collider>().enabled = false;
+                            protagonista2.GetComponent<Collider>().enabled = false;
                         detectaAtaque = false;
 
 
@@ -188,7 +187,7 @@ public class HealthBar : MonoBehaviour
                         if (estaminaActual <= 0)
                         {
                             protagonista2.anim.Play("daño");
-                            Player.instance.GetComponent<Collider>().enabled = true;
+                            protagonista2.GetComponent<Collider>().enabled = true;
                         detectaAtaque = false;
                     }
                     }
@@ -207,7 +206,7 @@ public class HealthBar : MonoBehaviour
                     if (vidaActual <= 0)
                     {
 
-                        Player.instance.GetComponent<Collider>().enabled = false;
+                        protagonista2.GetComponent<Collider>().enabled = false;
                         protagonista2.anim.Play("morir");
                     detectaAtaque = false;
 
@@ -215,7 +214,7 @@ public class HealthBar : MonoBehaviour
                 }
                     else
                     {
-                        Player.instance.GetComponent<Collider>().enabled = false;
+                        protagonista2.GetComponent<Collider>().enabled = false;
                         protagonista2.anim.Play("daño");
                     detectaAtaque = false;
                 }

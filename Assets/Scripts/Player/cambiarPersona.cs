@@ -18,18 +18,6 @@ public class cambiarPersona : MonoBehaviour
 
         muisca.SetActive(false);
         espanol.SetActive(true);
-        Pmuisca.atacando = false;
-        Pmuisca.atacandoDebil = false;
-        Pmuisca.atacandoFuerte = false;
-        Pmuisca.isDashing = false;
-        Pmuisca.numero_golpesDebiles = 0;
-        Pmuisca.numero_golpesFuertes = 0;
-        Pespanol.atacando = false;
-        Pespanol.atacandoDebil = false;
-        Pespanol.atacandoFuerte = false;
-        Pespanol.isDashing = false;
-        Pespanol.numero_golpesDebiles = 0;
-        Pespanol.numero_golpesFuertes = 0;
         freeLookCamera.Follow = espanol.transform;  
         freeLookCamera.LookAt = espanol.transform;  
     
@@ -60,6 +48,8 @@ public class cambiarPersona : MonoBehaviour
             freeLookCamera.LookAt = muisca.transform;
             muisca.transform.position=espanol.transform.position;
             muisca.transform.rotation=espanol.transform.rotation;
+            Pmuisca.GetComponent<Animator>().Rebind();
+            Pespanol.GetComponent<Animator>().Rebind();
             protagonistaUno = true;
 
         }
@@ -84,6 +74,8 @@ public class cambiarPersona : MonoBehaviour
             freeLookCamera.LookAt = espanol.transform;
             espanol.transform.position = muisca.transform.position;
             espanol.transform.rotation = muisca.transform.rotation;
+            Pmuisca.GetComponent<Animator>().Rebind();
+            Pespanol.GetComponent<Animator>().Rebind();
             protagonistaUno = false;
 
         }
