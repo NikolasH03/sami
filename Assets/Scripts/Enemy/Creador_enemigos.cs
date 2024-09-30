@@ -20,8 +20,8 @@ public class Creador_enemigos : MonoBehaviour
     public void Creando()
     {
         Vector3 SpawnPosition = new Vector3(0, 0, 0);
-        SpawnPosition = this.transform.position + Random.onUnitSphere * RangoCreacion;
-        SpawnPosition = new Vector3(SpawnPosition.x, 0, 0);
+        SpawnPosition = Enemigos.transform.position + Random.onUnitSphere * RangoCreacion;
+        SpawnPosition = new Vector3(SpawnPosition.x, 3, 0);
 
         GameObject Enemigo = Instantiate (Enemigos, SpawnPosition, Quaternion.identity);
         

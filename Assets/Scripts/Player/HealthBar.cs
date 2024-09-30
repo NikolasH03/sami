@@ -8,8 +8,8 @@ public class HealthBar : MonoBehaviour
     public float vidaActual;
     public int estaminaMax;
     public float estaminaActual;
-    public float dañoBase = 3;
-    public float curacionEstamina = 2;
+    public float dañoBase;
+    public float curacionEstamina;
     public Image imagenBarraVida;
     public Image imagenEstamina;
     public float tiempoUltimoRelleno; // Variable para rastrear el tiempo del último relleno
@@ -36,7 +36,8 @@ public class HealthBar : MonoBehaviour
     }
     void Start()
     {
-     
+
+    
 
         vidaActual = vidaMax;
         estaminaActual = estaminaMax;
@@ -60,7 +61,7 @@ public class HealthBar : MonoBehaviour
         if (tiempoTranscurrido >= 4f)
         {
             // Calcular la cantidad de estamina que se debe rellenar cada segundo
-            float estaminaPorSegundo = curacionEstamina / 4f;
+            float estaminaPorSegundo = curacionEstamina / 2f;
 
             // Calcular cuánta estamina debería haberse rellenado desde el último relleno
             float estaminaRelleno = estaminaPorSegundo * Mathf.Floor(tiempoTranscurrido / 4f);
@@ -75,6 +76,7 @@ public class HealthBar : MonoBehaviour
             // Actualizar el tiempo del último relleno
             tiempoUltimoRelleno = Time.time;
         }
+
 
         if (detectaAtaque)
         {
@@ -97,7 +99,7 @@ public class HealthBar : MonoBehaviour
                     Debug.Log("Tiempo: " + Mathf.FloorToInt(protagonista1.tiempoTranscurrido * 1000) + " milisegundos");
                     tiempoParry = protagonista1.tiempoTranscurrido * 1000;
 
-                    if (tiempoParry <= 2)
+                    if (tiempoParry <= 4)
                     {
                         protagonista1.anim.Play("parry");
                         protagonista1.ResetTimer();
@@ -105,7 +107,9 @@ public class HealthBar : MonoBehaviour
                     }
                     else
                     {
-                        if (estaminaActual > 0)
+                    
+                  
+                    if (estaminaActual > 0)
                         {
 
                             estaminaActual -= dañoBase;
@@ -123,7 +127,8 @@ public class HealthBar : MonoBehaviour
                             protagonista1.anim.Play("daño");
                             protagonista1.GetComponent<Collider>().enabled = true;
                             detectaAtaque = false;
-                        }
+                          
+                    }
                     }
 
 
@@ -132,7 +137,8 @@ public class HealthBar : MonoBehaviour
                 }
                 else
                 {
-
+               
+               
                     protagonista1.canMove = false;
                     vidaActual -= dañoBase;
                     imagenBarraVida.fillAmount = vidaActual / vidaMax;
@@ -163,7 +169,7 @@ public class HealthBar : MonoBehaviour
                     Debug.Log("Tiempo: " + Mathf.FloorToInt(protagonista2.tiempoTranscurrido * 1000) + " milisegundos");
                     tiempoParry = protagonista2.tiempoTranscurrido * 1000;
 
-                    if (tiempoParry <= 2)
+                    if (tiempoParry <= 20)
                     {
                         protagonista2.anim.Play("parry");
                         protagonista2.ResetTimer();
@@ -171,7 +177,9 @@ public class HealthBar : MonoBehaviour
                 }
                     else
                     {
-                        if (estaminaActual > 0)
+                    
+                    
+                    if (estaminaActual > 0)
                         {
 
                             estaminaActual -= dañoBase;
@@ -186,7 +194,8 @@ public class HealthBar : MonoBehaviour
 
                         if (estaminaActual <= 0)
                         {
-                            protagonista2.anim.Play("daño");
+                      
+                        protagonista2.anim.Play("daño");
                             protagonista2.GetComponent<Collider>().enabled = true;
                         detectaAtaque = false;
                     }
@@ -198,8 +207,10 @@ public class HealthBar : MonoBehaviour
                 }
                 else
                 {
+              
+                
 
-                    protagonista2.canMove = false;
+                protagonista2.canMove = false;
                     vidaActual -= dañoBase;
                     imagenBarraVida.fillAmount = vidaActual / vidaMax;
 

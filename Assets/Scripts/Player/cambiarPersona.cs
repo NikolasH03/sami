@@ -21,61 +21,63 @@ public class cambiarPersona : MonoBehaviour
         freeLookCamera.Follow = espanol.transform;  
         freeLookCamera.LookAt = espanol.transform;  
     
-    protagonistaUno = false;
+        protagonistaUno = false;
 
 }
 
     void Update()
     {
 
+
         if (Input.GetKeyDown(KeyCode.G) && espanol.activeSelf)
         {
-            muisca.SetActive(true);
+            muisca.transform.position = espanol.transform.position;
+            muisca.transform.rotation = espanol.transform.rotation;            
             espanol.SetActive(false);
+            muisca.SetActive(true);
+            freeLookCamera.Follow = muisca.transform;
+            freeLookCamera.LookAt = muisca.transform;
             Pespanol.atacando = false;
             Pespanol.atacandoDebil = false;
             Pespanol.atacandoFuerte = false;
             Pespanol.isDashing = false;
-            Pespanol.numero_golpesDebiles = 0;
-            Pespanol.numero_golpesFuertes = 0;
             Pmuisca.atacando = false;
             Pmuisca.atacandoDebil = false;
             Pmuisca.atacandoFuerte = false;
             Pmuisca.isDashing = false;
-            Pmuisca.numero_golpesDebiles = 0;
-            Pmuisca.numero_golpesFuertes = 0;
-            freeLookCamera.Follow = muisca.transform;
-            freeLookCamera.LookAt = muisca.transform;
-            muisca.transform.position=espanol.transform.position;
-            muisca.transform.rotation=espanol.transform.rotation;
-            Pmuisca.GetComponent<Animator>().Rebind();
-            Pespanol.GetComponent<Animator>().Rebind();
+
+
+            
+            //Pmuisca.GetComponent<Animator>().Rebind();
+            //Pespanol.GetComponent<Animator>().Rebind();
             protagonistaUno = true;
 
         }
 
         else if (Input.GetKeyDown(KeyCode.G) && muisca.activeSelf)
         {
+            espanol.transform.position = muisca.transform.position;
+            espanol.transform.rotation = muisca.transform.rotation;
+
             muisca.SetActive(false);
             espanol.SetActive(true);
+            freeLookCamera.Follow = espanol.transform;
+            freeLookCamera.LookAt = espanol.transform;
             Pmuisca.atacando = false;
             Pmuisca.atacandoDebil = false;
             Pmuisca.atacandoFuerte = false;
             Pmuisca.isDashing = false;
-            Pmuisca.numero_golpesDebiles = 0;
-            Pmuisca.numero_golpesFuertes = 0;
+
             Pespanol.atacando = false;
             Pespanol.atacandoDebil = false;
             Pespanol.atacandoFuerte = false;
             Pespanol.isDashing = false;
-            Pespanol.numero_golpesDebiles = 0;
-            Pespanol.numero_golpesFuertes = 0;
+
             freeLookCamera.Follow = espanol.transform;
             freeLookCamera.LookAt = espanol.transform;
-            espanol.transform.position = muisca.transform.position;
-            espanol.transform.rotation = muisca.transform.rotation;
-            Pmuisca.GetComponent<Animator>().Rebind();
-            Pespanol.GetComponent<Animator>().Rebind();
+            
+            //Pmuisca.GetComponent<Animator>().Rebind();
+            //Pespanol.GetComponent<Animator>().Rebind();
             protagonistaUno = false;
 
         }

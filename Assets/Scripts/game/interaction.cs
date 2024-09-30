@@ -39,6 +39,10 @@ public class interaction : MonoBehaviour
 
     void Update()
     {
+        GameObject playerObject = GameObject.FindWithTag("Player");
+
+        player = playerObject.GetComponent<Player>();
+
         if (playerInRange)
         {
             TextMeshProUGUI textComponent = text.GetComponent<TextMeshProUGUI>();
@@ -95,7 +99,7 @@ public class interaction : MonoBehaviour
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 player.enabled = true;
-                textConversation.text = "Sabia desición,hay fuerzas con las que no debemos meternos";
+                textConversation.text = "Sabia desición, hay fuerzas con las que no debemos meternos";
                 break;
         }
     }

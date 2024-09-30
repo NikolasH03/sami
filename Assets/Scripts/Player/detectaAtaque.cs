@@ -6,6 +6,7 @@ public class detectaAtaque : MonoBehaviour
 {
     [SerializeField] HealthBar healthBar;
     [SerializeField] Player player;
+    [SerializeField] weaponController controlArma;
     void Start()
     {
         healthBar.detectaAtaque = false;
@@ -27,9 +28,13 @@ public class detectaAtaque : MonoBehaviour
     public void FinishDamage()
     {
 
-            Player.instance.GetComponent<Collider>().enabled = true;
+            player.GetComponent<Collider>().enabled = true;
             player.canMove = true;
         
 
+    }
+    public void canShoot()
+    {
+        controlArma.shooting = false;
     }
 }

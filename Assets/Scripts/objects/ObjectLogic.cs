@@ -16,7 +16,7 @@ public class ObjectLogic : MonoBehaviour
     {
         player=GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
-   public void efecto()
+    public void efecto()
     {
         switch (tipo)
         {
