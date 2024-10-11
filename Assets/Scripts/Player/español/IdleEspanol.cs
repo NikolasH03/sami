@@ -5,11 +5,13 @@ using UnityEngine;
 public class IdleEspanol : StateMachineBehaviour
 {
     private Player player;
-
+    AudioManager audioManager;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
        
         player = animator.GetComponent<Player>();
+        audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
+
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -19,12 +21,14 @@ public class IdleEspanol : StateMachineBehaviour
         if (player.atacandoDebil)
         {
             player.anim.Play("ataque");
+            audioManager.playAudio(audioManager.attack);
             player.numero_golpesDebiles++;
             logicaEnemigo.instance.tipoDeDaño("ligero");
         }
         if (player.atacandoFuerte)
         {
             player.anim.Play("ataqueFuerte1");
+            audioManager.playAudio(audioManager.heavyAttack);
             player.numero_golpesFuertes++;
             logicaEnemigo.instance.tipoDeDaño("fuerte");
         }

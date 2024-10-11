@@ -11,10 +11,11 @@ public class cambiarPersona : MonoBehaviour
     [SerializeField] Player Pmuisca;
     [SerializeField] Player Pespanol;
 
+    AudioManager audioManager;
     public bool protagonistaUno;
     void Start()
     {
-        
+        audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
 
         muisca.SetActive(false);
         espanol.SetActive(true);
@@ -35,6 +36,7 @@ public class cambiarPersona : MonoBehaviour
             muisca.transform.rotation = espanol.transform.rotation;            
             espanol.SetActive(false);
             muisca.SetActive(true);
+            audioManager.playAudio(audioManager.changeProta);
             freeLookCamera.Follow = muisca.transform;
             freeLookCamera.LookAt = muisca.transform;
             Pespanol.atacando = false;
@@ -61,6 +63,7 @@ public class cambiarPersona : MonoBehaviour
 
             muisca.SetActive(false);
             espanol.SetActive(true);
+            audioManager.playAudio(audioManager.changeProta);
             freeLookCamera.Follow = espanol.transform;
             freeLookCamera.LookAt = espanol.transform;
             Pmuisca.atacando = false;

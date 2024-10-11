@@ -9,6 +9,7 @@ TagManager:
   - arma
   - hostile
   - enemy
+  - audio
   layers:
   - Default
   - TransparentFX

@@ -29,10 +29,13 @@ public class HealthBar : MonoBehaviour
     [SerializeField] Player protagonista1;
     [SerializeField] Player protagonista2;
 
+    AudioManager audioManager;
+
     public bool detectaAtaque;
     private void Awake()
     {
         instance = this;
+        audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
     }
     void Start()
     {
@@ -115,6 +118,7 @@ public class HealthBar : MonoBehaviour
                             estaminaActual -= dañoBase;
                             imagenEstamina.fillAmount = estaminaActual / estaminaMax;
                             protagonista1.anim.Play("daño_bloqueando");
+                            audioManager.playAudio(audioManager.block);
                             protagonista1.GetComponent<Collider>().enabled = false;
                             detectaAtaque = false;
 
@@ -125,7 +129,8 @@ public class HealthBar : MonoBehaviour
                         if (estaminaActual <= 0)
                         {
                             protagonista1.anim.Play("daño");
-                            protagonista1.GetComponent<Collider>().enabled = true;
+                        audioManager.playAudio(audioManager.damage);
+                        protagonista1.GetComponent<Collider>().enabled = true;
                             detectaAtaque = false;
                           
                     }
@@ -148,7 +153,8 @@ public class HealthBar : MonoBehaviour
 
                         protagonista1.GetComponent<Collider>().enabled = false;
                         protagonista1.anim.Play("morir");
-                        detectaAtaque = false;
+                    audioManager.playAudio(audioManager.death);
+                    detectaAtaque = false;
 
 
                 }
@@ -156,7 +162,8 @@ public class HealthBar : MonoBehaviour
                     {
                         protagonista1.GetComponent<Collider>().enabled = false;
                         protagonista1.anim.Play("daño");
-                        detectaAtaque = false;
+                    audioManager.playAudio(audioManager.damage);
+                    detectaAtaque = false;
 
                 }
 
@@ -169,7 +176,7 @@ public class HealthBar : MonoBehaviour
                     Debug.Log("Tiempo: " + Mathf.FloorToInt(protagonista2.tiempoTranscurrido * 1000) + " milisegundos");
                     tiempoParry = protagonista2.tiempoTranscurrido * 1000;
 
-                    if (tiempoParry <= 20)
+                    if (tiempoParry <= 4)
                     {
                         protagonista2.anim.Play("parry");
                         protagonista2.ResetTimer();
@@ -185,7 +192,8 @@ public class HealthBar : MonoBehaviour
                             estaminaActual -= dañoBase;
                             imagenEstamina.fillAmount = estaminaActual / estaminaMax;
                             protagonista2.anim.Play("daño_bloqueando");
-                            protagonista2.GetComponent<Collider>().enabled = false;
+                        audioManager.playAudio(audioManager.block);
+                        protagonista2.GetComponent<Collider>().enabled = false;
                         detectaAtaque = false;
 
 
@@ -196,7 +204,8 @@ public class HealthBar : MonoBehaviour
                         {
                       
                         protagonista2.anim.Play("daño");
-                            protagonista2.GetComponent<Collider>().enabled = true;
+                        audioManager.playAudio(audioManager.damage);
+                        protagonista2.GetComponent<Collider>().enabled = true;
                         detectaAtaque = false;
                     }
                     }
@@ -219,6 +228,7 @@ public class HealthBar : MonoBehaviour
 
                         protagonista2.GetComponent<Collider>().enabled = false;
                         protagonista2.anim.Play("morir");
+                    audioManager.playAudio(audioManager.death);
                     detectaAtaque = false;
 
 
@@ -227,6 +237,7 @@ public class HealthBar : MonoBehaviour
                     {
                         protagonista2.GetComponent<Collider>().enabled = false;
                         protagonista2.anim.Play("daño");
+                    audioManager.playAudio(audioManager.damage);
                     detectaAtaque = false;
                 }
 

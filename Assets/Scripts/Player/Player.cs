@@ -13,7 +13,7 @@ public class Player: MonoBehaviour
     [SerializeField] float turnSmoothVelocity;
     public bool canMove;
     //sprint
-    [SerializeField] bool isSprinting;
+    public bool isSprinting;
     [SerializeField] float sprintMultiplier;
     private float sprintSpeed = 1;
 
@@ -46,8 +46,8 @@ public class Player: MonoBehaviour
     public static Player instance;
     //[SerializeField] LockOnSystem lockOn;
     [SerializeField] cambiarArma cambioArma;
-   
 
+    AudioManager audioManager;
     private void Start()
     {
         Cursor.visible = false;
@@ -56,10 +56,13 @@ public class Player: MonoBehaviour
         ColliderArma.enabled=false;
         ColliderPierna.enabled = false;
         tiempoTranscurrido = 0f;
+
+        
     }
 
     private void Awake()
     {
+        audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
         instance = this;
     }
 
@@ -83,6 +86,15 @@ public class Player: MonoBehaviour
             bloqueoCheck();
             runCheck();
 
+            if (x == 0f && y == 0f)
+            {
+                audioManager.stopFootstep();
+            }
+            else
+            {
+                audioManager.playFootstep(isSprinting);
+
+            }
             if (direction.magnitude >= 0.1f && !atacando && !anim.GetBool("blocking"))
             {
 
@@ -101,8 +113,13 @@ public class Player: MonoBehaviour
 
                 move(movDir);
 
+
+
                 anim.SetFloat("Velx", x);
                 anim.SetFloat("Vely", y);
+
+               
+                
 
 
             }
@@ -113,6 +130,7 @@ public class Player: MonoBehaviour
     public void move(Vector3 movDir)
     {
         controller.Move(movDir.normalized * speed * Time.deltaTime * sprintSpeed);
+        
 
     }
 
@@ -142,11 +160,14 @@ public class Player: MonoBehaviour
         {
             sprintSpeed = sprintMultiplier;
             anim.SetBool("running", true);
+
+
         }
         else if (isSprinting == false)
         {
             sprintSpeed = 1;
             anim.SetBool("running", false);
+
         }
     }
     //verifica si el usuario oprimio el click y activa la animacion de golpe
@@ -158,14 +179,14 @@ public class Player: MonoBehaviour
         {
             anim.SetBool("distance", false);
             
-            if (Input.GetMouseButton(0) && !atacando)
+            if (Input.GetMouseButton(0) && !atacando && !isSprinting)
             {
 
                 atacando = true;
                 atacandoDebil = true;
 
             }
-            if (Input.GetMouseButton(1) && !atacando)
+            if (Input.GetMouseButton(1) && !atacando && !isSprinting)
             {
 
                 atacando = true;

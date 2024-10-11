@@ -5,11 +5,12 @@ using UnityEngine;
 public class TransitionHeavy2E : StateMachineBehaviour
 {
     private Player player;
-
+    AudioManager audioManager;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
         player = animator.GetComponent<Player>();
+        audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -17,6 +18,7 @@ public class TransitionHeavy2E : StateMachineBehaviour
         {
 
             player.anim.Play("ataqueFuerte3");
+            audioManager.playAudio(audioManager.heavyAttack);
             player.numero_golpesFuertes++;
         }
         else if (Input.GetMouseButton(0))
