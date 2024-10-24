@@ -6,7 +6,8 @@ using UnityEngine;
 public class Player: MonoBehaviour
 {
     //movimiento basico
-    [SerializeField] CharacterController controller;
+    //[SerializeField] CharacterController controller;
+    public Rigidbody rb;
     [SerializeField] float speed = 5;
     [SerializeField] float turnSmoothTime = 0.1f;
     [SerializeField] Transform cam;
@@ -56,8 +57,8 @@ public class Player: MonoBehaviour
         ColliderArma.enabled=false;
         ColliderPierna.enabled = false;
         tiempoTranscurrido = 0f;
+        rb = GetComponent<Rigidbody>();
 
-        
     }
 
     private void Awake()
@@ -129,9 +130,9 @@ public class Player: MonoBehaviour
     }
     public void move(Vector3 movDir)
     {
-        controller.Move(movDir.normalized * speed * Time.deltaTime * sprintSpeed);
-        
-
+       
+        Vector3 movement = movDir.normalized * speed * Time.deltaTime * sprintSpeed;
+        rb.MovePosition(transform.position + movement);
     }
 
     //verifica si el usuario oprimió la tecla LeftShift, si lo hizó multiplica la velocidad base
@@ -247,6 +248,7 @@ public class Player: MonoBehaviour
     public void bloquearDespuesDeGolpe()
     {
         GetComponent<Collider>().enabled = true;
+        GetComponent<Rigidbody>().isKinematic = false;
     }
 
 

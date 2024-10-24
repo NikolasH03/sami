@@ -8,19 +8,13 @@ public class Money : MonoBehaviour
     public int contador = 0;
     
     void Start()
-    {
-
-       
+    {  
         dinero.text = contador.ToString();
     }
 
     void Update()
-    {
-        
- 
-            
-            dinero.text = contador.ToString();
-        
+    {         
+            dinero.text = contador.ToString();    
     }
 }
 

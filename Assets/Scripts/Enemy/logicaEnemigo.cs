@@ -43,6 +43,7 @@ public class logicaEnemigo : MonoBehaviour
             if (vidaActual <= 0)
             {
                 GetComponent<Collider>().enabled = false;
+                GetComponent<Rigidbody>().isKinematic = true;
                 anim.Play("Falling Back Death");
                 dinero.contador = dinero.contador + 50;
                 float delayInSeconds = 2.0f; 
