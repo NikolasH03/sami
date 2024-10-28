@@ -12,15 +12,11 @@ public class logicaEnemigo : MonoBehaviour
     [SerializeField] Animator anim;
     [SerializeField] Image imagenBarraVida;
     [SerializeField] Money dinero;
-    public static logicaEnemigo instance;
     public void Start()
     {
         vidaActual = vidaMax;
     }
-    private void Awake()
-    {
-        instance = this;
-    }
+
     public void OnTriggerEnter(Collider other)
     {
 

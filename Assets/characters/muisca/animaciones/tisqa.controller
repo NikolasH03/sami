@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcfbced3c17478e45845042f8fad5beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemies: []
 --- !u!1101 &-7448589885265290326
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -362,6 +363,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcfbced3c17478e45845042f8fad5beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemies:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1101 &-5397482830942182047
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

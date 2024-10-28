@@ -5,6 +5,7 @@ using UnityEngine;
 public class IdleEspanol : StateMachineBehaviour
 {
     private Player player;
+    [SerializeField] GameObject[] enemies;
     private logicaEnemigo enemigo;
     AudioManager audioManager;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -12,12 +13,13 @@ public class IdleEspanol : StateMachineBehaviour
        
         player = animator.GetComponent<Player>();
         audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
-        
+        enemies = GameObject.FindGameObjectsWithTag("enemy");
 
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        enemigo = GameObject.FindGameObjectWithTag("enemy").GetComponent<logicaEnemigo>();
+
+        
         if (player == null)
             return;
 
@@ -26,16 +28,26 @@ public class IdleEspanol : StateMachineBehaviour
             player.anim.Play("ataque");
             audioManager.playAudio(audioManager.attack);
             player.numero_golpesDebiles++;
-            enemigo.tipoDeDaño("ligero");
-            //logicaEnemigo.instance.tipoDeDaño("ligero");
+            
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                enemigo = enemies[i].GetComponent<logicaEnemigo>();
+                enemigo.tipoDeDaño("ligero");
+            }
+           
         }
         if (player.atacandoFuerte)
         {
             player.anim.Play("ataqueFuerte1");
             audioManager.playAudio(audioManager.heavyAttack);
             player.numero_golpesFuertes++;
-            enemigo.tipoDeDaño("fuerte");
-            //logicaEnemigo.instance.tipoDeDaño("fuerte");
+
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                enemigo = enemies[i].GetComponent<logicaEnemigo>();
+                enemigo.tipoDeDaño("fuerte");
+            }
+            
         }
       
         if (player.anim.GetBool("blocking"))
