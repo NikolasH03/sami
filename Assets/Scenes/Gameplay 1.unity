@@ -784,7 +784,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &140470991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1855,7 +1855,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &261721198
 Transform:
   m_ObjectHideFlags: 0
@@ -3292,7 +3292,7 @@ Transform:
   m_GameObject: {fileID: 430856648}
   serializedVersion: 2
   m_LocalRotation: {x: -0.22880042, y: 0.08852979, z: 0.020899048, w: 0.9692142}
-  m_LocalPosition: {x: 0, y: 0, z: -0.000030517578}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000061035156}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5555,7 +5555,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: c938bca7fd120df419b72bb18ac2a3ac, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: fe973502686d4c54bb77dcfb9de8ebfe, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &579818667
 Transform:
@@ -7944,6 +7944,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: adefceec82d3b3642ba5c8d2dc2df490, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1386732486}
     - targetCorrespondingSourceObject: {fileID: 2715566404302941441, guid: adefceec82d3b3642ba5c8d2dc2df490, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1915199846}
@@ -8774,8 +8777,8 @@ MonoBehaviour:
   CameraDistance: 4.33
   CameraCollisionFilter:
     serializedVersion: 2
-    m_Bits: 0
-  IgnoreTag: 
+    m_Bits: 1
+  IgnoreTag: Player
   CameraRadius: 0.2
   DampingIntoCollision: 0
   DampingFromCollision: 2
@@ -9595,7 +9598,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 60.000004
+  field of view: 33.9
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -9621,8 +9624,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.04754533, y: -0.08516724, z: -0.0040687392, w: 0.99522334}
-  m_LocalPosition: {x: 60.738323, y: 1.438572, z: 88.57237}
+  m_LocalRotation: {x: -0.25819278, y: 0.08785272, z: 0.023583801, w: 0.9618016}
+  m_LocalPosition: {x: 60.26305, y: 0.49929214, z: 90.42674}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9795,6 +9798,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 974829078}
   m_CullTransparentMesh: 1
+--- !u!1 &984784434 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: adefceec82d3b3642ba5c8d2dc2df490, type: 3}
+  m_PrefabInstance: {fileID: 768249167}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1003373705
 GameObject:
   m_ObjectHideFlags: 0
@@ -12068,6 +12076,19 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: adefceec82d3b3642ba5c8d2dc2df490, type: 3}
   m_PrefabInstance: {fileID: 768249167}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1386732486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984784434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08a1fe0ea0f2e0742b848748855c7017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ColliderAtaque1: {fileID: 1915199846}
 --- !u!1 &1405397271
 GameObject:
   m_ObjectHideFlags: 0
@@ -16328,7 +16349,7 @@ Transform:
   m_GameObject: {fileID: 1851321625}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.36, y: -3.22, z: -3.09}
+  m_LocalPosition: {x: 10.36, y: -1.752, z: -3.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16459,7 +16480,7 @@ Rigidbody:
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -17075,7 +17096,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.25418347, y: 0.35259765, z: 0.30790415}
   m_Center: {x: 0.017003434, y: 0.19353189, z: 0.047728416}
