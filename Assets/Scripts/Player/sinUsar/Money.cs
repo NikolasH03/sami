@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class Money : MonoBehaviour
 {
-    public TextMeshProUGUI dinero; 
-    public int contador = 0;
+    [SerializeField] TextMeshProUGUI dinero; 
+    private int contador = 0;
     
     void Start()
     {  
@@ -15,6 +15,15 @@ public class Money : MonoBehaviour
     void Update()
     {         
             dinero.text = contador.ToString();    
+    }
+
+    public int getContador()
+    {
+        return contador;
+    }
+    public void setContador(int cont)
+    {
+        contador += cont;
     }
 }
 

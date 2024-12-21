@@ -509,6 +509,7 @@ GameObject:
   - component: {fileID: 79801882}
   - component: {fileID: 79801883}
   - component: {fileID: 79801884}
+  - component: {fileID: 79801885}
   m_Layer: 0
   m_Name: Player Manager
   m_TagString: Untagged
@@ -577,6 +578,19 @@ MonoBehaviour:
   tiempoDeBloqueo: 10
   playerDied: 0
   detectaAtaque: 0
+--- !u!114 &79801885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79801881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b6a7990cacd9b147b69c4cf9bd65e49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dineroUI: {fileID: 57114334}
 --- !u!1001 &86005008
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1874,7 +1888,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 239828123}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.25638354, y: 0.14365652, z: 0.03856417, w: 0.95506185}
+  m_LocalRotation: {x: -0.25721353, y: 0.121332735, z: 0.03257142, w: 0.9581538}
   m_LocalPosition: {x: 0, y: 0, z: -0.000015258789}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3559,8 +3573,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 430856648}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.22719713, y: 0.1447637, z: 0.03417407, w: 0.96242255}
-  m_LocalPosition: {x: 0, y: 0, z: -0.000091552734}
+  m_LocalRotation: {x: -0.22793266, y: 0.12226785, z: 0.028863521, w: 0.9655383}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000030517578}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4080,7 +4094,6 @@ GameObject:
   - component: {fileID: 521272962}
   - component: {fileID: 521272961}
   - component: {fileID: 521272960}
-  - component: {fileID: 521272959}
   - component: {fileID: 521272958}
   m_Layer: 0
   m_Name: Base Enemy (2)
@@ -4133,20 +4146,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &521272959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 521272956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29c523e5cfbd5444d929999cfba7f100, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dinero: {fileID: 57114334}
-  contador: 0
 --- !u!114 &521272960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4166,7 +4165,7 @@ MonoBehaviour:
   "tipoDa\xF1o": 
   anim: {fileID: 1200212480}
   imagenBarraVida: {fileID: 105390798}
-  dinero: {fileID: 521272959}
+  resourceManagement: {fileID: 79801885}
 --- !u!136 &521272961
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -10064,8 +10063,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.25638357, y: 0.14365654, z: 0.038564175, w: 0.9550619}
-  m_LocalPosition: {x: 60.343067, y: 0.49929225, z: 90.41431}
+  m_LocalRotation: {x: -0.25721356, y: 0.12133273, z: 0.032571413, w: 0.95815384}
+  m_LocalPosition: {x: 60.31117, y: 0.49929214, z: 90.42041}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10803,7 +10802,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1076013250}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.22719717, y: 0.1447637, z: 0.034174073, w: 0.96242255}
+  m_LocalRotation: {x: -0.22793268, y: 0.12226785, z: 0.028863521, w: 0.9655383}
   m_LocalPosition: {x: 0, y: 0, z: -0.000015258789}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -18459,7 +18458,6 @@ GameObject:
   - component: {fileID: 1851321627}
   - component: {fileID: 1851321630}
   - component: {fileID: 1851321631}
-  - component: {fileID: 1851321633}
   - component: {fileID: 1851321634}
   m_Layer: 0
   m_Name: Base Enemy
@@ -18576,21 +18574,7 @@ MonoBehaviour:
   "tipoDa\xF1o": 
   anim: {fileID: 1386732485}
   imagenBarraVida: {fileID: 2084221077}
-  dinero: {fileID: 1851321633}
---- !u!114 &1851321633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1851321625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29c523e5cfbd5444d929999cfba7f100, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dinero: {fileID: 57114334}
-  contador: 0
+  resourceManagement: {fileID: 79801885}
 --- !u!54 &1851321634
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -22376,7 +22360,6 @@ GameObject:
   - component: {fileID: 2104036271}
   - component: {fileID: 2104036270}
   - component: {fileID: 2104036269}
-  - component: {fileID: 2104036268}
   - component: {fileID: 2104036267}
   m_Layer: 0
   m_Name: Base Enemy (1)
@@ -22429,20 +22412,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &2104036268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2104036265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29c523e5cfbd5444d929999cfba7f100, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dinero: {fileID: 57114334}
-  contador: 0
 --- !u!114 &2104036269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22462,7 +22431,7 @@ MonoBehaviour:
   "tipoDa\xF1o": 
   anim: {fileID: 1978601066}
   imagenBarraVida: {fileID: 1793256737}
-  dinero: {fileID: 2104036268}
+  resourceManagement: {fileID: 79801885}
 --- !u!136 &2104036270
 CapsuleCollider:
   m_ObjectHideFlags: 0

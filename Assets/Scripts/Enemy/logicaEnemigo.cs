@@ -11,7 +11,7 @@ public class logicaEnemigo : MonoBehaviour
     [SerializeField] string tipoDaño;
     [SerializeField] Animator anim;
     [SerializeField] Image imagenBarraVida;
-    [SerializeField] Money dinero;
+    //[SerializeField] ResourceManagement resourceManagement;
     public void Start()
     {
         vidaActual = vidaMax;
@@ -41,7 +41,7 @@ public class logicaEnemigo : MonoBehaviour
                 GetComponent<Collider>().enabled = false;
                 GetComponent<Rigidbody>().isKinematic = true;
                 anim.Play("Falling Back Death");
-                dinero.contador = dinero.contador + 50;
+                ResourceManagement.instance.enemigoMuerto(1);
                 float delayInSeconds = 2.0f; 
                 Invoke("eliminarEnemigo", delayInSeconds);
             }

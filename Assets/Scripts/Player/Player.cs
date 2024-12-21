@@ -6,13 +6,13 @@ using UnityEngine;
 public class Player: MonoBehaviour
 {
     //movimiento basico
-    //[SerializeField] CharacterController controller;
     public Rigidbody rb;
     [SerializeField] float speed;
     [SerializeField] float turnSmoothTime;
     [SerializeField] Transform cam;
     [SerializeField] float turnSmoothVelocity;
     public bool canMove;
+
     //sprint
     public bool isSprinting;
     [SerializeField] float sprintMultiplier;
@@ -39,15 +39,8 @@ public class Player: MonoBehaviour
     //timer para parry
     public float tiempoTranscurrido;  
 
-    //Lock On system
-    //private Transform currentTarget;
-    //public Transform player;
-
-    //instancias y herencias
-    public static Player instance;
-    //[SerializeField] LockOnSystem lockOn;
+    //herencias
     [SerializeField] cambiarArma cambioArma;
-
     AudioManager audioManager;
     private void Start()
     {
@@ -64,7 +57,6 @@ public class Player: MonoBehaviour
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
-        instance = this;
     }
 
 
@@ -78,14 +70,11 @@ public class Player: MonoBehaviour
         else
         {
 
-            x = Input.GetAxis("Horizontal");
-            y = Input.GetAxis("Vertical");
-
-            Vector3 direction = new Vector3(x, 0f, y).normalized;
+            Vector3 direction = inputMovimiento();
 
             golpeCheck();
             bloqueoCheck();
-            runCheck();
+            
 
             if (x == 0f && y == 0f)
             {
@@ -98,39 +87,40 @@ public class Player: MonoBehaviour
             }
             if (direction.magnitude >= 0.1f && !atacando && !anim.GetBool("blocking"))
             {
-
-
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-
-                Vector3 movDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-
-
-
-
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-
-                move(movDir);
-
-
+                runCheck();
+                mover(direction);
 
                 anim.SetFloat("Velx", x);
                 anim.SetFloat("Vely", y);
-
-               
-                
-
 
             }
 
         }
 
     }
-    public void move(Vector3 movDir)
+    public Vector3 inputMovimiento()
     {
-       
+        x = Input.GetAxis("Horizontal");
+        y = Input.GetAxis("Vertical");
+
+        Vector3 direction = new Vector3(x, 0f, y).normalized;
+
+        return direction;
+    }
+    public void mover(Vector3 direction)
+    {
+
+        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+
+        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+
+        Vector3 movDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
+
+
+
+        transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
         Vector3 movement = movDir.normalized * speed * Time.deltaTime * sprintSpeed;
         rb.MovePosition(transform.position + movement);
     }
@@ -157,7 +147,7 @@ public class Player: MonoBehaviour
 
         }
 
-        if (isSprinting == true && !atacando)
+        if (isSprinting == true && !atacando && canMove)
         {
             sprintSpeed = sprintMultiplier;
             anim.SetBool("running", true);
@@ -215,7 +205,7 @@ public class Player: MonoBehaviour
     }
    
 
-    //verifica si el jugador esta manteniendo oprimido o solo oprimiendo la tecla para bloquear
+    //verifica si el jugador esta manteniendo oprimida la tecla para bloquear
     public void bloqueoCheck()
     {
 
@@ -237,9 +227,6 @@ public class Player: MonoBehaviour
             
         }
 
-
-
-
     }
     public void ResetTimer()
     {
@@ -250,19 +237,6 @@ public class Player: MonoBehaviour
         GetComponent<Collider>().enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
     }
-
-
-    // metodos para el sistema de enfocarse en un enemigo
-
-    //public void SetTarget(Transform target)
-    //{
-    //    currentTarget = target;
-    //}
-
-    //public void ClearTarget()
-    //{
-    //    currentTarget = null;
-    //}
 
 
     //activar colliders de diferentes armas
