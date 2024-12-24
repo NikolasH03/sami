@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransitionHeavy3E : StateMachineBehaviour
+public class TransitionHeavy3 : StateMachineBehaviour
 {
 
     private Player player;

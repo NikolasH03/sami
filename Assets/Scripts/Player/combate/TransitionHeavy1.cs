@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransitionCombo1E : StateMachineBehaviour
+public class TransitionHeavy1 : StateMachineBehaviour
 {
     private Player player;
 
@@ -13,16 +13,27 @@ public class TransitionCombo1E : StateMachineBehaviour
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        player.numero_golpesDebiles = 0;
-        player.numero_golpesFuertes = 0;
-    }
+        if (Input.GetMouseButton(1))
+        {
 
+            player.anim.Play("ataqueFuerte2");
+            AudioManager.instance.playAudio(AudioManager.instance.heavyAttack);
+            player.numero_golpesFuertes++;
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            player.anim.Play("ataque");
+            AudioManager.instance.playAudio(AudioManager.instance.attack);
+            player.numero_golpesDebiles++;
+        }
+
+    }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+
         player.atacando = false;
         player.atacandoFuerte = false;
-        player.atacandoDebil = false;
     }
 
 

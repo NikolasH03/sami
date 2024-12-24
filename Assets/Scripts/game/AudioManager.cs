@@ -18,12 +18,27 @@ public class AudioManager : MonoBehaviour
     public AudioClip footsteps;
     public AudioClip footstepsRun;
 
-    [SerializeField] Player player;
+    public static AudioManager instance;
+
+    private void Awake()
+    {
+
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+
+    }
     private void Start()
     {
         musicSource.clip = background;
         musicSource.Play();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+       
     }
     public void playAudio(AudioClip clip)
     {

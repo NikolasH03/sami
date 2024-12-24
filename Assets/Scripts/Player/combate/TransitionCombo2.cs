@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransitionCombo2E: StateMachineBehaviour
+public class TransitionCombo2: StateMachineBehaviour
 {
     private Player player;
 

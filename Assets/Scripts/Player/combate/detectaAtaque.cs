@@ -8,14 +8,14 @@ public class detectaAtaque : MonoBehaviour
     [SerializeField] weaponController controlArma;
     void Start()
     {
-        HealthBar.instance.detectaAtaque = false;
+        HealthBar.instance.recibeDaño = false;
     }
 
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "hostile")
         {
-            HealthBar.instance.detectaAtaque = true;
+            HealthBar.instance.recibeDaño = true;
         }
     }
 

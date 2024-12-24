@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleEspanol : StateMachineBehaviour
+public class Idle : StateMachineBehaviour
 {
     private Player player;
     [SerializeField] GameObject[] enemies;
     private logicaEnemigo enemigo;
-    AudioManager audioManager;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
        
         player = animator.GetComponent<Player>();
-        audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
         enemies = GameObject.FindGameObjectsWithTag("enemy");
 
     }
@@ -26,7 +24,7 @@ public class IdleEspanol : StateMachineBehaviour
         if (player.atacandoDebil)
         {
             player.anim.Play("ataque");
-            audioManager.playAudio(audioManager.attack);
+            AudioManager.instance.playAudio(AudioManager.instance.attack);
             player.numero_golpesDebiles++;
             
             for (int i = 0; i < enemies.Length; i++)
@@ -39,7 +37,7 @@ public class IdleEspanol : StateMachineBehaviour
         if (player.atacandoFuerte)
         {
             player.anim.Play("ataqueFuerte1");
-            audioManager.playAudio(audioManager.heavyAttack);
+            AudioManager.instance.playAudio(AudioManager.instance.heavyAttack);
             player.numero_golpesFuertes++;
 
             for (int i = 0; i < enemies.Length; i++)

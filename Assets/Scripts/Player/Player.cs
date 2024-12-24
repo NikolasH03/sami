@@ -41,7 +41,6 @@ public class Player: MonoBehaviour
 
     //herencias
     [SerializeField] cambiarArma cambioArma;
-    AudioManager audioManager;
     private void Start()
     {
         Cursor.visible = false;
@@ -52,11 +51,6 @@ public class Player: MonoBehaviour
         tiempoTranscurrido = 0f;
         rb = GetComponent<Rigidbody>();
 
-    }
-
-    private void Awake()
-    {
-        audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
     }
 
 
@@ -78,11 +72,11 @@ public class Player: MonoBehaviour
 
             if (x == 0f && y == 0f)
             {
-                audioManager.stopFootstep();
+                AudioManager.instance.stopFootstep();
             }
             else
             {
-                audioManager.playFootstep(isSprinting);
+                AudioManager.instance.playFootstep(isSprinting);
 
             }
             if (direction.magnitude >= 0.1f && !atacando && !anim.GetBool("blocking"))
@@ -154,7 +148,7 @@ public class Player: MonoBehaviour
 
 
         }
-        else if (isSprinting == false)
+        else if (isSprinting == false || atacando || !canMove)
         {
             sprintSpeed = 1;
             anim.SetBool("running", false);

@@ -8,6 +8,7 @@ public class HealthBar : MonoBehaviour
     public float vidaActual;
     public int estaminaMax;
     public float estaminaActual;
+    public bool recibeDaño;
     public float dañoBase;
     public float curacionEstamina;
     public Image imagenBarraVida;
@@ -29,12 +30,10 @@ public class HealthBar : MonoBehaviour
     //[SerializeField] Player protagonista1;
     private Player protagonista;
 
-    AudioManager audioManager;
-
-    public bool detectaAtaque;
+    
     private void Awake()
     {
-        audioManager = GameObject.FindGameObjectWithTag("audio").GetComponent<AudioManager>();
+        
     
         if (instance == null)
         {
@@ -92,7 +91,7 @@ void Start()
         }
 
 
-        if (detectaAtaque)
+        if (recibeDaño)
         {
             controladorDaño();
         }
@@ -115,7 +114,7 @@ void Start()
                     {
                         protagonista.anim.Play("parry");
                         protagonista.ResetTimer();
-                        detectaAtaque = false;
+                        recibeDaño = false;
                     }
                     else
                     {
@@ -127,10 +126,10 @@ void Start()
                             estaminaActual -= dañoBase;
                             imagenEstamina.fillAmount = estaminaActual / estaminaMax;
                             protagonista.anim.Play("daño_bloqueando");
-                            audioManager.playAudio(audioManager.block);
+                            AudioManager.instance.playAudio(AudioManager.instance.block);
                             protagonista.GetComponent<Collider>().enabled = false;
                             protagonista.GetComponent<Rigidbody>().isKinematic = true;
-                            detectaAtaque = false;
+                            recibeDaño = false;
 
 
                     }
@@ -139,10 +138,10 @@ void Start()
                         if (estaminaActual <= 0)
                         {
                             protagonista.anim.Play("daño");
-                        audioManager.playAudio(audioManager.damage);
+                    AudioManager.instance.playAudio(AudioManager.instance.damage);
                         protagonista.GetComponent<Collider>().enabled = true;
                     protagonista.GetComponent<Rigidbody>().isKinematic = false;
-                    detectaAtaque = false;
+                    recibeDaño = false;
                           
                     }
                     }
@@ -165,8 +164,8 @@ void Start()
                         protagonista.GetComponent<Collider>().enabled = false;
                 protagonista.GetComponent<Rigidbody>().isKinematic = true;
                 protagonista.anim.Play("morir");
-                    audioManager.playAudio(audioManager.death);
-                    detectaAtaque = false;
+                AudioManager.instance.playAudio(AudioManager.instance.death);
+                    recibeDaño = false;
 
 
                 }
@@ -174,9 +173,10 @@ void Start()
                     {
                         protagonista.GetComponent<Collider>().enabled = false;
                 protagonista.GetComponent<Rigidbody>().isKinematic = true;
+                protagonista.anim.SetBool("running", false);
                 protagonista.anim.Play("daño");
-                    audioManager.playAudio(audioManager.damage);
-                    detectaAtaque = false;
+                    AudioManager.instance.playAudio(AudioManager.instance.damage);
+                    recibeDaño = false;
 
                 }
 
