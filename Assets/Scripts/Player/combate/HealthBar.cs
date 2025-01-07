@@ -13,10 +13,9 @@ public class HealthBar : MonoBehaviour
     public float curacionEstamina;
     public Image imagenBarraVida;
     public Image imagenEstamina;
-    public float tiempoUltimoRelleno; // Variable para rastrear el tiempo del último relleno
+    public float tiempoUltimoRelleno; 
     public bool dañoEstamina;
     public static HealthBar instance;
-    public float tiempoParry;
 
     //variables para salida forzosa del bloqueo
     public float tiempoDeBloqueo = 10f; // Tiempo en segundos para bloquear la entrada
@@ -25,10 +24,8 @@ public class HealthBar : MonoBehaviour
     //Variables para despues de morir
     public bool playerDied;
 
-    // otros codigos necesarios
-    //[SerializeField] cambiarPersona protagonista;
-    //[SerializeField] Player protagonista1;
-    private Player protagonista;
+
+    private ControladorMovimiento protagonista;
 
     
     private void Awake()
@@ -62,7 +59,7 @@ void Start()
     }
     private void Update()
     {
-        protagonista = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        protagonista = GameObject.FindGameObjectWithTag("Player").GetComponent<ControladorMovimiento>();
 
  
         float tiempoTranscurrido = Time.time - tiempoUltimoRelleno;
@@ -107,18 +104,7 @@ void Start()
         
                 if (protagonista.anim.GetBool("blocking"))
                 {
-                    Debug.Log("Tiempo: " + Mathf.FloorToInt(protagonista.tiempoTranscurrido * 1000) + " milisegundos");
-                    tiempoParry = protagonista.tiempoTranscurrido * 1000;
 
-                    if (tiempoParry <= 4)
-                    {
-                        protagonista.anim.Play("parry");
-                        protagonista.ResetTimer();
-                        recibeDaño = false;
-                    }
-                    else
-                    {
-                    
                   
                     if (estaminaActual > 0)
                         {
@@ -126,7 +112,7 @@ void Start()
                             estaminaActual -= dañoBase;
                             imagenEstamina.fillAmount = estaminaActual / estaminaMax;
                             protagonista.anim.Play("daño_bloqueando");
-                            AudioManager.instance.playAudio(AudioManager.instance.block);
+                            ControladorSonido.instance.playAudio(ControladorSonido.instance.block);
                             protagonista.GetComponent<Collider>().enabled = false;
                             protagonista.GetComponent<Rigidbody>().isKinematic = true;
                             recibeDaño = false;
@@ -138,18 +124,14 @@ void Start()
                         if (estaminaActual <= 0)
                         {
                             protagonista.anim.Play("daño");
-                    AudioManager.instance.playAudio(AudioManager.instance.damage);
+                    ControladorSonido.instance.playAudio(ControladorSonido.instance.damage);
                         protagonista.GetComponent<Collider>().enabled = true;
                     protagonista.GetComponent<Rigidbody>().isKinematic = false;
                     recibeDaño = false;
                           
                     }
                     }
-
-
-
-
-                }
+ 
                 else
                 {
                
@@ -164,7 +146,7 @@ void Start()
                         protagonista.GetComponent<Collider>().enabled = false;
                 protagonista.GetComponent<Rigidbody>().isKinematic = true;
                 protagonista.anim.Play("morir");
-                AudioManager.instance.playAudio(AudioManager.instance.death);
+                ControladorSonido.instance.playAudio(ControladorSonido.instance.death);
                     recibeDaño = false;
 
 
@@ -175,7 +157,7 @@ void Start()
                 protagonista.GetComponent<Rigidbody>().isKinematic = true;
                 protagonista.anim.SetBool("running", false);
                 protagonista.anim.Play("daño");
-                    AudioManager.instance.playAudio(AudioManager.instance.damage);
+                    ControladorSonido.instance.playAudio(ControladorSonido.instance.damage);
                     recibeDaño = false;
 
                 }

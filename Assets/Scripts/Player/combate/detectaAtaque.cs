@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class detectaAtaque : MonoBehaviour
 {
-    [SerializeField] Player player;
-    [SerializeField] weaponController controlArma;
+    [SerializeField] ControladorMovimiento controladorMovimiento;
+    [SerializeField] ControladorCombateDistancia controlArma;
     void Start()
     {
         HealthBar.instance.recibeDaño = false;
@@ -22,15 +22,15 @@ public class detectaAtaque : MonoBehaviour
     public void playerDead()
     {
         HealthBar.instance.playerDied = true;
-            player.canMove = true;   
+        controladorMovimiento.canMove = true;   
     }
     public void FinishDamage()
     {
 
-            player.GetComponent<Collider>().enabled = true;
-        player.GetComponent<Rigidbody>().isKinematic = false;
-        player.canMove = true;
-        player.isSprinting=false;
+        controladorMovimiento.GetComponent<Collider>().enabled = true;
+        controladorMovimiento.GetComponent<Rigidbody>().isKinematic = false;
+        controladorMovimiento.canMove = true;
+        controladorMovimiento.estaCorriendo=false;
 
 
 

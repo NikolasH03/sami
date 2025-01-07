@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class GrabObject : MonoBehaviour
 {
-    [SerializeField] Player player;
+    [SerializeField] ControladorCombate controladorCombate;
     public Collider objeto;
     public GameObject mano;
     private void OnTriggerStay(Collider other)
@@ -18,7 +18,7 @@ public class GrabObject : MonoBehaviour
             if(Input.GetKey(KeyCode.E)) {
 
                 objeto = other;
-                player.anim.Play("agarrar");
+                controladorCombate.anim.Play("agarrar");
                 
             }
         }

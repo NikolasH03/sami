@@ -9,7 +9,7 @@ public class muerte : MonoBehaviour
 {
 
 
-    [SerializeField] Player player;
+    [SerializeField] ControladorCombate player;
     [SerializeField] HealthBar healthBar;
     [SerializeField] TextMeshProUGUI numMuertes;
     [SerializeField] int contador = 0;

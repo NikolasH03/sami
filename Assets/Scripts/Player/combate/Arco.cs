@@ -16,7 +16,7 @@ public class Arco : MonoBehaviour
     private GameObject flechaActual;
     public bool isAiming;
 
-    [SerializeField] Player player;
+    [SerializeField] ControladorCombate player;
     private void Start()
     {
         aimReticle.enabled = false;

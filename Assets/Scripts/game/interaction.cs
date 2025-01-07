@@ -9,7 +9,7 @@ public class interaction : MonoBehaviour
     [SerializeField] GameObject conversation;
     [SerializeField] GameObject conversationCanvas;
     [SerializeField] GameObject buttons;
-    [SerializeField] Player player;
+    [SerializeField] ControladorCombate player;
     private bool playerInRange;
     private int numConversation=0;
     
@@ -41,7 +41,7 @@ public class interaction : MonoBehaviour
     {
         GameObject playerObject = GameObject.FindWithTag("Player");
 
-        player = playerObject.GetComponent<Player>();
+        player = playerObject.GetComponent<ControladorCombate>();
 
         if (playerInRange)
         {

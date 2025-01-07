@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     private float bloquearDuration = 2.5f;
     private float tiempoUltimoBloqueo = 0f;
     private float intervaloBloqueo = 5f;
-    public Player player;
+    public ControladorCombate player;
 
     public void Start()
     {
@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
         if (autoselectTarget)
         {
             Target = GameObject.FindGameObjectWithTag("Player").transform;
-            player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<ControladorCombate>();
         }
 
         CheckEstado();
@@ -116,7 +116,7 @@ public class Enemy : MonoBehaviour
             CambiarEstado (Estados.Seguir);
         }
 
-        if (player.atacandoDebil && Time.time - tiempoUltimoBloqueo > intervaloBloqueo)
+        if (player.atacando && Time.time - tiempoUltimoBloqueo > intervaloBloqueo)
         {
             float Bloqueo = UnityEngine.Random.Range(0.0f, 1.0f);
 

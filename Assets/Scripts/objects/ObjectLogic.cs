@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObjectLogic : MonoBehaviour
 {
 
-    [SerializeField] Player player;
+    [SerializeField] ControladorMovimiento controladorMovimiento;
     [SerializeField] int tipo;
 
     //1. crece
@@ -14,20 +14,20 @@ public class ObjectLogic : MonoBehaviour
 
     void Start()
     {
-        player=GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        controladorMovimiento = GameObject.FindGameObjectWithTag("Player").GetComponent<ControladorMovimiento>();
     }
     public void efecto()
     {
         switch (tipo)
         {
             case 1:
-                player.gameObject.transform.localScale = new Vector3(3,3,3);
+                controladorMovimiento.gameObject.transform.localScale = new Vector3(3,3,3);
                 break;
 
             case 2:
-               float speed1= player.returnSpeed();
+               float speed1= controladorMovimiento.returnSpeed();
                 speed1 += 5;
-                player.setSpeed(speed1);
+                controladorMovimiento.setSpeed(speed1);
                 break;
 
 
