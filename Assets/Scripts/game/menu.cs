@@ -11,7 +11,8 @@ public class menu : MonoBehaviour
     }
     public void Salir()
     {
+        ControladorJuego.instance.guardarAvance();
         Application.Quit();
-        Debug.Log("Chao mundo");
+        
     }
 }

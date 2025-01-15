@@ -1,42 +1,69 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.InputSystem;
 using UnityEngine;
 
 public class ControladorMovimiento : MonoBehaviour
 {
-    //movimiento basico
-    public Rigidbody rb;
-    [SerializeField] float speed;
-    [SerializeField] float turnSmoothTime;
-    [SerializeField] Transform cam;
-    [SerializeField] float turnSmoothVelocity;
-    public bool canMove;
 
-    //sprint
-    public bool estaCorriendo;
-    [SerializeField] float sprintMultiplier;
-    private float sprintSpeed = 1;
+    [SerializeField] float VelocidadCaminando = 200f;
+    [SerializeField] float VelocidadCorriendo = 600f;
+    [Range(0.0f, 0.3f)]
+    [SerializeField] float RotationSmoothTime;
+    [SerializeField] float SpeedChangeRate = 50f;
 
+    [SerializeField] float sensibilidad = 1f;
+
+    [SerializeField] Rigidbody rb;
+    [SerializeField] bool canMove;
+
+    [SerializeField] float _speed;
+    [SerializeField] float _targetRotation = 0.0f;
+    [SerializeField] float _rotationVelocity;
+    [SerializeField] float _verticalVelocity;
+    [SerializeField] GameObject _mainCamera;
+
+    [SerializeField] private float Gravity = -9.81f;
+    [SerializeField] private float GroundCheckDistance = 0.2f; 
+    [SerializeField] private LayerMask GroundLayer; 
+
+    private bool IsGrounded; 
 
     //coordenadas para animaciones de movimiento
     [SerializeField] float x, y;
-    public Animator anim;
+    private Animator anim;
 
-    ControladorCombate player;
+    //rotacion de la camara
 
+    private float _cinemachineTargetYaw;
+    private float _cinemachineTargetPitch;
+    private const float BottomClamp = -30f;
+    private const float TopClamp = 70f;
+    private bool LockCameraPosition = false;
+    private const float _threshold = 0.01f;
+    private float CameraAngleOverride = 0.0f;
+    [SerializeField] GameObject CinemachineCameraTarget;
+    private bool rotarAlMoverse = true;
+
+    //referencias a otro codigos
+    private ControladorCombate controladorCombate;
+    private void Awake()
+    {
+        if (_mainCamera == null)
+        {
+            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        }
+    }
     void Start()
     {
         Cursor.visible = false;
         canMove = true;
 
         rb = GetComponent<Rigidbody>();
-        player= GetComponent<ControladorCombate>();
+        controladorCombate = GetComponent<ControladorCombate>();
         anim = GetComponent<Animator>();
 
- 
+
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!canMove)
@@ -47,97 +74,184 @@ public class ControladorMovimiento : MonoBehaviour
         else
         {
 
-            Vector3 direction = inputMovimiento();
+            
 
-
-            if (x == 0f && y == 0f)
+            if (!controladorCombate.getAtacando() && !anim.GetBool("blocking"))
             {
-                ControladorSonido.instance.stopFootstep();
-            }
-            else
-            {
-                ControladorSonido.instance.playFootstep(estaCorriendo);
-
-            }
-            if (direction.magnitude >= 0.1f && !player.atacando && !anim.GetBool("blocking"))
-            {
-                runCheck();
-                mover(direction);
-
-                anim.SetFloat("Velx", x);
-                anim.SetFloat("Vely", y);
-
+                ValoresAnimacionMovimiento();
+                mover();
             }
 
         }
     }
-    public Vector3 inputMovimiento()
+    private void LateUpdate()
     {
-        x = Input.GetAxis("Horizontal");
-        y = Input.GetAxis("Vertical");
-
-        Vector3 direction = new Vector3(x, 0f, y).normalized;
-
-        return direction;
+        RotacionCamara();
     }
-    public void mover(Vector3 direction)
+    public void ValoresAnimacionMovimiento()
     {
+        x = InputJugador.instance.moverse.x; 
+        y = InputJugador.instance.moverse.y;
 
-        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+        anim.SetFloat("Velx", x);
+        anim.SetFloat("Vely", y);
 
-        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-
-        Vector3 movDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-
-
-
-
-        transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-        Vector3 movement = movDir.normalized * speed * Time.deltaTime * sprintSpeed;
-        rb.MovePosition(transform.position + movement);
     }
 
-    //verifica si el usuario oprimió la tecla LeftShift, si lo hizó multiplica la velocidad base
-    public void runCheck()
+    public float CheckEstaCorriendo()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (InputJugador.instance.correr && !controladorCombate.getAtacando() && canMove)
         {
-                estaCorriendo = true;
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            estaCorriendo = false;
-
-        }
-
-        if (estaCorriendo == true && !player.atacando && canMove)
-        {
-            sprintSpeed = sprintMultiplier;
             anim.SetBool("running", true);
-
-
+            return VelocidadCorriendo;
         }
-        else if (estaCorriendo == false || player.atacando || !canMove)
+        else if (!InputJugador.instance.correr || controladorCombate.getAtacando() || !canMove)
         {
-            sprintSpeed = 1;
             anim.SetBool("running", false);
+            return VelocidadCaminando;
+        }
+        return VelocidadCaminando; 
+    }
 
+    private void mover()
+    {
+        CheckGrounded();
+        ApplyGravity();
+
+        float targetSpeed = CheckEstaCorriendo();
+
+        if (InputJugador.instance.moverse == Vector2.zero) targetSpeed = 0.0f;
+
+        float currentHorizontalSpeed = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z).magnitude;
+
+
+        float speedOffset = 0.5f;
+
+        // Accelerate or decelerate to the target speed
+        if (currentHorizontalSpeed < targetSpeed - speedOffset ||
+            currentHorizontalSpeed > targetSpeed + speedOffset)
+        {
+            // Smoothly transition to the target speed
+            _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed, Time.deltaTime * SpeedChangeRate);
+
+            // Round the speed to 3 decimal places
+            _speed = Mathf.Round(_speed * 1000f) / 1000f;
+        }
+        else
+        {
+            _speed = targetSpeed;
+        }
+
+
+        // Normalize the input direction
+        Vector3 inputDirection = new Vector3(InputJugador.instance.moverse.x, 0.0f, InputJugador.instance.moverse.y).normalized;
+
+        // Rotate the player if there is movement input
+        if (InputJugador.instance.moverse != Vector2.zero)
+        {
+            _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
+                              _mainCamera.transform.eulerAngles.y;
+            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
+                RotationSmoothTime);
+
+            // Rotate to face the input direction relative to the camera
+            if (rotarAlMoverse)
+            {
+                transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+            }
+            
+        }
+
+        // Calculate the target direction
+        Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+
+        // Move the player
+        rb.MovePosition(transform.position +
+            (targetDirection.normalized * _speed * Time.deltaTime) +
+            new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+
+
+    }
+
+
+    private void RotacionCamara()
+    {
+        if (InputJugador.instance.mirar.sqrMagnitude >= _threshold && !LockCameraPosition)
+        {
+            float deltaTimeMultiplier = 1.0f;
+
+            _cinemachineTargetYaw += InputJugador.instance.mirar.x * deltaTimeMultiplier * sensibilidad;
+            _cinemachineTargetPitch += InputJugador.instance.mirar.y * deltaTimeMultiplier * sensibilidad;
+        }
+
+        _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
+        _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+
+        CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, _cinemachineTargetYaw, 0.0f);
+    }
+
+    private float ClampAngle(float angle, float min, float max)
+    {
+        if (angle < -360f)
+            angle += 360f;
+        if (angle > 360f)
+            angle -= 360f;
+        return Mathf.Clamp(angle, min, max);
+
+    }
+
+    private void ApplyGravity()
+    {
+        if (IsGrounded)
+        {
+            // Resetea la velocidad vertical si está en el suelo
+            _verticalVelocity = 0f;
+        }
+        else
+        {
+            // Aplica la gravedad mientras el jugador está en el aire
+            _verticalVelocity += Gravity * Time.deltaTime;
+        }
+    }
+
+    private void CheckGrounded()
+    {
+        // Posición desde donde se realiza la comprobación (ajusta según el modelo del jugador)
+        Vector3 groundCheckPosition = transform.position + Vector3.down * GroundCheckDistance;
+
+        // Verifica si hay colisión con el suelo
+        IsGrounded = Physics.CheckSphere(groundCheckPosition, GroundCheckDistance, GroundLayer);
+
+        // Si está en el suelo y _verticalVelocity es menor que 0, reinicia la velocidad vertical
+        if (IsGrounded && _verticalVelocity < 0)
+        {
+            _verticalVelocity = 0f;
         }
     }
 
     //setters y getters
-    public float returnSpeed()
+
+    public void SetSensibilidad(float nuevaSensibilidad)
     {
-        return speed;
-    }
-    public void setSpeed(float speed1)
-    {
-        speed = speed1;
+        sensibilidad = nuevaSensibilidad;
     }
 
-    public void setMultiplier(float m1)
+    public void SetRotacionAlMoverse(bool nuevoRotacionAlMoverse)
     {
-        sprintMultiplier = m1;
+        rotarAlMoverse = nuevoRotacionAlMoverse;
+    }
+
+    public Animator getAnim()
+    {
+        return anim;
+    }
+    public bool getCanMove()
+    {
+        return canMove;
+    }
+    public void setCanMove(bool mover)
+    {
+        canMove = mover;
     }
 }
+

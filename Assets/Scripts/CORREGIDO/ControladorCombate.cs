@@ -3,32 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ControladorCombate: MonoBehaviour
+public class ControladorCombate : MonoBehaviour
 {
 
     public Animator anim;
 
     //ataque
     [SerializeField] int numeroArma;
-    public bool atacando=false;
-    public int numeroGolpesLigeros=0;
-    public int numeroGolpesFuertes=0;
+    [SerializeField] bool atacando = false;
+    public int numeroGolpesLigeros   = 0;
+    public int numeroGolpesFuertes = 0;
     [SerializeField] Collider ColliderArma;
     [SerializeField] Collider ColliderPierna;
 
 
-  
+
 
     //herencias
     [SerializeField] ControladorCambioArmas cambioArma;
     ControladorMovimiento controladorMovimiento;
     private void Start()
     {
-        
 
-        ColliderArma.enabled=false;
+
+        ColliderArma.enabled = false;
         ColliderPierna.enabled = false;
-    
+
 
         anim = GetComponent<Animator>();
         controladorMovimiento = GetComponent<ControladorMovimiento>();
@@ -44,20 +44,19 @@ public class ControladorCombate: MonoBehaviour
     //verifica si el usuario oprimio el click y activa la animacion de golpe
     public void golpeCheck()
     {
-       numeroArma=cambioArma.getterArma();
+        numeroArma = cambioArma.getterArma();
 
         if (numeroArma == 1)
         {
-            anim.SetBool("distance", false);
-            
-            if (Input.GetMouseButton(0) && !atacando && !controladorMovimiento.estaCorriendo)
+
+            if (Input.GetMouseButton(0) && !atacando && !InputJugador.instance.correr)
             {
 
                 atacando = true;
                 numeroGolpesLigeros = 1;
 
             }
-            if (Input.GetMouseButton(1) && !atacando && !controladorMovimiento.estaCorriendo)
+            if (Input.GetMouseButton(1) && !atacando && !InputJugador.instance.correr)
             {
 
                 atacando = true;
@@ -71,19 +70,11 @@ public class ControladorCombate: MonoBehaviour
             }
 
         }
-        else if (numeroArma == 2)
-        {
-            anim.SetBool("distance", true);
-
-    
 
 
-        }
-
-       
 
     }
-   
+
 
     //verifica si el jugador esta manteniendo oprimida la tecla para bloquear
     public void bloqueoCheck()
@@ -91,19 +82,13 @@ public class ControladorCombate: MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-               
-             anim.SetBool("blocking", true);
-            
-
-
+            anim.SetBool("blocking", true);
         }
-        
+
         else if (Input.GetKeyUp(KeyCode.Space))
         {
-            
             GetComponent<Collider>().enabled = true;
             anim.SetBool("blocking", false);
-            
         }
 
     }
@@ -131,6 +116,16 @@ public class ControladorCombate: MonoBehaviour
     {
         ColliderPierna.enabled = false;
     }
+    public bool getAtacando()
+    {
+        return atacando;
+    }
+    public void setAtacando(bool ataque)
+    {
+        atacando = ataque;
+    }
 
-  
+ 
+
+
 }

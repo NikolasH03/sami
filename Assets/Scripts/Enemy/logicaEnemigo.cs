@@ -11,7 +11,6 @@ public class logicaEnemigo : MonoBehaviour
     [SerializeField] string tipoDaño;
     [SerializeField] Animator anim;
     [SerializeField] Image imagenBarraVida;
-    //[SerializeField] ResourceManagement resourceManagement;
     public void Start()
     {
         vidaActual = vidaMax;
@@ -20,7 +19,6 @@ public class logicaEnemigo : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
 
-        Debug.Log("detecta un collider");
        if (other.gameObject.tag == "arma")
        {
             Debug.Log("detecta el collider del arma");
@@ -41,7 +39,7 @@ public class logicaEnemigo : MonoBehaviour
                 GetComponent<Collider>().enabled = false;
                 GetComponent<Rigidbody>().isKinematic = true;
                 anim.Play("Falling Back Death");
-                ResourceManagement.instance.enemigoMuerto(1);
+                Inventario.instance.enemigoMuerto(1);
                 float delayInSeconds = 2.0f; 
                 Invoke("eliminarEnemigo", delayInSeconds);
             }

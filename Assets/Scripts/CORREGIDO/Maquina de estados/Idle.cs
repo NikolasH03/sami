@@ -62,7 +62,7 @@ public class Idle : StateMachineBehaviour
         if (player == null)
             return;
 
-        player.atacando = false;
+        player.setAtacando(false);
 
     }
 

@@ -116,7 +116,7 @@ public class Enemy : MonoBehaviour
             CambiarEstado (Estados.Seguir);
         }
 
-        if (player.atacando && Time.time - tiempoUltimoBloqueo > intervaloBloqueo)
+        if (player.getAtacando() && Time.time - tiempoUltimoBloqueo > intervaloBloqueo)
         {
             float Bloqueo = UnityEngine.Random.Range(0.0f, 1.0f);
 

@@ -21,15 +21,8 @@ public class ObjectLogic : MonoBehaviour
         switch (tipo)
         {
             case 1:
-                controladorMovimiento.gameObject.transform.localScale = new Vector3(3,3,3);
+                controladorMovimiento.gameObject.transform.localScale = new Vector3(3, 3, 3);
                 break;
-
-            case 2:
-               float speed1= controladorMovimiento.returnSpeed();
-                speed1 += 5;
-                controladorMovimiento.setSpeed(speed1);
-                break;
-
 
             default:
                 Debug.Log("ningun efecto");

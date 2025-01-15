@@ -12,14 +12,15 @@ public class GrabObject : MonoBehaviour
     public GameObject mano;
     private void OnTriggerStay(Collider other)
     {
-        
+
         if (other.tag == "objeto")
         {
-            if(Input.GetKey(KeyCode.E)) {
+            if (Input.GetKey(KeyCode.E))
+            {
 
                 objeto = other;
                 controladorCombate.anim.Play("agarrar");
-                
+
             }
         }
 
@@ -29,7 +30,7 @@ public class GrabObject : MonoBehaviour
         objeto.GetComponent<ObjectLogic>().efecto();
         Destroy(objeto.gameObject);
     }
-    public void objetoEsHijo ()
+    public void objetoEsHijo()
     {
         objeto.transform.SetParent(mano.transform);
     }
