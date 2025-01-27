@@ -66,6 +66,10 @@ public class ControladorMovimiento : MonoBehaviour
 
     void Update()
     {
+
+    }
+    void FixedUpdate()
+    {
         if (!canMove)
         {
             return;
@@ -74,7 +78,7 @@ public class ControladorMovimiento : MonoBehaviour
         else
         {
 
-            
+
 
             if (!controladorCombate.getAtacando() && !anim.GetBool("blocking"))
             {
@@ -84,6 +88,7 @@ public class ControladorMovimiento : MonoBehaviour
 
         }
     }
+
     private void LateUpdate()
     {
         RotacionCamara();

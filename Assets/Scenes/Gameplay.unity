@@ -470,8 +470,6 @@ MonoBehaviour:
   imagenBarraVida: {fileID: 1794341539}
   imagenEstamina: {fileID: 1902516163}
   tiempoUltimoRelleno: 0
-  "da\xF1oEstamina": 0
-  tiempoDeBloqueo: 10
   jugadorMuerto: 0
   canvasNumMuertes: {fileID: 1405397273}
   contadorMuertes: 0
@@ -13296,7 +13294,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controladorMovimiento: {fileID: 1442962826}
-  controlArma: {fileID: 0}
 --- !u!136 &1442962824
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -13344,9 +13341,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 2
+  m_Interpolate: 1
   m_Constraints: 80
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &1442962826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13359,10 +13356,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4398c21166f91b4084c5397e412fe6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VelocidadCaminando: 100
-  VelocidadCorriendo: 300
+  VelocidadCaminando: 30
+  VelocidadCorriendo: 80
   RotationSmoothTime: 0.3
-  SpeedChangeRate: 10
+  SpeedChangeRate: 5
   sensibilidad: 1
   rb: {fileID: 0}
   canMove: 0
@@ -13378,8 +13375,6 @@ MonoBehaviour:
     m_Bits: 1
   x: 0
   y: 0
-  anim: {fileID: 0}
-  CameraAngleOverride: 0
   CinemachineCameraTarget: {fileID: 757191334}
 --- !u!114 &1442962827
 MonoBehaviour:
@@ -16586,7 +16581,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controladorMovimiento: {fileID: 1891072059}
-  controlArma: {fileID: 0}
 --- !u!114 &1891072056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16626,9 +16620,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 2
+  m_Interpolate: 1
   m_Constraints: 80
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!136 &1891072058
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -16664,10 +16658,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4398c21166f91b4084c5397e412fe6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VelocidadCaminando: 100
-  VelocidadCorriendo: 300
+  VelocidadCaminando: 30
+  VelocidadCorriendo: 80
   RotationSmoothTime: 0.3
-  SpeedChangeRate: 10
+  SpeedChangeRate: 5
   sensibilidad: 1
   rb: {fileID: 0}
   canMove: 0
@@ -16683,8 +16677,6 @@ MonoBehaviour:
     m_Bits: 1
   x: 0
   y: 0
-  anim: {fileID: 0}
-  CameraAngleOverride: 0
   CinemachineCameraTarget: {fileID: 1678699088}
 --- !u!114 &1891072060
 MonoBehaviour:

@@ -7,8 +7,8 @@ using UnityEngine;
 public class pausa : MonoBehaviour
 {
 
-    public GameObject menuPausa;
-    public bool pausado = false;
+    [SerializeField] GameObject menuPausa;
+    [SerializeField] bool pausado = false;
 
 
     void Update()

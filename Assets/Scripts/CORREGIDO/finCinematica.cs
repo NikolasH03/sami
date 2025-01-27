@@ -12,10 +12,10 @@ public class finCinematica : MonoBehaviour
 
     void Start()
     {
-        // Asegúrate de que el Video Player no se detenga al finalizar
+
         videoPlayer.isLooping = false;
 
-        // Suscribirse al evento que se dispara cuando el video termina
+
         videoPlayer.loopPointReached += OnVideoEnd;
     }
     private void Update()
@@ -28,12 +28,10 @@ public class finCinematica : MonoBehaviour
 
     void OnVideoEnd(VideoPlayer vp)
     {
-        // Cambiar a la escena especificada
         ChangeScene();
     }
     void ChangeScene()
     {
-        // Cambiar a la escena especificada
         SceneManager.LoadScene(sceneName);
     }
 }
