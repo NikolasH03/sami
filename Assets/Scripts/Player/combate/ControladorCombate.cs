@@ -37,6 +37,7 @@ public class ControladorCombate : MonoBehaviour
     {
         golpeCheck();
         bloqueoCheck();
+        dashCheck();
     }
 
 
@@ -91,6 +92,21 @@ public class ControladorCombate : MonoBehaviour
             anim.SetBool("blocking", false);
         }
 
+    }
+
+    public void dashCheck()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            anim.SetBool("dashing", true);
+        }
+    }
+
+    public void terminarDash()
+    {
+        anim.SetBool("dashing", false);
+        controladorMovimiento.GetComponent<Collider>().enabled = true;
+        controladorMovimiento.GetComponent<Rigidbody>().isKinematic = false;
     }
     public void bloquearDespuesDeGolpe()
     {

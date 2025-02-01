@@ -47,13 +47,20 @@ public class Idle : StateMachineBehaviour
             }
             
         }
-      
+
         if (player.anim.GetBool("blocking"))
         {
             player.anim.Play("bloqueando");
-           
-            
-        } 
+
+        }
+
+        if (player.anim.GetBool("dashing"))
+        {
+            player.anim.Play("dash");
+            player.GetComponent<Collider>().enabled = false;
+            player.GetComponent<Rigidbody>().isKinematic = true;
+
+        }
     }
 
 
