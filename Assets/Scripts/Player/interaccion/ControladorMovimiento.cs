@@ -84,6 +84,16 @@ public class ControladorMovimiento : MonoBehaviour
             {
                 ValoresAnimacionMovimiento();
                 mover();
+
+                if (x == 0f && y == 0f)
+                {
+                    ControladorSonido.instance.stopFootstep();
+                }
+                else
+                {
+                    ControladorSonido.instance.playFootstep(anim.GetBool("running"));
+
+                }
             }
 
         }
