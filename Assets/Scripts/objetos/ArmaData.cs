@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "Nueva Arma", menuName = "Arma")]
-public class Arma : ScriptableObject
+public class ArmaData : ScriptableObject
 {
 
     public string nombre;

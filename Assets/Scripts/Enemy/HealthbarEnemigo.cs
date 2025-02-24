@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class logicaEnemigo : MonoBehaviour
+public class HealthbarEnemigo : MonoBehaviour
 {
     [SerializeField] float vidaActual;
     [SerializeField] float vidaMax;

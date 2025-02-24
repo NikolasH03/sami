@@ -11,7 +11,7 @@ public class VolverJuego : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("Gameplay");
+            SceneManager.LoadScene("Capitulo1-Introduccion");
         }
     }
 }

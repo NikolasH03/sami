@@ -13,6 +13,7 @@ public class ControladorCombate : MonoBehaviour
     [SerializeField] bool atacando = false;
     public int numeroGolpesLigeros   = 0;
     public int numeroGolpesFuertes = 0;
+    [SerializeField] private ArmaData armaActual;
     [SerializeField] Collider ColliderArma;
     [SerializeField] Collider ColliderPierna;
 

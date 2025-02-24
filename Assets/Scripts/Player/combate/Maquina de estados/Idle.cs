@@ -6,7 +6,7 @@ public class Idle : StateMachineBehaviour
 {
     private ControladorCombate player;
     [SerializeField] GameObject[] enemies;
-    private logicaEnemigo enemigo;
+    private HealthbarEnemigo enemigo;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
        
@@ -29,7 +29,7 @@ public class Idle : StateMachineBehaviour
             
             for (int i = 0; i < enemies.Length; i++)
             {
-                enemigo = enemies[i].GetComponent<logicaEnemigo>();
+                enemigo = enemies[i].GetComponent<HealthbarEnemigo>();
                 enemigo.tipoDeDaño("ligero");
             }
            
@@ -42,7 +42,7 @@ public class Idle : StateMachineBehaviour
 
             for (int i = 0; i < enemies.Length; i++)
             {
-                enemigo = enemies[i].GetComponent<logicaEnemigo>();
+                enemigo = enemies[i].GetComponent<HealthbarEnemigo>();
                 enemigo.tipoDeDaño("fuerte");
             }
             
