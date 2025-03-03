@@ -10,6 +10,7 @@ public class ControladorSonido : MonoBehaviour
 
     public AudioClip background;
     public AudioClip attack;
+    public AudioClip slash;
     public AudioClip heavyAttack;
     public AudioClip block;
     public AudioClip damage;

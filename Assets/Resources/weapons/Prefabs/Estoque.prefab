@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 67348a122ad2e694d94bdb957151a69f, type: 2}
     - target: {fileID: 919132149155446097, guid: 5c816e180096f5649ab09f54cc37fdb4, type: 3}
       propertyPath: m_Name
-      value: guard_sword
+      value: Estoque
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5c816e180096f5649ab09f54cc37fdb4, type: 3}
       propertyPath: m_IsActive
@@ -83,6 +83,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5c816e180096f5649ab09f54cc37fdb4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2696594880560215653}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5c816e180096f5649ab09f54cc37fdb4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -2564188335706790746}
   m_SourcePrefab: {fileID: 100100000, guid: 5c816e180096f5649ab09f54cc37fdb4, type: 3}
 --- !u!1 &2173260131908042425 stripped
 GameObject:
@@ -106,7 +109,20 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.00035657774, y: 0.0010553363, z: 0.009058482}
   m_Center: {x: 0.0000006645731, y: -0.000052054747, z: 0.0062271166}
+--- !u!114 &-2564188335706790746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173260131908042425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa35598409a9f6a47bb41513caebd2b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagEnemigo: enemy

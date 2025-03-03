@@ -87,6 +87,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8411c1f1b60edbe4fb515e3c4d1e31af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3032632865163825447}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8411c1f1b60edbe4fb515e3c4d1e31af, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1384649432950211782}
   m_SourcePrefab: {fileID: 100100000, guid: 8411c1f1b60edbe4fb515e3c4d1e31af, type: 3}
 --- !u!1 &5256997645918239544 stripped
 GameObject:
@@ -110,7 +113,20 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1.1136619, z: 1}
   m_Center: {x: -0.00000008836828, y: 0.6034452, z: 0.000000042910102}
+--- !u!114 &1384649432950211782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5256997645918239544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa35598409a9f6a47bb41513caebd2b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagEnemigo: enemy

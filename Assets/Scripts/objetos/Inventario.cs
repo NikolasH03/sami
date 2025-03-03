@@ -8,7 +8,7 @@ public class Inventario : MonoBehaviour
     public static Inventario instance;
 
     
-    private int dinero = 0;
+    [SerializeField] private int dinero = 0;
 
     private void Awake()
     {
@@ -44,8 +44,8 @@ public class Inventario : MonoBehaviour
     {
         switch (tipoEnemigo)
         {
-            case 1: dinero += 50; break;
-            case 2: dinero += 200; break;
+            case 1: aumentarDinero(50); break;
+            case 2: aumentarDinero(200); break;
             default: Debug.Log("No existe ese tipo de enemigo"); break;
         }
     }

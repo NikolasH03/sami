@@ -5,13 +5,10 @@ using UnityEngine;
 public class Idle : StateMachineBehaviour
 {
     private ControladorCombate player;
-    [SerializeField] GameObject[] enemies;
-    private HealthbarEnemigo enemigo;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
        
         player = animator.GetComponent<ControladorCombate>();
-        enemies = GameObject.FindGameObjectsWithTag("enemy");
 
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -25,26 +22,16 @@ public class Idle : StateMachineBehaviour
         {
             player.anim.Play("ataque");
             ControladorSonido.instance.playAudio(ControladorSonido.instance.attack);
-            player.numeroGolpesLigeros++; 
-            
-            for (int i = 0; i < enemies.Length; i++)
-            {
-                enemigo = enemies[i].GetComponent<HealthbarEnemigo>();
-                enemigo.tipoDeDaño("ligero");
-            }
-           
+            player.numeroGolpesLigeros++;
+            player.tipoAtaque = "ligero";
+
         }
         if (player.numeroGolpesFuertes==1)
         {
             player.anim.Play("ataqueFuerte1");
             ControladorSonido.instance.playAudio(ControladorSonido.instance.heavyAttack);
             player.numeroGolpesFuertes++;
-
-            for (int i = 0; i < enemies.Length; i++)
-            {
-                enemigo = enemies[i].GetComponent<HealthbarEnemigo>();
-                enemigo.tipoDeDaño("fuerte");
-            }
+            player.tipoAtaque = "fuerte";
             
         }
 

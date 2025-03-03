@@ -19,12 +19,14 @@ public class TransitionHeavy1 : StateMachineBehaviour
             player.anim.Play("ataqueFuerte2");
             ControladorSonido.instance.playAudio(ControladorSonido.instance.heavyAttack);
             player.numeroGolpesFuertes++;
+            player.tipoAtaque = "fuerte";
         }
         else if (Input.GetMouseButton(0))
         {
             player.anim.Play("ataque");
             ControladorSonido.instance.playAudio(ControladorSonido.instance.attack);
             player.numeroGolpesLigeros++;
+            player.tipoAtaque = "ligero";
         }
 
     }

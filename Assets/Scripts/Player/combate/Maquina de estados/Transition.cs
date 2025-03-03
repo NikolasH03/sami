@@ -17,12 +17,14 @@ public class Transition : StateMachineBehaviour
             player.anim.Play("ataque2");
             ControladorSonido.instance.playAudio(ControladorSonido.instance.attack);
             player.numeroGolpesLigeros++;
+            player.tipoAtaque = "ligero";
         }
         else if (Input.GetMouseButton(1))
         {
-            player.anim.Play("ataqueFuerte2");
+            player.anim.Play("ataqueFuerte1");
             ControladorSonido.instance.playAudio(ControladorSonido.instance.heavyAttack);
             player.numeroGolpesFuertes++;
+            player.tipoAtaque = "fuerte";
         }
 
     }

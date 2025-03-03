@@ -13,7 +13,14 @@ public class ControladorCombate : MonoBehaviour
     [SerializeField] bool atacando = false;
     public int numeroGolpesLigeros   = 0;
     public int numeroGolpesFuertes = 0;
+    public string tipoAtaque;
+
+    //intanciar arma melee
     [SerializeField] private ArmaData armaActual;
+    [SerializeField] private Transform puntoSujecion;
+    private GameObject armaInstanciada;
+
+    //colliders necesarios para generar daño
     [SerializeField] Collider ColliderArma;
     [SerializeField] Collider ColliderPierna;
 
@@ -26,8 +33,9 @@ public class ControladorCombate : MonoBehaviour
     //[SerializeField] HabilidadesJugador habilidadesJugador;
     private void Start()
     {
-
-
+        EquiparArma(armaActual);
+        ColliderArma = armaInstanciada.GetComponent<Collider>();
+        
         ColliderArma.enabled = false;
         ColliderPierna.enabled = false;
 
@@ -104,6 +112,32 @@ public class ControladorCombate : MonoBehaviour
         }
     }
 
+    public void EquiparArma(ArmaData nuevaArma)
+    {
+        if (nuevaArma == null) return;
+
+
+        armaInstanciada = Instantiate(nuevaArma.prefab, puntoSujecion);
+        armaInstanciada.transform.localPosition = Vector3.zero;
+        armaInstanciada.transform.localRotation = Quaternion.identity;
+        armaInstanciada.transform.localScale = Vector3.one;
+
+        armaActual = nuevaArma;
+    }
+
+    public int TipoDeDaño()
+    {
+        if (tipoAtaque=="ligero")
+        {
+            return armaActual.dañoGolpeLigero;
+        }
+        else if (tipoAtaque == "fuerte")
+        {
+            return armaActual.dañoGolpeFuerte;
+        }
+        return armaActual.dañoGolpeLigero;
+    }
+
     public void terminarDash()
     {
         anim.SetBool("dashing", false);
@@ -120,6 +154,7 @@ public class ControladorCombate : MonoBehaviour
     {
         return HabilidadesJugador.instance.estaDesbloqueada(HabilidadesJugador.TipoHabilidad.Capoeira);
     }
+
 
 
     //activar colliders de diferentes armas
@@ -146,6 +181,10 @@ public class ControladorCombate : MonoBehaviour
     public void setAtacando(bool ataque)
     {
         atacando = ataque;
+    }
+    public GameObject getArmaActual()
+    {
+        return armaActual.prefab;
     }
 
  

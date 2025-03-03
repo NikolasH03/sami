@@ -6,62 +6,46 @@ public class HealthbarEnemigo : MonoBehaviour
 {
     [SerializeField] float vidaActual;
     [SerializeField] float vidaMax;
-    [SerializeField] int dañoLigero;
-    [SerializeField] int dañoFuerte;
-    [SerializeField] string tipoDaño;
     [SerializeField] Animator anim;
     [SerializeField] Image imagenBarraVida;
+    [SerializeField] bool EnemigoMuerto;
     public void Start()
     {
         vidaActual = vidaMax;
+        EnemigoMuerto = false;
     }
 
-    public void OnTriggerEnter(Collider other)
+    public void Update()
     {
-
-       if (other.gameObject.tag == "arma")
-       {
-            //Debug.Log("detecta el collider del arma");
-            if (tipoDaño == "ligero")
-            {
-                vidaActual -= dañoLigero;
-            }
-            else if (tipoDaño == "fuerte")
-            {
-                vidaActual -= dañoFuerte;
-            }
            
+           imagenBarraVida.fillAmount = vidaActual / vidaMax;
 
-            imagenBarraVida.fillAmount = vidaActual / vidaMax;
-
-            if (vidaActual <= 0)
+            if (vidaActual <= 0 && !EnemigoMuerto)
             {
                 GetComponent<Collider>().enabled = false;
                 GetComponent<Rigidbody>().isKinematic = true;
-                anim.Play("Falling Back Death");
-                Inventario.instance.enemigoMuerto(1);
-                float delayInSeconds = 2.0f; 
+                anim.Play("Falling Back Death");    
+                float delayInSeconds = 2.0f;
                 Invoke("eliminarEnemigo", delayInSeconds);
-            }
+                EnemigoMuerto = true;
+        }
             else
             {
                 anim.Play("damage");
 
             }
 
-
-        }
-
-        
+    }
+    public void recibeDaño(int daño)
+    {
+        vidaActual -= daño;
     }
     public void eliminarEnemigo()
     {
-        gameObject.SetActive(false);
+        Inventario.instance.enemigoMuerto(1);
+        gameObject.SetActive(false);  
+
     }
-    public void tipoDeDaño(string ataque)
-    {
-        tipoDaño= ataque;
-       
-    }
+
 
 }

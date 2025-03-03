@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ddf640d6616efa418000a4e9a967c9b, type: 3}
-  m_Name: Macana
+  m_Name: Estoque
   m_EditorClassIdentifier: 
-  nombre: Macana
-  "da\xF1oGolpeFuerte": 5
-  "da\xF1oGolpeLigero": 2
-  "da\xF1oGolpeFuerteGuardia": 8
-  "da\xF1oGolpeLigeroGuardia": 4
-  prefab: {fileID: 5256997645918239544, guid: 48599c11f7299be46ae52652367aaa9a, type: 3}
+  nombre: Estoque
+  "da\xF1oGolpeFuerte": 8
+  "da\xF1oGolpeLigero": 4
+  "da\xF1oGolpeFuerteGuardia": 4
+  "da\xF1oGolpeLigeroGuardia": 2
+  prefab: {fileID: 2173260131908042425, guid: 58b8a663f441f04468094a9205298dd6, type: 3}

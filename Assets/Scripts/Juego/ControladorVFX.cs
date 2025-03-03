@@ -26,7 +26,7 @@ public class ControladorVFX : MonoBehaviour
 public void GenerarEfecto(Vector3 posicion)
     {
         GameObject explosion = Instantiate(ataquePrefab, posicion, Quaternion.identity);
-        Destroy(explosion, 2f);
+        Destroy(explosion, 0.8f);
     }
 
 }

@@ -18,10 +18,12 @@ public class Transition2 : StateMachineBehaviour
             player.anim.Play("ataque3");
             ControladorSonido.instance.playAudio(ControladorSonido.instance.attack);
             player.numeroGolpesLigeros++;
+            player.tipoAtaque = "ligero";
         }
         else if (Input.GetMouseButton(1))
         {
             player.anim.Play("combo1");
+            player.tipoAtaque = "ligero";
         }
     }
 

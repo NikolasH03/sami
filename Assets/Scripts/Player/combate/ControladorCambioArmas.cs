@@ -8,8 +8,11 @@ public class ControladorCambioArmas : MonoBehaviour
     [SerializeField] GameObject armaDistancia;
     private int numeroArma;
 
+    ControladorCombate controladorCombate;
     void Start()
     {
+        controladorCombate = GetComponent<ControladorCombate>();
+        armaMelee = controladorCombate.getArmaActual();
         armaMelee.SetActive(true);
         armaDistancia.SetActive(false);
         numeroArma = 1;
