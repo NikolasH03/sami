@@ -20,6 +20,7 @@ public class DetectorImpactoMelee : MonoBehaviour
 
             enemigo = other.GetComponent<HealthbarEnemigo>();
             enemigo.recibeDaño(player.TipoDeDaño());
+            enemigo.setRecibiendoDaño(true);
 
         }
     }

@@ -9,6 +9,7 @@ public class HealthbarEnemigo : MonoBehaviour
     [SerializeField] Animator anim;
     [SerializeField] Image imagenBarraVida;
     [SerializeField] bool EnemigoMuerto;
+    [SerializeField] bool RecibiendoDaño;
     public void Start()
     {
         vidaActual = vidaMax;
@@ -20,20 +21,27 @@ public class HealthbarEnemigo : MonoBehaviour
            
            imagenBarraVida.fillAmount = vidaActual / vidaMax;
 
+        if (RecibiendoDaño == true)
+        {
             if (vidaActual <= 0 && !EnemigoMuerto)
             {
                 GetComponent<Collider>().enabled = false;
                 GetComponent<Rigidbody>().isKinematic = true;
-                anim.Play("Falling Back Death");    
+                anim.Play("Falling Back Death");
                 float delayInSeconds = 2.0f;
                 Invoke("eliminarEnemigo", delayInSeconds);
                 EnemigoMuerto = true;
-        }
+                RecibiendoDaño = false;
+            }
             else
             {
                 anim.Play("damage");
+                RecibiendoDaño = false;
 
             }
+
+        }
+            
 
     }
     public void recibeDaño(int daño)
@@ -45,6 +53,11 @@ public class HealthbarEnemigo : MonoBehaviour
         Inventario.instance.enemigoMuerto(1);
         gameObject.SetActive(false);  
 
+    }
+
+    public void setRecibiendoDaño(bool recibiendoDaño)
+    {
+        RecibiendoDaño = recibiendoDaño;
     }
 
 
