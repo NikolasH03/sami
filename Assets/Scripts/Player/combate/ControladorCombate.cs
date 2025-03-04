@@ -135,7 +135,11 @@ public class ControladorCombate : MonoBehaviour
         {
             return armaActual.dañoGolpeFuerte;
         }
-        return armaActual.dañoGolpeLigero;
+        else
+        {
+            return armaActual.dañoGolpeLigero;
+        }
+       
     }
 
     public void terminarDash()

@@ -5,7 +5,8 @@ using UnityEngine;
 public class ControladorProyectil : MonoBehaviour
 {
     private Rigidbody proyectilRB;
-
+    HealthbarEnemigo enemigo;
+    ControladorCombate player;
     private void Awake()
     {
         proyectilRB = GetComponent<Rigidbody>();
@@ -23,7 +24,13 @@ public class ControladorProyectil : MonoBehaviour
         Debug.Log("detecta un trigger");
         if(other.gameObject.tag == "enemy")
         {
-            ControladorSonido.instance.playAudio(ControladorSonido.instance.death);
+            Vector3 puntoImpacto = other.ClosestPoint(this.transform.position);
+            ControladorVFX.instance.GenerarEfecto(puntoImpacto);
+            ControladorSonido.instance.playAudio(ControladorSonido.instance.slash);
+
+            enemigo = other.GetComponent<HealthbarEnemigo>();
+            enemigo.recibeDaño(player.TipoDeDaño());
+            enemigo.setRecibiendoDaño(true);
         }
         Destroy(gameObject);
     }

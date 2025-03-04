@@ -3593,6 +3593,8 @@ MonoBehaviour:
   angulo: {x: 0, y: 0, z: 0, w: 0}
   grado: 0
   speedWalk: 2
+  estaAtacando: 0
+  establoqueando: 0
 --- !u!195 &521272963
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3632,6 +3634,7 @@ MonoBehaviour:
   anim: {fileID: 1200212480}
   imagenBarraVida: {fileID: 105390798}
   EnemigoMuerto: 0
+  "RecibiendoDa\xF1o": 0
 --- !u!1 &524860353
 GameObject:
   m_ObjectHideFlags: 0
@@ -9563,7 +9566,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100002, guid: 022a72268e462114788abcf0c0b07418, type: 3}
       propertyPath: m_Name
-      value: Elven Long Bow
+      value: arco
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 022a72268e462114788abcf0c0b07418, type: 3}
       propertyPath: m_TagString
@@ -26353,6 +26356,8 @@ MonoBehaviour:
   angulo: {x: 0, y: 0, z: 0, w: 0}
   grado: 0
   speedWalk: 2
+  estaAtacando: 0
+  establoqueando: 0
 --- !u!195 &1851321628
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -26442,6 +26447,7 @@ MonoBehaviour:
   anim: {fileID: 1386732485}
   imagenBarraVida: {fileID: 2084221077}
   EnemigoMuerto: 0
+  "RecibiendoDa\xF1o": 0
 --- !u!1001 &1882393714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31728,6 +31734,8 @@ MonoBehaviour:
   angulo: {x: 0, y: 0, z: 0, w: 0}
   grado: 0
   speedWalk: 2
+  estaAtacando: 0
+  establoqueando: 0
 --- !u!195 &2104036272
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -31767,6 +31775,7 @@ MonoBehaviour:
   anim: {fileID: 1978601066}
   imagenBarraVida: {fileID: 1793256737}
   EnemigoMuerto: 0
+  "RecibiendoDa\xF1o": 0
 --- !u!1 &2125311241
 GameObject:
   m_ObjectHideFlags: 0
