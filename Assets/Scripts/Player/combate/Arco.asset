@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ddf640d6616efa418000a4e9a967c9b, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e5ec79b0fbbcbc42bca47b436a3f301, type: 3}
   m_Name: Arco
   m_EditorClassIdentifier: 
   nombre: Arco
-  "da\xF1oGolpeFuerte": 0
-  "da\xF1oGolpeLigero": 8
-  "da\xF1oGolpeFuerteGuardia": 0
-  "da\xF1oGolpeLigeroGuardia": 4
+  "da\xF1oDisparo": 8
+  "da\xF1oDisparoGuardia": 4
   prefab: {fileID: 0}

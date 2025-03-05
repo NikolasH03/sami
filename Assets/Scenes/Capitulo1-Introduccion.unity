@@ -9091,6 +9091,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.24536616, y: 0.4605904, z: 0.6344281}
   m_Center: {x: -0.033348333, y: 0.33541444, z: 0.03561943}
+--- !u!114 &951641502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951641498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa35598409a9f6a47bb41513caebd2b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagEnemigo: enemy
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -24276,6 +24289,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -6170625038081293824, guid: e99c6b98b9a3112419b9c4e65fb4f24b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 15884165}
+    - targetCorrespondingSourceObject: {fileID: -6170625038081293824, guid: e99c6b98b9a3112419b9c4e65fb4f24b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1442962816}
   m_SourcePrefab: {fileID: 100100000, guid: e99c6b98b9a3112419b9c4e65fb4f24b, type: 3}
 --- !u!1 &1442962812 stripped
 GameObject:
@@ -24292,6 +24308,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e99c6b98b9a3112419b9c4e65fb4f24b, type: 3}
   m_PrefabInstance: {fileID: 1442962811}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1442962816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442962813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa35598409a9f6a47bb41513caebd2b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagEnemigo: enemy
 --- !u!114 &1442962821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24422,6 +24451,7 @@ MonoBehaviour:
   tipoAtaque: 
   armaActual: {fileID: 11400000, guid: 674048b9a7d6cbf47b4544ca7ff1a90c, type: 2}
   puntoSujecion: {fileID: 86005013}
+  armaDistancia: {fileID: 11400000, guid: e4b597adc14969a41a4d984171ac7e50, type: 2}
   ColliderArma: {fileID: 86005010}
   ColliderPierna: {fileID: 15884165}
   cambioArma: {fileID: 1442962829}
@@ -28150,6 +28180,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -4332706925441422008, guid: bd0c357a498d397498ce703ed51e5242, type: 3}
       insertIndex: -1
       addedObject: {fileID: 951641500}
+    - targetCorrespondingSourceObject: {fileID: -4332706925441422008, guid: bd0c357a498d397498ce703ed51e5242, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 951641502}
   m_SourcePrefab: {fileID: 100100000, guid: bd0c357a498d397498ce703ed51e5242, type: 3}
 --- !u!4 &1891072048 stripped
 Transform:
@@ -28291,6 +28324,7 @@ MonoBehaviour:
   tipoAtaque: 
   armaActual: {fileID: 11400000, guid: af08468c5f6f1564ca751fbd07cb985e, type: 2}
   puntoSujecion: {fileID: 1143866743}
+  armaDistancia: {fileID: 11400000, guid: cbbd932e0fb6ddc4c99ba58697440e35, type: 2}
   ColliderArma: {fileID: 1143866745}
   ColliderPierna: {fileID: 951641500}
   cambioArma: {fileID: 1891072062}
@@ -32256,7 +32290,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: PuntoSujecionEstoque
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -2564188335706790746, guid: 58b8a663f441f04468094a9205298dd6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

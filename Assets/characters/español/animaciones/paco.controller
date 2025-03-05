@@ -116,7 +116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcfbced3c17478e45845042f8fad5beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies: []
 --- !u!1102 &-8042062395249991619
 AnimatorState:
   serializedVersion: 6
@@ -1846,7 +1845,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcfbced3c17478e45845042f8fad5beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies: []
 --- !u!114 &8184819632194978492
 MonoBehaviour:
   m_ObjectHideFlags: 1

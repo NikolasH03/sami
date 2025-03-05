@@ -20,6 +20,11 @@ public class ControladorCombate : MonoBehaviour
     [SerializeField] private Transform puntoSujecion;
     private GameObject armaInstanciada;
 
+    //Daño del arma a distancia
+    [SerializeField] private ArmaDistanciaData armaDistancia;
+
+
+
     //colliders necesarios para generar daño
     [SerializeField] Collider ColliderArma;
     [SerializeField] Collider ColliderPierna;
@@ -125,7 +130,7 @@ public class ControladorCombate : MonoBehaviour
         armaActual = nuevaArma;
     }
 
-    public int TipoDeDaño()
+    public int EntregarDañoArmaMelee()
     {
         if (tipoAtaque=="ligero")
         {
@@ -140,6 +145,11 @@ public class ControladorCombate : MonoBehaviour
             return armaActual.dañoGolpeLigero;
         }
        
+    }
+
+    public int EntregarDañoArmaDistancia()
+    {
+        return armaDistancia.dañoDisparo;
     }
 
     public void terminarDash()
@@ -188,7 +198,7 @@ public class ControladorCombate : MonoBehaviour
     }
     public GameObject getArmaActual()
     {
-        return armaActual.prefab;
+        return armaInstanciada;
     }
 
  

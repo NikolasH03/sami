@@ -11,8 +11,6 @@ public class ControladorCambioArmas : MonoBehaviour
     ControladorCombate controladorCombate;
     void Start()
     {
-        controladorCombate = GetComponent<ControladorCombate>();
-        armaMelee = controladorCombate.getArmaActual();
         armaMelee.SetActive(true);
         armaDistancia.SetActive(false);
         numeroArma = 1;
@@ -20,6 +18,8 @@ public class ControladorCambioArmas : MonoBehaviour
 
     void Update()
     {
+        controladorCombate = GetComponent<ControladorCombate>();
+        armaMelee = controladorCombate.getArmaActual();
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {

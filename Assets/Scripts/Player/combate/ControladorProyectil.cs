@@ -18,6 +18,10 @@ public class ControladorProyectil : MonoBehaviour
         proyectilRB.velocity = transform.forward*velocidad;
 
     }
+    private void Update()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<ControladorCombate>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -29,7 +33,7 @@ public class ControladorProyectil : MonoBehaviour
             ControladorSonido.instance.playAudio(ControladorSonido.instance.slash);
 
             enemigo = other.GetComponent<HealthbarEnemigo>();
-            enemigo.recibeDaño(player.TipoDeDaño());
+            enemigo.recibeDaño(player.EntregarDañoArmaDistancia());
             enemigo.setRecibiendoDaño(true);
         }
         Destroy(gameObject);

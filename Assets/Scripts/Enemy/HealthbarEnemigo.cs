@@ -50,7 +50,9 @@ public class HealthbarEnemigo : MonoBehaviour
     }
     public void eliminarEnemigo()
     {
+
         Inventario.instance.enemigoMuerto(1);
+        Debug.Log("llama al inventario");
         gameObject.SetActive(false);  
 
     }
