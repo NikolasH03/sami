@@ -17,7 +17,8 @@ public class DetectorRecibeDaño : MonoBehaviour
     public void playerDead()
     {
         HealthBar.instance.setJugadorMuerto(true);
-        controladorMovimiento.setCanMove(true);   
+        controladorMovimiento.setCanMove(true);
+        controladorMovimiento.getAnim().SetBool("Muere", false);
     }
     public void FinalizarRecibirDaño()
     {
@@ -25,6 +26,7 @@ public class DetectorRecibeDaño : MonoBehaviour
         controladorMovimiento.GetComponent<Collider>().enabled = true;
         controladorMovimiento.GetComponent<Rigidbody>().isKinematic = false;
         controladorMovimiento.setCanMove(true);
+        controladorMovimiento.getAnim().SetBool("RecibeDaño", false);
 
 
 

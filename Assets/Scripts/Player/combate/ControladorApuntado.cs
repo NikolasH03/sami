@@ -114,15 +114,21 @@ public class ControladorApuntado : MonoBehaviour
 
     public void RealizaAccionMientrasApunta()
     {
-        if (HealthBar.instance.getRecibeDaño() || HealthBar.instance.getJugadorMuerto() || controladorCombate.getDashing() || controladorCombate.getBlocking())
+        if (controladorMovimiento.getAnim().GetBool("RecibeDaño") || controladorMovimiento.getAnim().GetBool("Muere") || controladorCombate.getDashing() || controladorCombate.getBlocking())
         {
             // Reducir el Layer de apuntado a 0 en 0.2s
+            Debug.Log("ESTA RECIBIENDO DAÑO");
+            estaApuntando = false;
+            camaraApuntado.gameObject.SetActive(false);
+            controladorMovimiento.SetSensibilidad(sensibilidadNormal);
+            controladorMovimiento.SetRotacionAlMoverse(true);
+            crosshair.SetActive(false);
             StartCoroutine(AdjustLayerWeight(1, 0f, 0.2f));
 
 
 
         }
-        else if (!HealthBar.instance.getRecibeDaño() && !HealthBar.instance.getJugadorMuerto() && !controladorCombate.getDashing() && !controladorCombate.getBlocking())
+        else if (!controladorMovimiento.getAnim().GetBool("RecibeDaño") && !controladorMovimiento.getAnim().GetBool("Muere") && !controladorCombate.getDashing() && !controladorCombate.getBlocking())
         {
             // Restaurar el Layer de apuntado 
             RestoreLayerAfterDamage();
@@ -144,6 +150,8 @@ public class ControladorApuntado : MonoBehaviour
         }
 
         animator.SetLayerWeight(layerIndex, targetWeight);
+
+
     }
 
     public void RestoreLayerAfterDamage()

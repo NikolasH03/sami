@@ -162,15 +162,18 @@ public class HealthBar : MonoBehaviour
         controladorMovimiento.getAnim().Play("daño");
         ControladorSonido.instance.playAudio(ControladorSonido.instance.damage);
         recibeDaño = false;
+        controladorMovimiento.getAnim().SetBool("RecibeDaño", true);
     }
 
     public void jugadorMuere()
     {
         controladorMovimiento.GetComponent<Collider>().enabled = false;
         controladorMovimiento.GetComponent<Rigidbody>().isKinematic = true;
+        controladorMovimiento.getAnim().SetBool("Muere", true);
         controladorMovimiento.getAnim().Play("morir");
         ControladorSonido.instance.playAudio(ControladorSonido.instance.death);
         recibeDaño = false;
+      
     }
 
     public void terminoAnimacionMuerte()

@@ -115,6 +115,7 @@ public class ControladorCombate : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && !anim.GetBool("dashing"))
         {
             anim.SetBool("running", false);
+            anim.SetBool("RecibeDaño", false);
             anim.SetBool("dashing", true);
         }
     }
@@ -157,6 +158,7 @@ public class ControladorCombate : MonoBehaviour
     public void terminarDash()
     {
         anim.SetBool("dashing", false);
+        anim.SetBool("RecibeDaño", false);
         controladorMovimiento.GetComponent<Collider>().enabled = true;
         controladorMovimiento.GetComponent<Rigidbody>().isKinematic = false;
     }
