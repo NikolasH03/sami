@@ -19,7 +19,8 @@ public class HealthBar : MonoBehaviour
     [SerializeField] float tiempoUltimoRelleno;
 
 
-    [SerializeField] bool jugadorMuerto;
+    [SerializeField] bool jugadorEnAnimacionMuriendo = false;
+    [SerializeField] bool jugadorMuerto = false;
     [SerializeField] TextMeshProUGUI canvasNumMuertes;
     [SerializeField] int contadorMuertes = 0;
     [SerializeField] GameObject menuMuerte;
@@ -49,7 +50,6 @@ public class HealthBar : MonoBehaviour
         canvasNumMuertes.text = contadorMuertes.ToString();
 
         recibeDaño = false;
-        jugadorMuerto = false;
 
     }
     private void Update()
@@ -73,7 +73,7 @@ public class HealthBar : MonoBehaviour
         {
             controladorDaño();
         }
-        if (jugadorMuerto)
+        if (jugadorEnAnimacionMuriendo)
         {
             terminoAnimacionMuerte();
         }
@@ -167,6 +167,7 @@ public class HealthBar : MonoBehaviour
 
     public void jugadorMuere()
     {
+        jugadorMuerto = true;
         controladorMovimiento.GetComponent<Collider>().enabled = false;
         controladorMovimiento.GetComponent<Rigidbody>().isKinematic = true;
         controladorMovimiento.getAnim().SetBool("Muere", true);
@@ -186,7 +187,7 @@ public class HealthBar : MonoBehaviour
 
         contadorMuertes++;
         canvasNumMuertes.text = contadorMuertes.ToString();
-        jugadorMuerto = false;
+        jugadorEnAnimacionMuriendo = false;
     }
 
     public void revivirJugador()
@@ -204,6 +205,7 @@ public class HealthBar : MonoBehaviour
         imagenEstamina.fillAmount = estaminaMax;
 
         controladorMovimiento.GetComponent<Collider>().enabled = true;
+        jugadorMuerto=false;
     }
 
     // setters y getters
@@ -224,6 +226,14 @@ public class HealthBar : MonoBehaviour
     public void setRecibeDaño(bool boolDaño)
     {
         recibeDaño = boolDaño;
+    }
+    public bool getJugadorMuriendo()
+    {
+        return jugadorEnAnimacionMuriendo;
+    }
+    public void setJugadorMuriendo(bool boolMuerto)
+    {
+        jugadorEnAnimacionMuriendo = boolMuerto;
     }
     public bool getJugadorMuerto()
     {

@@ -89,6 +89,7 @@ public class ControladorMovimiento : MonoBehaviour
                 if (x == 0f && y == 0f)
                 {
                     ControladorSonido.instance.stopFootstep();
+                    anim.SetBool("running", false);
                 }
                 else
                 {

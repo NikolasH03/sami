@@ -50,9 +50,13 @@ public class ControladorCombate : MonoBehaviour
     }
     public void Update()
     {
-        golpeCheck();
-        bloqueoCheck();
-        dashCheck();
+        if (!HealthBar.instance.getJugadorMuerto())
+        {
+            golpeCheck();
+            bloqueoCheck();
+            dashCheck();
+        }
+
     }
 
 

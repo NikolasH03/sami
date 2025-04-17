@@ -18,6 +18,7 @@ public class InputJugador : MonoBehaviour
     public static InputJugador instance;
 
     ControladorCambioArmas controladorCambioArmas;
+    ControladorApuntado controladorApuntado;
 
     public void Awake()
     {
@@ -41,6 +42,7 @@ public class InputJugador : MonoBehaviour
     private void Update()
     {
         controladorCambioArmas = GameObject.FindGameObjectWithTag("Player").GetComponent<ControladorCambioArmas>();
+        controladorApuntado = GameObject.FindGameObjectWithTag("Player").GetComponent<ControladorApuntado>();
     }
 
     public void OnMoverse(InputValue value)
@@ -64,9 +66,13 @@ public class InputJugador : MonoBehaviour
     public void OnDisparar(InputValue value)
     {
         int tipoArma = controladorCambioArmas.getterArma();
+
         if (tipoArma == 2)
         {
-            disparar = value.isPressed;
+            if (controladorApuntado.GetEstaApuntando())
+            {
+                disparar = value.isPressed;
+            }
         }
         
         

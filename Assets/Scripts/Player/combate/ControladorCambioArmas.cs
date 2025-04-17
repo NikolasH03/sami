@@ -33,6 +33,7 @@ public class ControladorCambioArmas : MonoBehaviour
             armaMelee.SetActive(false);  
             armaDistancia.SetActive(true);
             numeroArma = 2;
+            controladorCombate.setAtacando(false);
         }
     }
     public int getterArma()

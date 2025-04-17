@@ -14,7 +14,7 @@ public class ControladorApuntado : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject crosshair;
     [SerializeField] private bool terminoAnimacionDisparo;
-    [SerializeField] bool estaApuntando= false;
+    [SerializeField] bool estaApuntando = false;
 
     //referencias a otros codigos
     private ControladorCambioArmas controladorCambioArmas;
@@ -48,9 +48,9 @@ public class ControladorApuntado : MonoBehaviour
             posicionMouse = ray.GetPoint(10);
         }
 
-        if (InputJugador.instance.apuntar && numeroArma==2)
+        
+        if (InputJugador.instance.apuntar && numeroArma==2 && !HealthBar.instance.getJugadorMuerto())
         {
-
             EstaApuntando(posicionMouse);
             RealizaAccionMientrasApunta();
             if (InputJugador.instance.disparar)
@@ -72,6 +72,7 @@ public class ControladorApuntado : MonoBehaviour
 
     public void EstaApuntando(Vector3 posicionMouse)
     {
+
         estaApuntando = true;
         camaraApuntado.gameObject.SetActive(true);
         crosshair.SetActive(true);
