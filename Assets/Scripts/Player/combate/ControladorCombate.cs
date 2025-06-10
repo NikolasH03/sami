@@ -22,7 +22,7 @@ public class ControladorCombate : MonoBehaviour
     [SerializeField] private Transform puntoSujecion;
     private GameObject armaInstanciada;
 
-    //Daño del arma a distancia
+    //Daï¿½o del arma a distancia
     [SerializeField] private ArmaDistanciaData armaDistancia;
 
     //variables para generar los combos en los estados
@@ -31,7 +31,7 @@ public class ControladorCombate : MonoBehaviour
     public List<TipoInputCombate> secuenciaInputs = new List<TipoInputCombate>();
     public Dictionary<string, Combo> combos;
 
-    //colliders necesarios para generar daño
+    //colliders necesarios para generar daï¿½o
     [SerializeField] Collider ColliderArma;
     [SerializeField] Collider ColliderPierna;
     [SerializeField]  int normalLayerIndex;
@@ -92,26 +92,26 @@ public class ControladorCombate : MonoBehaviour
         armaActual = nuevaArma;
     }
 
-    public int EntregarDañoArmaMelee()
+    public int EntregarDanoArmaMelee()
     {
         if (tipoAtaque=="ligero")
         {
-            return armaActual.dañoGolpeLigero;
+            return armaActual.daÃ±oGolpeLigero;
         }
         else if (tipoAtaque == "fuerte")
         {
-            return armaActual.dañoGolpeFuerte;
+            return armaActual.daÃ±oGolpeFuerte;
         }
         else
         {
-            return armaActual.dañoGolpeLigero;
+            return armaActual.daÃ±oGolpeLigero;
         }
        
     }
 
-    public int EntregarDañoArmaDistancia()
+    public int EntregarDaÃ±oArmaDistancia()
     {
-        return armaDistancia.dañoDisparo;
+        return armaDistancia.daÃ±oDisparo;
     }
 
 
