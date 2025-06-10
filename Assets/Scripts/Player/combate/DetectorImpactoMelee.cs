@@ -3,7 +3,7 @@ using UnityEngine;
 public class DetectorImpactoMelee : MonoBehaviour
 {
     [SerializeField] private string tagEnemigo = "enemy";
-    HealthbarEnemigo enemigo;
+    HealthComp enemigo;
     ControladorCombate player;
 
     private void Update()
@@ -18,9 +18,9 @@ public class DetectorImpactoMelee : MonoBehaviour
             ControladorVFX.instance.GenerarEfecto(puntoImpacto);
             ControladorSonido.instance.playAudio(ControladorSonido.instance.slash);
 
-            enemigo = other.GetComponent<HealthbarEnemigo>();
-            enemigo.recibeDaño(player.EntregarDañoArmaMelee());
-            enemigo.setRecibiendoDaño(true);
+            enemigo = other.GetComponent<HealthComp>();
+            enemigo.recibeDano(player.EntregarDanoArmaMelee());
+            enemigo.setRecibiendoDano(true);
 
         }
     }

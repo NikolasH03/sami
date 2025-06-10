@@ -9,10 +9,10 @@ public class ArmaData : ScriptableObject
 
     public string nombre;
 
-    public int dañoGolpeFuerte;
-    public int dañoGolpeLigero;
-    public int dañoGolpeFuerteGuardia;
-    public int dañoGolpeLigeroGuardia;
+    public int daÃ±oGolpeFuerte;
+    public int daÃ±oGolpeLigero;
+    public int daÃ±oGolpeFuerteGuardia;
+    public int daÃ±oGolpeLigeroGuardia;
 
     public GameObject prefab;
 

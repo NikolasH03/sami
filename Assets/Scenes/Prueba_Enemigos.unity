@@ -3294,12 +3294,14 @@ GameObject:
   m_Component:
   - component: {fileID: 521272957}
   - component: {fileID: 521272963}
-  - component: {fileID: 521272962}
   - component: {fileID: 521272964}
   - component: {fileID: 521272961}
   - component: {fileID: 521272958}
+  - component: {fileID: 521272965}
+  - component: {fileID: 521272966}
+  - component: {fileID: 521272967}
   m_Layer: 0
-  m_Name: Base Enemy (2)
+  m_Name: Enemy_Control
   m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3372,35 +3374,6 @@ CapsuleCollider:
   m_Height: 2.3775983
   m_Direction: 1
   m_Center: {x: -0.037160873, y: 0.9704981, z: -0.006326854}
---- !u!114 &521272962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 521272956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c15bf9f7341af247ad8519d1eb5c32f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Estado: 0
-  disSeguir: 5
-  disAtacar: 1.5
-  disEscape: 7
-  autoselectTarget: 1
-  Target: {fileID: 0}
-  Distance: 0
-  Alive: 1
-  ProbBloqueo: 1
-  player: {fileID: 0}
-  rutina: 0
-  cronometro: 0
-  animator: {fileID: 1200212480}
-  angulo: {x: 0, y: 0, z: 0, w: 0}
-  grado: 0
-  speedWalk: 2
-  estaAtacando: 0
 --- !u!195 &521272963
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3411,7 +3384,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 1.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -3430,7 +3403,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 521272956}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb519d8a1b358204fb16d405ee575b28, type: 3}
   m_Name: 
@@ -3441,6 +3414,60 @@ MonoBehaviour:
   imagenBarraVida: {fileID: 105390798}
   EnemigoMuerto: 0
   "RecibiendoDa\xF1o": 0
+--- !u!114 &521272965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521272956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23d32231ae2cab942a2df208dc3c1411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 521272963}
+  animator: {fileID: 1200212480}
+  tiempoDeEspera: 1.5
+  radioDePatrulla: 8
+  detectarJugador: {fileID: 521272966}
+  velocidadEnEstadoSeguir: 4
+  tiempoEntreAtaques: 1
+  rangoDeBloqueo: 4
+  probabilidadDeBloqueo: 0.5
+  duracionDanoRecibido: 1.1
+  tiempoDeDesaparicion: 2
+--- !u!114 &521272966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521272956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fc8fc7a2eaa4844b73eb59b1b046e43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anguloDeDeteccion: 120
+  radioDeDeteccion: 15
+  radioDeDeteccionAutomatica: 5
+  rangoDeAtaque: 3
+  tiempoPorDeteccion: 1
+--- !u!114 &521272967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521272956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 065164772668d894c9a9fe40424f6489, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vidaMax: 20
+  imagenBarraVida: {fileID: 105390798}
 --- !u!1 &524860353
 GameObject:
   m_ObjectHideFlags: 0
