@@ -26,6 +26,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField] GameObject menuMuerte;
 
     private ControladorMovimiento controladorMovimiento;
+    private ControladorCombate controladorCombate;
 
 
     private void Awake()
@@ -55,7 +56,7 @@ public class HealthBar : MonoBehaviour
     private void Update()
     {
         controladorMovimiento = GameObject.FindGameObjectWithTag("Player").GetComponent<ControladorMovimiento>();
-
+        controladorCombate = GameObject.FindGameObjectWithTag("Player").GetComponent<ControladorCombate>();
 
         float tiempoTranscurrido = Time.time - tiempoUltimoRelleno;
         if (estaminaActual < 0)
@@ -87,7 +88,7 @@ public class HealthBar : MonoBehaviour
     public void controladorDaño()
     {
 
-        if (controladorMovimiento.getAnim().GetBool("blocking"))
+        if (controladorCombate.getBloqueando())
         {
 
             if (estaminaActual > 0)

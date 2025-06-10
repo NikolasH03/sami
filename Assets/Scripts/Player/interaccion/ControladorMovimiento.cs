@@ -81,7 +81,7 @@ public class ControladorMovimiento : MonoBehaviour
 
 
 
-            if (!controladorCombate.getAtacando() && !anim.GetBool("blocking") && !anim.GetBool("dashing"))
+            if (!controladorCombate.getAtacando() && !controladorCombate.getBloqueando() && !anim.GetBool("dashing"))
             {
                 ValoresAnimacionMovimiento();
 
@@ -111,6 +111,7 @@ public class ControladorMovimiento : MonoBehaviour
         x = InputJugador.instance.moverse.x; 
         y = InputJugador.instance.moverse.y;
 
+
         anim.SetFloat("Velx", x);
         anim.SetFloat("Vely", y);
 
@@ -123,7 +124,7 @@ public class ControladorMovimiento : MonoBehaviour
             anim.SetBool("running", true);
             return VelocidadCorriendo;
         }
-        else if (!InputJugador.instance.correr || controladorCombate.getAtacando() || !canMove || anim.GetBool("blocking") || anim.GetBool("dashing") || controladorApuntado.GetEstaApuntando())
+        else if (!InputJugador.instance.correr || controladorCombate.getAtacando() || !canMove || controladorCombate.getBloqueando() || anim.GetBool("dashing") || controladorApuntado.GetEstaApuntando())
         {
             anim.SetBool("running", false);
             return VelocidadCaminando;

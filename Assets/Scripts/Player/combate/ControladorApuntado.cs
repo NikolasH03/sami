@@ -13,8 +13,9 @@ public class ControladorApuntado : MonoBehaviour
     [SerializeField] private Transform spawnPosicionProyectil;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject crosshair;
-    [SerializeField] private bool terminoAnimacionDisparo;
+    [SerializeField] private bool estaEnAnimacionDisparo = false;
     [SerializeField] bool estaApuntando = false;
+    //[SerializeField] bool yaRecargo = false;
 
     //referencias a otros codigos
     private ControladorCambioArmas controladorCambioArmas;
@@ -24,7 +25,6 @@ public class ControladorApuntado : MonoBehaviour
     public void Start()
     {
         crosshair.SetActive(false);
-        terminoAnimacionDisparo = true;
     }
     private void Update()
     {
@@ -48,37 +48,49 @@ public class ControladorApuntado : MonoBehaviour
             posicionMouse = ray.GetPoint(10);
         }
 
-        
-        if (InputJugador.instance.apuntar && numeroArma==2 && !HealthBar.instance.getJugadorMuerto())
+
+        if (numeroArma == 2)
         {
-            EstaApuntando(posicionMouse);
+            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
             RealizaAccionMientrasApunta();
-            if (InputJugador.instance.disparar)
+
+            if (InputJugador.instance.apuntar && !HealthBar.instance.getJugadorMuerto())
             {
-                if (terminoAnimacionDisparo)
+                EstaApuntando(posicionMouse);
+               
+                if (InputJugador.instance.disparar)
                 {
-                    disparar(posicionMouse);
+                    Debug.Log("detecto el click");
+                    if (!estaEnAnimacionDisparo)
+                    {
+                        Debug.Log("va a instanciar la bala");
+                        disparar(posicionMouse);
+                    }
+
                 }
 
             }
-
+            else
+            {
+                noEstaApuntando();
+            }
         }
-        else
+        else if (numeroArma == 1)
         {
-            noEstaApuntando();
+            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
         }
-
     }
 
     public void EstaApuntando(Vector3 posicionMouse)
     {
 
         estaApuntando = true;
+        animator.SetBool("Apuntando",true);
         camaraApuntado.gameObject.SetActive(true);
         crosshair.SetActive(true);
         controladorMovimiento.SetSensibilidad(sensibilidadApuntado);
         controladorMovimiento.SetRotacionAlMoverse(false);
-        animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
+        
         Vector3 TargetApuntado = posicionMouse;
         TargetApuntado.y = transform.position.y;
         Vector3 direccionApuntado = (TargetApuntado - transform.position).normalized;
@@ -89,10 +101,10 @@ public class ControladorApuntado : MonoBehaviour
     public void noEstaApuntando()
     {
         estaApuntando = false;
+        animator.SetBool("Apuntando", false);
         camaraApuntado.gameObject.SetActive(false);
         controladorMovimiento.SetSensibilidad(sensibilidadNormal);
         controladorMovimiento.SetRotacionAlMoverse(true);
-        animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
         crosshair.SetActive(false);
     }
 
@@ -100,44 +112,43 @@ public class ControladorApuntado : MonoBehaviour
     {
         Vector3 aimDir = (posicionMouse - spawnPosicionProyectil.position).normalized;
 
-        animator.SetBool("Disparo",true);
+        animator.Play("fire");
+        animator.SetBool("Disparo",true);        
         Instantiate(prefabProyectil, spawnPosicionProyectil.position, Quaternion.LookRotation(aimDir, Vector3.up)); 
-        terminoAnimacionDisparo = false;
+        estaEnAnimacionDisparo = true;
 
 
     }
     public void recargar()
     {
         animator.SetBool("Disparo", false);
-        terminoAnimacionDisparo = true;
+        estaEnAnimacionDisparo = false;
         InputJugador.instance.disparar = false;
     }
 
     public void RealizaAccionMientrasApunta()
     {
-        if (controladorMovimiento.getAnim().GetBool("RecibeDaño") || controladorMovimiento.getAnim().GetBool("Muere") || controladorCombate.getDashing() || controladorCombate.getBlocking())
+        if (controladorMovimiento.getAnim().GetBool("RecibeDaño") || controladorMovimiento.getAnim().GetBool("Muere") || controladorCombate.getDashing() || controladorCombate.getBloqueando())
         {
-            // Reducir el Layer de apuntado a 0 en 0.2s
-            Debug.Log("ESTA RECIBIENDO DAÑO");
+            InputJugador.instance.apuntar = false;
             estaApuntando = false;
             camaraApuntado.gameObject.SetActive(false);
             controladorMovimiento.SetSensibilidad(sensibilidadNormal);
             controladorMovimiento.SetRotacionAlMoverse(true);
             crosshair.SetActive(false);
-            StartCoroutine(AdjustLayerWeight(1, 0f, 0.2f));
+            StartCoroutine(AjustarLayer(1, 0f, 0.2f));
 
 
 
         }
-        else if (!controladorMovimiento.getAnim().GetBool("RecibeDaño") && !controladorMovimiento.getAnim().GetBool("Muere") && !controladorCombate.getDashing() && !controladorCombate.getBlocking())
+        else if (!controladorMovimiento.getAnim().GetBool("RecibeDaño") && !controladorMovimiento.getAnim().GetBool("Muere") && !controladorCombate.getDashing() && !controladorCombate.getBloqueando())
         {
-            // Restaurar el Layer de apuntado 
-            RestoreLayerAfterDamage();
+            VolverLayerNormal();
         }
    
     }
 
-    IEnumerator AdjustLayerWeight(int layerIndex, float targetWeight, float duration)
+    IEnumerator AjustarLayer(int layerIndex, float targetWeight, float duration)
     {
         float startWeight = animator.GetLayerWeight(layerIndex);
         float elapsedTime = 0f;
@@ -155,15 +166,14 @@ public class ControladorApuntado : MonoBehaviour
 
     }
 
-    public void RestoreLayerAfterDamage()
+    public void VolverLayerNormal()
     {
-
-        // Volver el Layer de apuntado a su peso normal
-        StartCoroutine(AdjustLayerWeight(1, 1f, 0.2f));
+        StartCoroutine(AjustarLayer(1, 1f, 0.2f));
     }
 
     public bool GetEstaApuntando()
     {
         return estaApuntando;
     }
+    
 }

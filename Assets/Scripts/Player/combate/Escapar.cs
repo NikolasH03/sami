@@ -30,6 +30,12 @@ public class Escapar : StateMachineBehaviour
             player.GetComponent<Rigidbody>().isKinematic = true;
 
         }
+        //if (!player.getAtacando())
+        //{
+        //    player.anim.Play("movimiento Basico");
+        //    player.numeroGolpesFuertes = 0;
+        //    player.numeroGolpesLigeros = 0;
+        //}
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

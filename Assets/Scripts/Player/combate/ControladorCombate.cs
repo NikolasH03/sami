@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class ControladorCombate : MonoBehaviour
@@ -11,9 +12,10 @@ public class ControladorCombate : MonoBehaviour
     //ataque
     [SerializeField] int numeroArma;
     [SerializeField] bool atacando = false;
-    public int numeroGolpesLigeros   = 0;
-    public int numeroGolpesFuertes = 0;
     public string tipoAtaque;
+
+    //bloqueo y dash
+    [SerializeField] bool bloqueando = false;
 
     //intanciar arma melee
     [SerializeField] private ArmaData armaActual;
@@ -23,18 +25,24 @@ public class ControladorCombate : MonoBehaviour
     //Daño del arma a distancia
     [SerializeField] private ArmaDistanciaData armaDistancia;
 
-
+    //variables para generar los combos en los estados
+    [HideInInspector] public bool puedeHacerCombo = false;
+    [HideInInspector] public TipoInputCombate inputBufferCombo = TipoInputCombate.Ninguno;
+    public List<TipoInputCombate> secuenciaInputs = new List<TipoInputCombate>();
+    public Dictionary<string, Combo> combos;
 
     //colliders necesarios para generar daño
     [SerializeField] Collider ColliderArma;
     [SerializeField] Collider ColliderPierna;
-
+    [SerializeField]  int normalLayerIndex;
+    [SerializeField] int dodgeLayerIndex;
 
 
 
     //referencias 
     [SerializeField] ControladorCambioArmas cambioArma;
     ControladorMovimiento controladorMovimiento;
+    private CombatStateMachine fsm;
     //[SerializeField] HabilidadesJugador habilidadesJugador;
     private void Start()
     {
@@ -44,84 +52,31 @@ public class ControladorCombate : MonoBehaviour
         ColliderArma.enabled = false;
         ColliderPierna.enabled = false;
 
+        normalLayerIndex = LayerMask.NameToLayer("Default");
+        dodgeLayerIndex = LayerMask.NameToLayer("Esquivar");
 
         anim = GetComponent<Animator>();
         controladorMovimiento = GetComponent<ControladorMovimiento>();
+
+        fsm = new CombatStateMachine();
+        fsm.ChangeState(new IdleState(fsm, this));
+        combos = ComboDatabase.Combos;
     }
     public void Update()
     {
         if (!HealthBar.instance.getJugadorMuerto())
         {
-            golpeCheck();
-            bloqueoCheck();
-            dashCheck();
+            fsm.Update();
+            //bloqueoCheck();
+            //dashCheck();
         }
 
     }
 
 
-
-    //verifica si el usuario oprimio el click y activa la animacion de golpe
-    public void golpeCheck()
+    public int VerificarArmaEquipada()
     {
-        numeroArma = cambioArma.getterArma();
-
-        if (numeroArma == 1)
-        {
-
-            if (Input.GetMouseButton(0) && !atacando && !InputJugador.instance.correr && !anim.GetBool("dashing"))
-            {
-                anim.SetBool("running", false);
-                atacando = true;
-                numeroGolpesLigeros = 1;
-
-            }
-            if (Input.GetMouseButton(1) && !atacando && !InputJugador.instance.correr && !anim.GetBool("dashing"))
-            {
-                anim.SetBool("running", false);
-                atacando = true;
-                numeroGolpesFuertes = 1;
-
-            }
-            if (!atacando)
-            {
-                numeroGolpesLigeros = 0;
-                numeroGolpesFuertes = 0;
-            }
-
-        }
-
-
-
-    }
-
-
-    //verifica si el jugador esta manteniendo oprimida la tecla para bloquear
-    public void bloqueoCheck()
-    {
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            anim.SetBool("running", false);
-            anim.SetBool("blocking", true);
-        }
-
-        else if (Input.GetKeyUp(KeyCode.Space))
-        {
-            GetComponent<Collider>().enabled = true;
-            anim.SetBool("blocking", false);
-        }
-
-    }
-
-    public void dashCheck()
-    {
-        if (Input.GetKeyDown(KeyCode.Q) && !anim.GetBool("dashing"))
-        {
-            anim.SetBool("running", false);
-            anim.SetBool("RecibeDaño", false);
-            anim.SetBool("dashing", true);
-        }
+        return cambioArma.getterArma();
     }
 
     public void EquiparArma(ArmaData nuevaArma)
@@ -159,27 +114,42 @@ public class ControladorCombate : MonoBehaviour
         return armaDistancia.dañoDisparo;
     }
 
-    public void terminarDash()
-    {
-        anim.SetBool("dashing", false);
-        anim.SetBool("RecibeDaño", false);
-        controladorMovimiento.GetComponent<Collider>().enabled = true;
-        controladorMovimiento.GetComponent<Rigidbody>().isKinematic = false;
-    }
+
     public void bloquearDespuesDeGolpe()
     {
         GetComponent<Collider>().enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
     }
-
-    public bool PuedeUsarCapoeira()
+    public void LimpiarSecuenciaInputs()
     {
-        return HabilidadesJugador.instance.estaDesbloqueada(HabilidadesJugador.TipoHabilidad.Capoeira);
+        secuenciaInputs.Clear();
     }
 
-
-
-    //activar colliders de diferentes armas
+    // funciones para los Animation Events
+    public void VolverAIdle()
+    {
+        puedeHacerCombo = false;
+        fsm.ChangeState(new IdleState(fsm, this));
+        inputBufferCombo = TipoInputCombate.Ninguno;
+        LimpiarSecuenciaInputs();
+    }
+    public void ActivarVentanaCombo()
+    {
+        puedeHacerCombo = true;
+    }
+    public void DesactivarVentanaCombo()
+    {
+        puedeHacerCombo = false;
+        inputBufferCombo = TipoInputCombate.Ninguno;
+        LimpiarSecuenciaInputs();
+    }
+    public void terminarDash()
+    {
+        anim.SetBool("dashing", false);
+        anim.SetBool("RecibeDaño", false);
+        gameObject.layer = normalLayerIndex;
+        fsm.ChangeState(new IdleState(fsm, this));
+    }
     public void activarColliderArma()
     {
         ColliderArma.enabled = true;
@@ -196,6 +166,18 @@ public class ControladorCombate : MonoBehaviour
     {
         ColliderPierna.enabled = false;
     }
+
+
+
+    //prueba para el arbol de habilidades
+    public bool PuedeUsarCapoeira()
+    {
+        return HabilidadesJugador.instance.estaDesbloqueada(HabilidadesJugador.TipoHabilidad.Capoeira);
+    }
+
+
+    //setters y getters
+
     public bool getAtacando()
     {
         return atacando;
@@ -208,16 +190,21 @@ public class ControladorCombate : MonoBehaviour
     {
         return anim.GetBool("dashing");
     }
-    public bool getBlocking()
+    public bool getBloqueando()
     {
-        return anim.GetBool("blocking");
+        return bloqueando;
+    }
+    public void setBloqueando(bool block)
+    {
+        bloqueando = block;
     }
     public GameObject getArmaActual()
     {
         return armaInstanciada;
     }
-
- 
-
+    public int getLayerDodge()
+    {
+        return dodgeLayerIndex;
+    }
 
 }
