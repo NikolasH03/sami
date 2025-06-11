@@ -10,7 +10,7 @@ public class DetectorRecibeDaño : MonoBehaviour
     {
         if (other.gameObject.tag == "hostile")
         {
-            HealthBar.instance.setRecibeDaño(true);
+            HealthBar.instance.setRecibeDano(true);
         }
     }
 

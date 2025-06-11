@@ -33,7 +33,7 @@ public class ControladorProyectil : MonoBehaviour
             ControladorSonido.instance.playAudio(ControladorSonido.instance.slash);
 
             enemigo = other.GetComponent<HealthbarEnemigo>();
-            enemigo.recibeDaño(player.EntregarDañoArmaDistancia());
+            enemigo.recibeDaño(player.EntregarDanoArmaDistancia());
             enemigo.setRecibiendoDaño(true);
         }
         Destroy(gameObject);

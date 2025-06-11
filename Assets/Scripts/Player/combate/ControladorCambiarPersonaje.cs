@@ -53,12 +53,12 @@ public class ControladorCambiarPersonaje : MonoBehaviour
     {
 
 
-        if (Input.GetKeyDown(KeyCode.G) && espanol.activeSelf && !controladorEspanol.getAtacando() && !HealthBar.instance.getRecibeDaño())
+        if (Input.GetKeyDown(KeyCode.G) && espanol.activeSelf && !controladorEspanol.getAtacando() && !HealthBar.instance.getRecibeDano())
         {
             activarMuisca();
         }
 
-        else if (Input.GetKeyDown(KeyCode.G) && muisca.activeSelf && !controladorMuisca.getAtacando() && !HealthBar.instance.getRecibeDaño())
+        else if (Input.GetKeyDown(KeyCode.G) && muisca.activeSelf && !controladorMuisca.getAtacando() && !HealthBar.instance.getRecibeDano())
         {
             activarEspanol();
         }

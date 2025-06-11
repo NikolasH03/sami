@@ -96,22 +96,22 @@ public class ControladorCombate : MonoBehaviour
     {
         if (tipoAtaque=="ligero")
         {
-            return armaActual.dañoGolpeLigero;
+            return armaActual.danoGolpeLigero;
         }
         else if (tipoAtaque == "fuerte")
         {
-            return armaActual.dañoGolpeFuerte;
+            return armaActual.danoGolpeFuerte;
         }
         else
         {
-            return armaActual.dañoGolpeLigero;
+            return armaActual.danoGolpeLigero;
         }
        
     }
 
-    public int EntregarDañoArmaDistancia()
+    public int EntregarDanoArmaDistancia()
     {
-        return armaDistancia.dañoDisparo;
+        return armaDistancia.danoDisparo;
     }
 
 

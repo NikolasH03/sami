@@ -11,8 +11,8 @@ public class HealthBar : MonoBehaviour
     [SerializeField] float vidaActual;
     [SerializeField] int estaminaMax;
     [SerializeField] float estaminaActual;
-    [SerializeField] bool recibeDaño;
-    [SerializeField] float dañoBase;
+    [SerializeField] bool recibeDano;
+    [SerializeField] float danoBase;
     [SerializeField] float curacionEstamina;
     [SerializeField] Image imagenBarraVida;
     [SerializeField] Image imagenEstamina;
@@ -50,7 +50,7 @@ public class HealthBar : MonoBehaviour
         menuMuerte.SetActive(false);
         canvasNumMuertes.text = contadorMuertes.ToString();
 
-        recibeDaño = false;
+        recibeDano = false;
 
     }
     private void Update()
@@ -70,9 +70,9 @@ public class HealthBar : MonoBehaviour
         }
 
 
-        if (recibeDaño)
+        if (recibeDano)
         {
-            controladorDaño();
+            controladorDano();
         }
         if (jugadorEnAnimacionMuriendo)
         {
@@ -85,7 +85,7 @@ public class HealthBar : MonoBehaviour
     }
 
 
-    public void controladorDaño()
+    public void controladorDano()
     {
 
         if (controladorCombate.getBloqueando())
@@ -93,7 +93,7 @@ public class HealthBar : MonoBehaviour
 
             if (estaminaActual > 0)
             {
-                recibeDañoBloqueo();
+                recibeDanoBloqueo();
             }
 
 
@@ -107,7 +107,7 @@ public class HealthBar : MonoBehaviour
         {
 
             controladorMovimiento.setCanMove(false);
-            vidaActual -= dañoBase;
+            vidaActual -= danoBase;
             imagenBarraVida.fillAmount = vidaActual / vidaMax;
 
             if (vidaActual <= 0)
@@ -116,7 +116,7 @@ public class HealthBar : MonoBehaviour
             }
             else
             {
-                recibeDañoVida();
+                recibeDanoVida();
             }
 
         }
@@ -135,15 +135,15 @@ public class HealthBar : MonoBehaviour
         tiempoUltimoRelleno = Time.time;
     }
 
-    public void recibeDañoBloqueo()
+    public void recibeDanoBloqueo()
     {
-        estaminaActual -= dañoBase;
+        estaminaActual -= danoBase;
         imagenEstamina.fillAmount = estaminaActual / estaminaMax;
         controladorMovimiento.getAnim().Play("daño_bloqueando");
         ControladorSonido.instance.playAudio(ControladorSonido.instance.block);
         controladorMovimiento.GetComponent<Collider>().enabled = false;
         controladorMovimiento.GetComponent<Rigidbody>().isKinematic = true;
-        recibeDaño = false;
+        recibeDano = false;
     }
 
     public void rompeBloqueo()
@@ -152,17 +152,17 @@ public class HealthBar : MonoBehaviour
         ControladorSonido.instance.playAudio(ControladorSonido.instance.damage);
         controladorMovimiento.GetComponent<Collider>().enabled = true;
         controladorMovimiento.GetComponent<Rigidbody>().isKinematic = false;
-        recibeDaño = false;
+        recibeDano = false;
     }
 
-    public void recibeDañoVida()
+    public void recibeDanoVida()
     {
         controladorMovimiento.GetComponent<Collider>().enabled = false;
         controladorMovimiento.GetComponent<Rigidbody>().isKinematic = true;
         controladorMovimiento.getAnim().SetBool("running", false);
         controladorMovimiento.getAnim().Play("daño");
         ControladorSonido.instance.playAudio(ControladorSonido.instance.damage);
-        recibeDaño = false;
+        recibeDano = false;
         controladorMovimiento.getAnim().SetBool("RecibeDaño", true);
     }
 
@@ -174,7 +174,7 @@ public class HealthBar : MonoBehaviour
         controladorMovimiento.getAnim().SetBool("Muere", true);
         controladorMovimiento.getAnim().Play("morir");
         ControladorSonido.instance.playAudio(ControladorSonido.instance.death);
-        recibeDaño = false;
+        recibeDano = false;
       
     }
 
@@ -220,13 +220,13 @@ public class HealthBar : MonoBehaviour
         vidaActual= vida;
     }
 
-    public bool getRecibeDaño()
+    public bool getRecibeDano()
     {
-        return recibeDaño;
+        return recibeDano;
     }
-    public void setRecibeDaño(bool boolDaño)
+    public void setRecibeDano(bool boolDano)
     {
-        recibeDaño = boolDaño;
+        recibeDano = boolDano;
     }
     public bool getJugadorMuriendo()
     {

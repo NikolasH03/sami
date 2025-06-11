@@ -9,7 +9,7 @@ public class ArmaDistanciaData : ScriptableObject
 
     public string nombre;
 
-    public int dañoDisparo;
+    public int danoDisparo;
     public int dañoDisparoGuardia;
 
     public GameObject prefab;
