@@ -16,7 +16,16 @@ public class DispararState : CombatState
         combatController.anim.SetTrigger("Disparo");
         combatController.ReproducirVFX(4, 2);
         combatController.ReproducirSonido(4, 2);
-        apuntado.InstanciarBala(apuntado.ObtenerPosicionObjetivo());
+
+        if (ControladorCambiarPersonaje.instance.getEsMuisca())
+        {
+            apuntado.InstanciarBala(apuntado.ObtenerPosicionObjetivo());
+        }
+        else
+        {
+            apuntado.ConoDeDano();
+        }
+        
     }
     public override void Exit()
     {

@@ -17,6 +17,7 @@ public class ControladorApuntado : MonoBehaviour
 
     //referencias a otros codigos
     private ControladorMovimiento controladorMovimiento;
+    [SerializeField] ArcabuzDisparo arcabuzDisparo;
 
     public void Start()
     {
@@ -77,6 +78,10 @@ public class ControladorApuntado : MonoBehaviour
     {
         Vector3 aimDir = (posicionMouse - spawnPosicionProyectil.position).normalized;
         Instantiate(prefabProyectil, spawnPosicionProyectil.position, Quaternion.LookRotation(aimDir, Vector3.up)); 
+    }
+    public void ConoDeDano()
+    {
+        arcabuzDisparo.Disparar();
     }
 
     public void TransicionarLayerPeso(int layerIndex, float pesoObjetivo, float duracion)

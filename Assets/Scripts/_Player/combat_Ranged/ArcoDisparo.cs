@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ControladorProyectil : MonoBehaviour
+public class ArcoDisparo : MonoBehaviour
 {
     private Rigidbody proyectilRB;
     HealthbarEnemigo enemigo;

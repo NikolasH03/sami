@@ -88,6 +88,7 @@ public class ControladorCombate : MonoBehaviour
     public void Update()
     {
         fsm.Update();
+        Debug.Log("Vida Maxima: "+stats.VidaMax);
 
     }
     public void OnTriggerEnter(Collider other)
@@ -333,6 +334,16 @@ public class ControladorCombate : MonoBehaviour
     public void CambiarArmaDistancia()
     {
         cambioArma.CambiarArmaDistancia();
+    }
+
+    public void AumentarVidaTotem(float cantidad)
+    {
+        stats.AumentarVidaMax(cantidad);
+    }
+
+    public void AumentarEstaminaTotem(float cantidad)
+    {
+        stats.AumentarEstaminaMax(cantidad);
     }
 
 }

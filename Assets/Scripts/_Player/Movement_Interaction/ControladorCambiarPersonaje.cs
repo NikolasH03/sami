@@ -88,4 +88,8 @@ public class ControladorCambiarPersonaje : MonoBehaviour
         protagonistaUno = false;
     }
 
+    public bool getEsMuisca()
+    {
+        return protagonistaUno;
+    }
 }
