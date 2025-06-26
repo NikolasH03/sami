@@ -6,7 +6,7 @@ public class DispararState : CombatState
 {
     private ControladorApuntado apuntado;
 
-    public DispararState(CombatStateMachine fsm, ControladorCombate cc) : base(fsm, cc)
+    public DispararState(CombatStateMachine fsm, ControladorCombate cc) : base(fsm, cc)  
     {
         apuntado = cc.GetComponent<ControladorApuntado>();
     }

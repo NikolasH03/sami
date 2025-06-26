@@ -16,11 +16,6 @@ public class IdleDistanciaState : CombatState
             combatController.CambiarArmaMelee();
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            combatController.CambiarArmaDistancia();
-        }
-
         if (combatController.VerificarArmaEquipada() == 1)
         {
             stateMachine.ChangeState(new IdleMeleeState(stateMachine, combatController));
@@ -38,8 +33,5 @@ public class IdleDistanciaState : CombatState
 
     }
 
-    public override void Exit()
-    {
-    }
 }
 

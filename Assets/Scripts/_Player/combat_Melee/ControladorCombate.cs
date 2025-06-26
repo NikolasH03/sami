@@ -23,6 +23,7 @@ public class ControladorCombate : MonoBehaviour
 
     //Daño del arma a distancia
     [SerializeField] private ArmaDistanciaData armaDistancia;
+    private bool tieneBufoDisparo = false;
 
     //variables para generar los combos en los estados
     [HideInInspector] public bool puedeHacerCombo = false;
@@ -88,7 +89,6 @@ public class ControladorCombate : MonoBehaviour
     public void Update()
     {
         fsm.Update();
-        Debug.Log("Vida Maxima: "+stats.VidaMax);
 
     }
     public void OnTriggerEnter(Collider other)
@@ -167,7 +167,16 @@ public class ControladorCombate : MonoBehaviour
 
     public int EntregarDañoArmaDistancia()
     {
+        if (tieneBufoDisparo)
+        {
+            tieneBufoDisparo = false; 
+            return Mathf.RoundToInt(armaDistancia.dañoDisparo * 1.5f); 
+        }
         return armaDistancia.dañoDisparo;
+    }
+    public void ActivarBufoDisparo()
+    {
+        tieneBufoDisparo = true;
     }
 
     public void LimpiarSecuenciaInputs()

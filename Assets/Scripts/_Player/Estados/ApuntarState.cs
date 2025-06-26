@@ -5,7 +5,7 @@ using UnityEngine;
 public class ApuntarState : CombatState
 {
     private ControladorApuntado apuntado;
-    private bool saltarTransicion = false;
+    private bool saltarTransicionLayer = false;
     public ApuntarState(CombatStateMachine fsm, ControladorCombate cc) : base(fsm, cc)
     {
         apuntado = cc.GetComponent<ControladorApuntado>();
@@ -22,7 +22,7 @@ public class ApuntarState : CombatState
     {
         if (InputJugador.instance.disparar)
         {
-            saltarTransicion=true;
+            saltarTransicionLayer=true;
             stateMachine.ChangeState(new DispararState(stateMachine, combatController));
             return;
         }
@@ -45,13 +45,14 @@ public class ApuntarState : CombatState
     }
     public override void Exit()
     {
-        if (!saltarTransicion) 
+        if (!saltarTransicionLayer) 
         {
             apuntado.TransicionarLayerPeso(1, 0f, 0.2f);
             apuntado.NoEstaApuntando();
         }
         
-        saltarTransicion = false;
+        saltarTransicionLayer = false;
+        apuntado.SetEstaApuntando(false);
         
     }
 }

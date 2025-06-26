@@ -16,10 +16,6 @@ public class IdleMeleeState : CombatState
     }
     public override void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            combatController.CambiarArmaMelee();
-        }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {

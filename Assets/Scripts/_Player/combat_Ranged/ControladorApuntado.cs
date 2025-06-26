@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using System;
 public class ControladorApuntado : MonoBehaviour
 {
    [SerializeField] private CinemachineVirtualCamera camaraApuntado;
@@ -13,11 +14,12 @@ public class ControladorApuntado : MonoBehaviour
     [SerializeField] private Transform spawnPosicionProyectil;
      private Animator animator;
     [SerializeField] private GameObject crosshair;
-    [SerializeField] bool estaApuntando = false;
+    [SerializeField] bool ListoParaRecibirDisparo = false;
 
     //referencias a otros codigos
     private ControladorMovimiento controladorMovimiento;
     [SerializeField] ArcabuzDisparo arcabuzDisparo;
+    [SerializeField] private MinijuegoRecargaUI minijuegoUI;
 
     public void Start()
     {
@@ -52,7 +54,7 @@ public class ControladorApuntado : MonoBehaviour
     public void EstaApuntando(Vector3 posicionMouse)
     {
 
-        estaApuntando = true;
+        ListoParaRecibirDisparo = true;
         camaraApuntado.gameObject.SetActive(true);
         crosshair.SetActive(true);
         controladorMovimiento.SetSensibilidad(sensibilidadApuntado);
@@ -67,7 +69,7 @@ public class ControladorApuntado : MonoBehaviour
 
     public void NoEstaApuntando()
     {
-        estaApuntando = false;
+        ListoParaRecibirDisparo = false;
         camaraApuntado.gameObject.SetActive(false);
         controladorMovimiento.SetSensibilidad(sensibilidadNormal);
         controladorMovimiento.SetRotacionAlMoverse(true);
@@ -104,10 +106,19 @@ public class ControladorApuntado : MonoBehaviour
 
         animator.SetLayerWeight(layerIndex, pesoObjetivo); 
     }
+    public void IniciarMinijuegoRecarga(Action<bool> callback)
+    {
+        minijuegoUI.gameObject.SetActive(true);
+        minijuegoUI.OnFinRecarga = callback;
+    }
 
     public bool GetEstaApuntando()
     {
-        return estaApuntando;
+        return ListoParaRecibirDisparo;
     }
-    
+    public void SetEstaApuntando(bool disparo)
+    {
+        ListoParaRecibirDisparo = disparo;
+    }
+
 }
