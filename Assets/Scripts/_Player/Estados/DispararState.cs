@@ -14,8 +14,6 @@ public class DispararState : CombatState
     public override void Enter()
     {
         combatController.anim.SetTrigger("Disparo");
-        combatController.ReproducirVFX(4, 2);
-        combatController.ReproducirSonido(4, 2);
 
         if (ControladorCambiarPersonaje.instance.getEsMuisca())
         {
@@ -24,11 +22,10 @@ public class DispararState : CombatState
         else
         {
             apuntado.EsferaDeDano();
+            combatController.ReproducirVFX(4, 2);
+            combatController.ReproducirSonido(4, 2);
+            CameraShakeManager.instance.ShakeExplosion();
         }
         
-    }
-    public override void Exit()
-    {
-        InputJugador.instance.disparar = false;
     }
 }

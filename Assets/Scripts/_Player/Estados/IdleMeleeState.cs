@@ -17,21 +17,22 @@ public class IdleMeleeState : CombatState
     public override void HandleInput()
     {
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (InputJugador.instance.cambiarArmaDistancia)
         {
             combatController.CambiarArmaDistancia();
         }
         if (combatController.VerificarArmaEquipada() == 2)
         {
+            InputJugador.instance.CambiarInputDistancia();
             stateMachine.ChangeState(new IdleDistanciaState(stateMachine, combatController));
         }
-        if (Input.GetKeyDown(KeyCode.Q) && !combatController.anim.GetBool("dashing")) 
+        if (InputJugador.instance.esquivar && !combatController.anim.GetBool("dashing")) 
         {
             combatController.DesactivarVentanaCombo();
             stateMachine.ChangeState(new EsquivaState(stateMachine, combatController));
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Space)) 
+        if (InputJugador.instance.bloquear) 
         {
             if (combatController.stats.EstaminaActual <= 0) return;
 
@@ -40,11 +41,11 @@ public class IdleMeleeState : CombatState
             return;
         }
 
-        if (Input.GetMouseButtonDown(0) && !combatController.anim.GetBool("running"))
+        if (InputJugador.instance.atacarLigero && !combatController.anim.GetBool("running"))
         {
             combatController.inputBufferCombo = TipoInputCombate.Ligero;
         }
-        else if (Input.GetMouseButtonDown(1) && !combatController.anim.GetBool("running"))
+        else if (InputJugador.instance.atacarFuerte && !combatController.anim.GetBool("running"))
         {
             combatController.inputBufferCombo = TipoInputCombate.Fuerte;
         }

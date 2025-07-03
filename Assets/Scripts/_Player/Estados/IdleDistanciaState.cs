@@ -11,20 +11,21 @@ public class IdleDistanciaState : CombatState
 
     public override void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (InputJugador.instance.cambiarArmaMelee)
         {
             combatController.CambiarArmaMelee();
         }
 
         if (combatController.VerificarArmaEquipada() == 1)
         {
+            InputJugador.instance.CambiarInputMelee();
             stateMachine.ChangeState(new IdleMeleeState(stateMachine, combatController));
         }
         if (InputJugador.instance.apuntar)
         {
             stateMachine.ChangeState(new ApuntarState(stateMachine, combatController));
         }
-        else if (Input.GetKeyDown(KeyCode.Q) && !combatController.anim.GetBool("dashing"))
+        else if (InputJugador.instance.esquivar && !combatController.anim.GetBool("dashing"))
         {
             stateMachine.ChangeState(new EsquivaState(stateMachine, combatController));
             return;

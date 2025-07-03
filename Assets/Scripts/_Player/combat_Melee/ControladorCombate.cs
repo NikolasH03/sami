@@ -146,14 +146,17 @@ public class ControladorCombate : MonoBehaviour
     {
         if (tipoAtaque == "ligero")
         {
+            CameraShakeManager.instance.ShakeGolpeLigero();
             return armaActual.dañoGolpeLigero;
         }
         else if (tipoAtaque == "fuerte")
         {
+            CameraShakeManager.instance.ShakeGolpeFuerte();
             return armaActual.dañoGolpeFuerte;
         }
         else
         {
+            CameraShakeManager.instance.ShakeGolpeLigero();
             return armaActual.dañoGolpeLigero;
         }
 

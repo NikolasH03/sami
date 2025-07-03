@@ -8,7 +8,6 @@ public class MinijuegoRecargaUI : MonoBehaviour
     public RectTransform zonaPerfecta;
 
     public float velocidad = 300f;
-    public KeyCode teclaRecarga = KeyCode.R;
     public bool recargaPerfecta = false;
 
     private bool activo = false;
@@ -37,7 +36,7 @@ public class MinijuegoRecargaUI : MonoBehaviour
         float x = Mathf.Lerp(posInicial, -posInicial, tiempoActual / tiempoTotal);
         marcador.anchoredPosition = new Vector2(x, marcador.anchoredPosition.y);
 
-        if (Input.GetKeyDown(teclaRecarga))
+        if (InputJugador.instance.recargar)
         {
             float marcadorX = marcador.anchoredPosition.x;
             float izquierda = zonaPerfecta.anchoredPosition.x - (zonaPerfecta.rect.width / 2f);

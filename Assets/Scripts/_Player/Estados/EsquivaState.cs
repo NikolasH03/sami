@@ -18,12 +18,12 @@ public class EsquivaState : CombatState
 
     public override void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (InputJugador.instance.cambiarArmaMelee)
         {
             combatController.CambiarArmaMelee();
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (InputJugador.instance.cambiarArmaDistancia)
         {
             combatController.CambiarArmaDistancia();
         }

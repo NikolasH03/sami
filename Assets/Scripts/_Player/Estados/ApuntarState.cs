@@ -32,7 +32,7 @@ public class ApuntarState : CombatState
             stateMachine.ChangeState(new IdleDistanciaState(stateMachine, combatController));
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Q) && !combatController.anim.GetBool("dashing"))
+        if (InputJugador.instance.esquivar && !combatController.anim.GetBool("dashing"))
         {            
             stateMachine.ChangeState(new EsquivaState(stateMachine, combatController));
             return;

@@ -15,13 +15,13 @@ public class AtaqueFuerte1 : CombatState
     }
     public override void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && !combatController.anim.GetBool("dashing"))
+        if (InputJugador.instance.esquivar && !combatController.anim.GetBool("dashing"))
         {
             combatController.DesactivarVentanaCombo();
             stateMachine.ChangeState(new EsquivaState(stateMachine, combatController));
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (InputJugador.instance.bloquear)
         {
             combatController.DesactivarVentanaCombo();
             stateMachine.ChangeState(new BloqueoState(stateMachine, combatController));
@@ -30,11 +30,11 @@ public class AtaqueFuerte1 : CombatState
 
         if (!combatController.puedeHacerCombo) return;
 
-        if (Input.GetMouseButtonDown(0))
+        if (InputJugador.instance.atacarLigero)
         {
             combatController.inputBufferCombo = TipoInputCombate.Ligero;
         }
-        else if (Input.GetMouseButtonDown(1))
+        else if (InputJugador.instance.atacarFuerte)
         {
             combatController.inputBufferCombo = TipoInputCombate.Fuerte;
         }

@@ -30,6 +30,7 @@ public class DanoState : CombatState
             combatController.anim.SetTrigger("Dano");
             combatController.ReproducirVFX(5, 5);
             combatController.ReproducirSonido(5, 5);
+            CameraShakeManager.instance.ShakeGolpeFuerte();
 
         }
 

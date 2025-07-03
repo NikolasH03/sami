@@ -46,12 +46,12 @@ public class ControladorCambiarPersonaje : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G) && espanol.activeSelf && !controladorEspanol.getAtacando())
+        if (InputJugador.instance.cambiarProtagonista && espanol.activeSelf && !controladorEspanol.getAtacando())
         {
             activarMuisca();
         }
 
-        else if (Input.GetKeyDown(KeyCode.G) && muisca.activeSelf && !controladorMuisca.getAtacando())
+        else if (InputJugador.instance.cambiarProtagonista && muisca.activeSelf && !controladorMuisca.getAtacando())
         {
             activarEspanol();
         }

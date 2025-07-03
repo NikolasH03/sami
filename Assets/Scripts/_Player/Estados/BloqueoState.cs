@@ -17,7 +17,7 @@ public class BloqueoState : CombatState
 
     public override void HandleInput()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (!InputJugador.instance.bloquear)
         {
             combatController.GetComponent<Collider>().enabled = true;
             stateMachine.ChangeState(new IdleMeleeState(stateMachine, combatController));

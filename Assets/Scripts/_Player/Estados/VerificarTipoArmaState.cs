@@ -10,14 +10,17 @@ public class VerificarTipoArmaState : CombatState
 
         if (armaEquipada == 1) 
         {
+            InputJugador.instance.CambiarInputMelee();
             stateMachine.ChangeState(new IdleMeleeState(stateMachine, combatController));
         }
         else if (armaEquipada == 2) 
         {
+            InputJugador.instance.CambiarInputDistancia();
             stateMachine.ChangeState(new IdleDistanciaState(stateMachine, combatController));
         }
         else
         {
+            InputJugador.instance.CambiarInputMelee();
             stateMachine.ChangeState(new IdleMeleeState(stateMachine, combatController));
         }
     }
