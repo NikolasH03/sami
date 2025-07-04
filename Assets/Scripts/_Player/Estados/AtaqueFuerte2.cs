@@ -10,6 +10,7 @@ public class AtaqueFuerte2 : CombatState
     public override void Enter()
     {
         combatController.tipoAtaque = "fuerte";
+        combatController.OrientarJugador();
         combatController.anim.SetTrigger("Fuerte2");
         combatController.setAtacando(true);
     }

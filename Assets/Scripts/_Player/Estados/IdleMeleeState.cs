@@ -26,6 +26,10 @@ public class IdleMeleeState : CombatState
             InputJugador.instance.CambiarInputDistancia();
             stateMachine.ChangeState(new IdleDistanciaState(stateMachine, combatController));
         }
+        if (InputJugador.instance.cambiarProtagonista)
+        {
+            ControladorCambiarPersonaje.instance.CambiarProtagonista();
+        }
         if (InputJugador.instance.esquivar && !combatController.anim.GetBool("dashing")) 
         {
             combatController.DesactivarVentanaCombo();

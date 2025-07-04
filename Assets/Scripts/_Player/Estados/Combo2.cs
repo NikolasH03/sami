@@ -9,6 +9,7 @@ public class Combo2 : CombatState
     public override void Enter()
     {
         combatController.tipoAtaque = "fuerte";
+        combatController.OrientarJugador();
         combatController.anim.SetTrigger("Combo2");
         combatController.setAtacando(true);
     }

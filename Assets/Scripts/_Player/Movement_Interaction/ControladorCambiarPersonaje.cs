@@ -44,19 +44,19 @@ public class ControladorCambiarPersonaje : MonoBehaviour
         activarEspanol();
     }
 
-    void Update()
+    public void CambiarProtagonista()
     {
-        if (InputJugador.instance.cambiarProtagonista && espanol.activeSelf && !controladorEspanol.getAtacando())
+        if (espanol.activeSelf)
         {
             activarMuisca();
         }
 
-        else if (InputJugador.instance.cambiarProtagonista && muisca.activeSelf && !controladorMuisca.getAtacando())
+        else
         {
             activarEspanol();
         }
-    }
 
+    }
     public void activarMuisca()
     {
         muisca.transform.position = espanol.transform.position;
@@ -88,10 +88,5 @@ public class ControladorCambiarPersonaje : MonoBehaviour
     public bool getEsMuisca()
     {
         return esMuisca;
-    }
-    public GameObject getJugadorActual()
-    {
-        if (esMuisca) return muisca;
-        else return espanol;
     }
 }

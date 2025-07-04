@@ -12,6 +12,7 @@ public class BloqueoState : CombatState
 
         combatController.anim.SetBool("running", false);
         combatController.setBloqueando(true);
+        combatController.OrientarJugador();
         combatController.anim.SetTrigger("Bloqueo");
     }
 

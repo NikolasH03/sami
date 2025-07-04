@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CombatStateMachine : MonoBehaviour
+public class CombatStateMachine
 {
     private CombatState currentState;
     public void ChangeState(CombatState newState)

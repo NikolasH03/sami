@@ -10,9 +10,7 @@ public class EsquivaState : CombatState
     {
         combatController.anim.SetBool("dashing", true);
         combatController.anim.SetTrigger("Esquiva");
-        combatController.GetComponent<Collider>().enabled = false;
-        combatController.GetComponent<Rigidbody>().isKinematic = true;
-        combatController.anim.SetBool("RecibeDaño", false);
+        combatController.InvulneravilidadDash();
         combatController.anim.SetBool("running", false);
     }
 
@@ -27,11 +25,5 @@ public class EsquivaState : CombatState
         {
             combatController.CambiarArmaDistancia();
         }
-    }
-
-    public override void Exit()
-    {
-        combatController.GetComponent<Collider>().enabled = true;
-        combatController.GetComponent<Rigidbody>().isKinematic = false;
     }
 }

@@ -8,6 +8,7 @@ public class PerderGuardiaState : CombatState
     {
         combatController.CambiarMovimientoCanMove(false);
         combatController.anim.SetBool("running", false);
+        combatController.OrientarJugador();
         combatController.anim.SetTrigger("Dano");
         Debug.Log("Le rompieron la guardia");
 

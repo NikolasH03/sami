@@ -33,8 +33,10 @@ public class ControladorCombate : MonoBehaviour
     //colliders necesarios para generar daño
     [SerializeField] Collider ColliderArma;
     [SerializeField] Collider ColliderPierna;
+
+    //layers para invulnerabilidad en el dash
     private int normalLayerIndex;
-    private int dodgeLayerIndex;
+    private int esquivarLayerIndex;
 
     //variables y referencias relacionadas con las barras de vida, estamina y numero de muertes
     public EstadisticasCombateSO statsBase;
@@ -52,6 +54,7 @@ public class ControladorCombate : MonoBehaviour
     [SerializeField] ControladorCambioArmas cambioArma;
     private ControladorMovimiento controladorMovimiento;
     private CombatStateMachine fsm;
+    private AutoTargeting targeting;
     //[SerializeField] HabilidadesJugador habilidadesJugador;
 
     void Awake()
@@ -68,10 +71,11 @@ public class ControladorCombate : MonoBehaviour
         ColliderPierna.enabled = false;
 
         normalLayerIndex = LayerMask.NameToLayer("Default");
-        dodgeLayerIndex = LayerMask.NameToLayer("Esquivar");
+        esquivarLayerIndex = LayerMask.NameToLayer("Esquivar");
 
         anim = GetComponent<Animator>();
         controladorMovimiento = GetComponent<ControladorMovimiento>();
+        targeting = GetComponent<AutoTargeting>();
 
         fsm = new CombatStateMachine();
         fsm.ChangeState(new VerificarTipoArmaState(fsm, this));
@@ -194,8 +198,10 @@ public class ControladorCombate : MonoBehaviour
 
         fsm.ChangeState(new VerificarTipoArmaState(fsm, this));
     }
-
-
+    public void OrientarJugador()
+    {
+        targeting.BuscarYOrientar();
+    }
     public void ReproducirVFX(int indexVFX, int indexPivot = 0)
     {
         eventosAnimacion.ReproducirVFX(indexVFX, indexPivot);
@@ -247,10 +253,13 @@ public class ControladorCombate : MonoBehaviour
         inputBufferCombo = TipoInputCombate.Ninguno;
         LimpiarSecuenciaInputs();
     }
+    public void InvulneravilidadDash()
+    {
+        gameObject.layer = esquivarLayerIndex;
+    }
     public void terminarDash()
     {
         anim.SetBool("dashing", false);
-        anim.SetBool("RecibeDaño", false);
         gameObject.layer = normalLayerIndex;
         fsm.ChangeState(new VerificarTipoArmaState(fsm, this));
     }
@@ -326,7 +335,7 @@ public class ControladorCombate : MonoBehaviour
     }
     public int getLayerDodge()
     {
-        return dodgeLayerIndex;
+        return esquivarLayerIndex;
     }
 
     public void CambiarMovimientoCanMove(bool puedeMov)

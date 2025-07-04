@@ -16,6 +16,7 @@ public class DanoBloqueandoState : CombatState
         {
             stateMachine.ChangeState(new PerderGuardiaState(stateMachine, combatController));
         }
+        combatController.OrientarJugador();
         combatController.anim.SetTrigger("DanoBloqueando");
 
 

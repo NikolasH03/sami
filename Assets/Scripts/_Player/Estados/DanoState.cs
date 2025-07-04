@@ -27,6 +27,7 @@ public class DanoState : CombatState
             combatController.GetComponent<Rigidbody>().isKinematic = true;
             combatController.CambiarMovimientoCanMove(false);
             combatController.anim.SetBool("running", false);
+            combatController.OrientarJugador();
             combatController.anim.SetTrigger("Dano");
             combatController.ReproducirVFX(5, 5);
             combatController.ReproducirSonido(5, 5);
