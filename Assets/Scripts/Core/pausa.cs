@@ -8,6 +8,7 @@ public class pausa : MonoBehaviour
 {
 
     [SerializeField] GameObject menuPausa;
+    [SerializeField] GameObject Coleccionables;
     [SerializeField] bool pausado = false;
 
 
@@ -15,8 +16,8 @@ public class pausa : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            
-            if(!pausado)
+
+            if (!pausado)
             {
                 menuPausa.SetActive(true);
                 pausado = true;
@@ -34,10 +35,20 @@ public class pausa : MonoBehaviour
     public void resumir()
     {
         menuPausa.SetActive(false);
-        pausado=false;
+        pausado = false;
 
         Time.timeScale = 1;
-        Cursor.visible = false; 
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+    public void MostrarColeccionables()
+    {
+        Coleccionables.SetActive(true);
+        menuPausa.SetActive(false);
+    }
+    public void EsconderColeccionables()
+    {     
+        menuPausa.SetActive(true);
+        Coleccionables.SetActive(false);
     }
 }

@@ -50,7 +50,7 @@ public class HabilidadesJugador : MonoBehaviour
         {
             if (estaDesbloqueada(requerimientoHabilidad))
             {
-                if (Inventario.instance.getDinero() >= dineroRequerido)
+                if (InventarioEconomia.instance.getDinero() >= dineroRequerido)
                 {
                     DesbloquearHabilidad(tipoHabilidad);
                     Debug.Log("todo melo");
@@ -63,7 +63,7 @@ public class HabilidadesJugador : MonoBehaviour
         }
         else
         {
-            if (Inventario.instance.getDinero() >= dineroRequerido)
+            if (InventarioEconomia.instance.getDinero() >= dineroRequerido)
             {
                 DesbloquearHabilidad(tipoHabilidad);
                 return true;
