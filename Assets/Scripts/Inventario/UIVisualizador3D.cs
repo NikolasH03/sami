@@ -53,26 +53,6 @@ public class UIVisualizador3D : MonoBehaviour
 
         contenedor.SetActive(true);
     }
-    private void AjustarEscalaModelo(GameObject modelo, float tamanoDeseado = 1.5f)
-    {
-        float mayorDimension = 0f;
-
-        MeshFilter[] filtros = modelo.GetComponentsInChildren<MeshFilter>();
-        foreach (var filtro in filtros)
-        {
-            Vector3 size = filtro.sharedMesh.bounds.size;
-            float magnitud = size.magnitude * filtro.transform.lossyScale.magnitude;
-
-            if (magnitud > mayorDimension)
-                mayorDimension = magnitud;
-        }
-
-        if (mayorDimension == 0) return;
-
-        float factorEscala = tamanoDeseado / mayorDimension;
-
-        modelo.transform.localScale *= factorEscala;
-    }
 
     public void Cerrar()
     {

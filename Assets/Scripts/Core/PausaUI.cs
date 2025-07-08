@@ -4,14 +4,18 @@ using UnityEngine;
 
 
 
-public class pausa : MonoBehaviour
+public class PausaUI : MonoBehaviour
 {
-
+    public static PausaUI instance;
     [SerializeField] GameObject menuPausa;
     [SerializeField] GameObject Coleccionables;
     [SerializeField] bool pausado = false;
 
 
+    public void Start()
+    {
+        instance = this;
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -19,11 +23,7 @@ public class pausa : MonoBehaviour
 
             if (!pausado)
             {
-                menuPausa.SetActive(true);
-                pausado = true;
-                Time.timeScale = 0;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
+                Pausar();
             }
             else {
                 resumir();
@@ -31,7 +31,14 @@ public class pausa : MonoBehaviour
 
         }
     }
-
+    public void Pausar()
+    {
+        menuPausa.SetActive(true);
+        pausado = true;
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
     public void resumir()
     {
         menuPausa.SetActive(false);

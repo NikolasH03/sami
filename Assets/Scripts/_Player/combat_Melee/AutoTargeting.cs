@@ -37,6 +37,4 @@ public class AutoTargeting : MonoBehaviour
             enemigoObjetivo = mejorObjetivo;
         }
     }
-
-    public Transform GetObjetivoActual() => enemigoObjetivo;
 }

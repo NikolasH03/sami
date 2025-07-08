@@ -50,7 +50,19 @@ public class InventarioColeccionables : MonoBehaviour
     {
         return coleccionables[id];
     }
+    public ColeccionableData GetDatosPorID(int id)
+    {
+        for (int i = 0; i < coleccionables.Length; i++)
+        {
+            if (coleccionables[i].id == id)
+            {
+                return coleccionables[i];
+            }
+        }
+        return null;
 
+
+    }
     public int TotalColeccionables()
     {
         return coleccionables.Length;

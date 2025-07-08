@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LlaveColeccionable : MonoBehaviour
 {
-    public int idColeccionable;
+    [SerializeField] private int idColeccionable;
     [SerializeField] private GameObject canvasInteractuar;
     private bool jugadorCerca = false;
 
@@ -11,7 +11,8 @@ public class LlaveColeccionable : MonoBehaviour
         if (jugadorCerca && Input.GetKeyDown(KeyCode.E))
         {
             canvasInteractuar.SetActive(false);
-            InventarioColeccionables.instance.Desbloquear(1);
+            InventarioColeccionables.instance.Desbloquear(idColeccionable);
+            UIIndicadorRecolectado.instance.MostrarIndicador(idColeccionable);
             gameObject.SetActive(false);
         }
     }
