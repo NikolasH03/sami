@@ -4551,7 +4551,6 @@ MonoBehaviour:
   grado: 0
   speedWalk: 2
   estaAtacando: 0
-  establoqueando: 0
 --- !u!195 &521272963
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -28432,7 +28431,6 @@ MonoBehaviour:
   grado: 0
   speedWalk: 2
   estaAtacando: 0
-  establoqueando: 0
 --- !u!195 &1851321628
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -34293,7 +34291,6 @@ MonoBehaviour:
   grado: 0
   speedWalk: 2
   estaAtacando: 0
-  establoqueando: 0
 --- !u!195 &2104036272
 NavMeshAgent:
   m_ObjectHideFlags: 0
