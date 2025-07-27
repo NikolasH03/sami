@@ -12,9 +12,11 @@ public class HealthComp : MonoBehaviour
     private bool estaBloqueado;
     private bool estaMuerto = false;
     private bool estaSiendoDanado = false;
+    private bool estaEsquivando = false;
 
     public bool EstaMuerto => estaMuerto;
     public bool EstaSiendoDanado => estaSiendoDanado;
+    public bool EstaEsquivando => estaEsquivando;
 
     private void Start()
     {
@@ -30,7 +32,7 @@ public class HealthComp : MonoBehaviour
 
     public void recibeDano(int cantidad)
     {
-        if (estaMuerto || estaBloqueado) return;
+        if (estaMuerto || estaBloqueado || estaEsquivando) return;
         
 
         vidaActual -= cantidad;
@@ -51,6 +53,11 @@ public class HealthComp : MonoBehaviour
     {
         estaBloqueado = valor;
         setRecibiendoDano(false);
+    }
+
+    public void setEsquivando(bool valor)
+    {
+        estaEsquivando = valor;
     }
 
     public void Eliminar()
