@@ -19,8 +19,8 @@ public class Enemigo : MonoBehaviour
     private GameObject controladorDeCombate;
     
     [Header("Parametros Para Estado Patrulla")]
-    [SerializeField] public float tiempoDeEspera;
-    [SerializeField] public float radioDePatrulla;
+    [SerializeField] public float tiempoDeEspera = 1.5f;
+    [SerializeField] public float radioDePatrulla = 8f;
     
     [Header("Parametros Para Estado Seguir")]
     [SerializeField] public DetectarJugador detectarJugador;
@@ -42,7 +42,7 @@ public class Enemigo : MonoBehaviour
     
     [Header("Parametros para Secuencia De Ataques")]
     [SerializeField] private SecuenciaAtaques[] secuenciaAtaques;
-    [SerializeField] public float delayEntreAtaques = 1f;
+    [SerializeField] public float delayEntreAtaques = 2f;
     
     [Header("Parametros Para Estado Recibir Daño")]
     [SerializeField] public float duracionDanoRecibido = 1.10f;

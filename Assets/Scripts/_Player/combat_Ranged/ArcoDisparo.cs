@@ -6,7 +6,7 @@ public class ArcoDisparo : MonoBehaviour
 {
     private Rigidbody proyectilRB;
     private float velocidad = 50f;
-    private HealthbarEnemigo enemigo;
+    //private HealthbarEnemigo enemigo;
     private ControladorCombate player;
     private void Awake()
     {
@@ -21,9 +21,9 @@ public class ArcoDisparo : MonoBehaviour
         if(other.gameObject.tag == "enemy")
         {
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<ControladorCombate>();
-            enemigo = other.GetComponent<HealthbarEnemigo>();
-            enemigo.recibeDaño(player.EntregarDanoArmaDistancia());
-            enemigo.setRecibiendoDaño(true);
+            //enemigo = other.GetComponent<HealthbarEnemigo>();
+            //enemigo.recibeDaño(player.EntregarDanoArmaDistancia());
+            //enemigo.setRecibiendoDaño(true);
         }
         Destroy(gameObject);
     }
