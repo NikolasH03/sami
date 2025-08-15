@@ -17,8 +17,10 @@ public class ControladorCombate : MonoBehaviour
 
     //intanciar arma melee
     [SerializeField] private ArmaData armaActual;
-    [SerializeField] private Transform puntoSujecion;
+    [SerializeField] private Transform puntoSujecionArmaPrincipal;
+    [SerializeField] private Transform puntoSujecionArmaSecundaria;
     private GameObject armaInstanciada;
+    private GameObject armaSecundariaInstanciada;
 
     //Daño del arma a distancia
     [SerializeField] private ArmaDistanciaData armaDistancia;
@@ -32,6 +34,7 @@ public class ControladorCombate : MonoBehaviour
 
     //colliders necesarios para generar daño
     [SerializeField] Collider ColliderArma;
+    [SerializeField] Collider ColliderArmaSecundaria;
     [SerializeField] Collider ColliderPierna;
 
     //layers para invulnerabilidad en el dash
@@ -66,8 +69,10 @@ public class ControladorCombate : MonoBehaviour
     {
         
         ColliderArma = armaInstanciada.GetComponent<Collider>();
+        ColliderArmaSecundaria = armaSecundariaInstanciada.GetComponent<Collider>();
 
         ColliderArma.enabled = false;
+        ColliderArmaSecundaria.enabled = false;
         ColliderPierna.enabled = false;
 
         normalLayerIndex = LayerMask.NameToLayer("Default");
@@ -141,10 +146,15 @@ public class ControladorCombate : MonoBehaviour
         if (nuevaArma == null) return;
 
 
-        armaInstanciada = Instantiate(nuevaArma.prefab, puntoSujecion);
+        armaInstanciada = Instantiate(nuevaArma.prefabArmaPrincipal, puntoSujecionArmaPrincipal);
         armaInstanciada.transform.localPosition = Vector3.zero;
         armaInstanciada.transform.localRotation = Quaternion.identity;
         armaInstanciada.transform.localScale = Vector3.one;
+
+        armaSecundariaInstanciada = Instantiate(nuevaArma.prefabArmaSecundaria, puntoSujecionArmaSecundaria);
+        armaSecundariaInstanciada.transform.localPosition = Vector3.zero;
+        armaSecundariaInstanciada.transform.localRotation = Quaternion.identity;
+        armaSecundariaInstanciada.transform.localScale = Vector3.one;
 
         armaActual = nuevaArma;
     }
@@ -274,6 +284,14 @@ public class ControladorCombate : MonoBehaviour
     {
         ColliderArma.enabled = false;
     }
+    public void activarColliderArmaSecundaria()
+    {
+        ColliderArmaSecundaria.enabled = true;
+    }
+    public void desactivarColliderArmaSecundaria()
+    {
+        ColliderArmaSecundaria.enabled = false;
+    }
     public void activarColliderPierna()
     {
         ColliderPierna.enabled = true;
@@ -330,9 +348,13 @@ public class ControladorCombate : MonoBehaviour
     {
         bloqueando = block;
     }
-    public GameObject getArmaActual()
+    public List<GameObject> getArmaActual()
     {
-        return armaInstanciada;
+        List<GameObject> armas = new List<GameObject>();
+        armas.Add(armaInstanciada);
+        armas.Add(armaSecundariaInstanciada);
+
+        return armas;
     }
     public int getLayerDodge()
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ControladorCambioArmas : MonoBehaviour
 {
-    [SerializeField] private GameObject armaMelee;
+    private List<GameObject> armasMelee;
     [SerializeField] private GameObject armaDistancia;
     private int numeroArma;
 
@@ -15,29 +15,35 @@ public class ControladorCambioArmas : MonoBehaviour
     }
     private void Start()
     {
-        armaMelee = controladorCombate.getArmaActual();
-        armaMelee.SetActive(true);
-        armaDistancia.SetActive(false);
-        numeroArma = 1;
-
+        armasMelee = controladorCombate.getArmaActual();
+        CambiarArmaMelee();
     }
 
     public void CambiarArmaMelee()
     {
-        armaMelee.SetActive(true);
+        SetListaActiva(armasMelee, true);
         armaDistancia.SetActive(false);
         numeroArma = 1;
     }
+
     public void CambiarArmaDistancia()
     {
-        armaMelee.SetActive(false);
+        SetListaActiva(armasMelee, false);
         armaDistancia.SetActive(true);
         numeroArma = 2;
-        controladorCombate.setAtacando(false);
     }
+
     public int getterArma()
     {
         return numeroArma;
+    }
+    private void SetListaActiva(List<GameObject> lista, bool estado)
+    {
+        foreach (GameObject arma in lista)
+        {
+            if (arma != null)
+                arma.SetActive(estado);
+        }
     }
 }
 

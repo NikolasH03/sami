@@ -14,7 +14,8 @@ public class ArmaData : ScriptableObject
     public int dañoGolpeFuerteGuardia;
     public int dañoGolpeLigeroGuardia;
 
-    public GameObject prefab;
+    public GameObject prefabArmaPrincipal;
+    public GameObject prefabArmaSecundaria;
 
 
 }
