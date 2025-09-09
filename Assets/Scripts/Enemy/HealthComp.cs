@@ -22,6 +22,11 @@ public class HealthComp : MonoBehaviour
     private bool enGuardBreak = false;
     private Temporizador timerGuardBreak;
 
+    [Header("Stun")]
+    [SerializeField] private float duracionStun = 2f;
+    private bool estaStuneado = false;
+    private Temporizador timerStun;
+
     [Header("Booleanos Adicionales")]
     private bool estaBloqueado;
     private bool estaMuerto = false;
@@ -33,13 +38,20 @@ public class HealthComp : MonoBehaviour
     public bool EstaMuerto => estaMuerto;
     public bool EstaSiendoDanado => estaSiendoDanado;
     public bool EstaEsquivando => estaEsquivando;
+    public bool EstaStuneado => estaStuneado; // 👈 Nuevo getter público
+    public bool EnGuardBreak => enGuardBreak;
 
     private void Start()
     {
         vidaActual = vidaMax;
         staminaActual = staminaMax;
+
         timerGuardBreak = new Temporizador(duracionGuardBreak);
         timerGuardBreak.OnTimerStop += RecuperarGuardBreak;
+
+        timerStun = new Temporizador(duracionStun);
+        timerStun.OnTimerStop += () => estaStuneado = false;
+
         ActualizarBarra();
     }
 
@@ -64,7 +76,7 @@ public class HealthComp : MonoBehaviour
         vidaActual -= cantidad;
         ActualizarBarra();
 
-        danoPendiente = true;  // <-- marcar daño pendiente
+        danoPendiente = true;
         estaSiendoDanado = true;
 
         if (vidaActual <= 0f)
@@ -73,11 +85,7 @@ public class HealthComp : MonoBehaviour
         }
     }
 
-
-    public void setRecibiendoDano(bool valor)
-    {
-        estaSiendoDanado = valor;
-    }
+    public void setRecibiendoDano(bool valor) => estaSiendoDanado = valor;
 
     public void setBloqueado(bool valor)
     {
@@ -85,15 +93,9 @@ public class HealthComp : MonoBehaviour
         setRecibiendoDano(false);
     }
     
-    public bool DebeBloquear()
-    {
-        return golpesRecibidos >= golpesAntesDeBloquear;
-    }
+    public bool DebeBloquear() => golpesRecibidos >= golpesAntesDeBloquear;
 
-    public void setEsquivando(bool valor)
-    {
-        estaEsquivando = valor;
-    }
+    public void setEsquivando(bool valor) => estaEsquivando = valor;
 
     public void Eliminar()
     {
@@ -106,20 +108,15 @@ public class HealthComp : MonoBehaviour
     {
         if (danoPendiente && !estaMuerto && !estaBloqueado)
         {
-            danoPendiente = false; // <-- consumir la marca
+            danoPendiente = false;
             return true;
         }
-
         return false;
     }
 
-    public bool EnemigoHaMuerto()
-    {
-        return estaMuerto;
-    }
+    public bool EnemigoHaMuerto() => estaMuerto;
     
-    // Eventos Relacionados a la stamina
-    
+    // --- Stamina / Guard Break ---
     public void ConsumirStaminaPorBloqueo()
     {
         staminaActual -= costoBloqueo;
@@ -131,15 +128,17 @@ public class HealthComp : MonoBehaviour
             Debug.Log("Guardia Rota!!!");
             enGuardBreak = true;
             timerGuardBreak.Empezar();
+
+            // Cuando se rompe la guardia, activar stun
+            EntrarEnStun();
         }
     }
     
     public void TickTimers(float deltaTime)
     {
         timerGuardBreak.Tick(deltaTime);
+        timerStun.Tick(deltaTime);
     }
-    
-    public bool EnGuardBreak => enGuardBreak;
 
     private void RecuperarGuardBreak()
     {
@@ -156,5 +155,13 @@ public class HealthComp : MonoBehaviour
         }
     }
     
-}
+    public void RestablecerEstamina() => staminaActual = staminaMax;
 
+    // --- Stun ---
+    public void EntrarEnStun()
+    {
+        estaStuneado = true;
+        timerStun.Reiniciar();
+        timerStun.Empezar();
+    }
+}

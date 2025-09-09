@@ -5787,6 +5787,7 @@ MonoBehaviour:
   rangoDeAtaque: 1
   rangoDeBloqueo: 4
   probabilidadDeBloqueo: 1
+  probabilidadDeEsquivar: 0.3
   distanciaEsquivar: 3
   velocidadEsquivar: 10
   secuenciaAtaques:
@@ -30372,6 +30373,7 @@ MonoBehaviour:
   rangoDeAtaque: 1
   rangoDeBloqueo: 4
   probabilidadDeBloqueo: 1
+  probabilidadDeEsquivar: 0.3
   distanciaEsquivar: 3
   velocidadEsquivar: 10
   secuenciaAtaques:
@@ -30509,6 +30511,7 @@ MonoBehaviour:
   rangoDeAtaque: 1
   rangoDeBloqueo: 4
   probabilidadDeBloqueo: 1
+  probabilidadDeEsquivar: 0.3
   distanciaEsquivar: 3
   velocidadEsquivar: 10
   secuenciaAtaques:
