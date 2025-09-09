@@ -66,8 +66,12 @@ public class Enemigo : MonoBehaviour
         this.agent = this.GetComponent<NavMeshAgent>();
         this.animator = this.GetComponentInChildren<Animator>();
         this.vidaEnemigo = GetComponent<HealthComp>();
-        this.controladorDeCombate = GameObject.FindGameObjectWithTag("Player");
+        BuscarJugador();
         tempParaAtaques = new Temporizador(tiempoEntreAtaques);
+    }
+    public void BuscarJugador()
+    {
+        this.controladorDeCombate = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void OnValidate()

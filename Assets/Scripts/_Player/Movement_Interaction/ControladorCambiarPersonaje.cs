@@ -19,6 +19,9 @@ public class ControladorCambiarPersonaje : MonoBehaviour
     //logica para cambiar el personaje
     private bool esMuisca;
 
+    //otras referencias
+    [SerializeField] EnemyManager enemigos;
+
     private void Awake()
     {
 
@@ -44,11 +47,13 @@ public class ControladorCambiarPersonaje : MonoBehaviour
         if (espanol.activeSelf)
         {
             activarMuisca();
+            enemigos.ActualizarJugador();
         }
 
         else
         {
             activarEspanol();
+            enemigos.ActualizarJugador();
         }
 
     }

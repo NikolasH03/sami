@@ -22,8 +22,8 @@ public class ArcoDisparo : MonoBehaviour
         {
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<ControladorCombate>();
             enemigo = other.GetComponent<HealthComp>();
-            //enemigo.recibeDano(player.EntregarDanoArmaDistancia());
-            //enemigo.setRecibiendoDaño(true);
+            enemigo.recibeDano(player.EntregarDanoArmaDistancia());
+            enemigo.setRecibiendoDano(true);
         }
         Destroy(gameObject);
     }

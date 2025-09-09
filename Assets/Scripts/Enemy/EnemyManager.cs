@@ -28,7 +28,15 @@ public class EnemyManager : MonoBehaviour
         // Esperar un frame para dar tiempo a que todos los enemigos terminen su Start
         StartCoroutine(IniciarDespuesDeUnFrame());
     }
-
+    public void ActualizarJugador()
+    {
+        foreach (var enemigo in enemigos)
+        {
+            enemigo.BuscarJugador(); 
+            DetectarJugador detector = enemigo.gameObject.GetComponent<DetectarJugador>();
+            detector.BuscarJugador();
+        }
+    }
     private IEnumerator IniciarDespuesDeUnFrame()
     {
         yield return null; // espera 1 frame
