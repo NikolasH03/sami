@@ -18,6 +18,9 @@ public class Enemigo : MonoBehaviour
     HealthComp vidaEnemigo;
     private GameObject controladorDeCombate;
     
+    private bool atacando = false;
+    private bool disponibleParaAtacar = true;
+    
     [Header("Parametros Para Estado Patrulla")]
     [SerializeField] public float tiempoDeEspera = 1.5f;
     [SerializeField] public float radioDePatrulla = 8f;
@@ -36,10 +39,12 @@ public class Enemigo : MonoBehaviour
     [SerializeField] public float rangoDeBloqueo = 4f;
     [SerializeField] public float probabilidadDeBloqueo = 0.5f;
     private Temporizador tempParaSecuencia;
-    
-    [Header("Parametros para estado de Esquivar Ataques")]
+
+    [Header("Parametros para estado de Esquivar Ataques")] 
+    [SerializeField] public float probabilidadDeEsquivar = 0.3f;
     [SerializeField] public float distanciaEsquivar = 3f;
     [SerializeField] public float velocidadEsquivar = 10f;
+    private bool intentoEsquivar = false;
     
     [Header("Parametros para Secuencia De Ataques")]
     [SerializeField] private SecuenciaAtaques[] secuenciaAtaques;
@@ -47,6 +52,9 @@ public class Enemigo : MonoBehaviour
     
     [Header("Parametros Para Estado Recibir Daño")]
     [SerializeField] public float duracionDanoRecibido = 1.10f;
+    
+    [Header("Parametros Para Estado Stun")]
+    [SerializeField] public float duracionStun = 5f;
     
     [Header("Parametros Para Estado De Muerte")]
     [SerializeField] public float tiempoDeDesaparicion = 2f;
@@ -70,9 +78,8 @@ public class Enemigo : MonoBehaviour
 
     void Start()
     {
-        
         maquinaDeEstados = new MaquinaDeEstados();
-
+        
         var estadoPatrulla = new EstadoPatrullaEnemigo(this, animator, agent, radioDePatrulla, tiempoDeEspera);
         
         var estadoSeguir = new EstadoSeguirJugador(this, animator, agent, detectarJugador.Player, velocidadEnEstadoSeguir);
@@ -84,12 +91,19 @@ public class Enemigo : MonoBehaviour
         var estadoMuerte = new EstadoMuerte(this, animator, vidaEnemigo, tiempoDeDesaparicion);
 
         var estadoBloqueo = new EstadoDeBloqueo(this, animator, agent, vidaEnemigo);
-
+        
         var estadoSecuenciaDeAtaques = new EstadoSecuenciaDeAtaques(this, animator, agent, detectarJugador.Player,
             secuenciaAtaques, tempParaSecuencia, delayEntreAtaques);
 
         var estadoEsquivarAtaques =
             new EstadoDeEsquivar(this, animator, agent, vidaEnemigo, distanciaEsquivar, velocidadEsquivar);
+
+        var estadoRompeGuardia = new EstadoRomperGuardia(this, animator, agent, vidaEnemigo);
+        
+        var estadoRodear = new EstadoRodearJugador(this, animator, agent, detectarJugador.Player);
+        
+        var estadoStun = new EstadoStun(this, animator, agent, vidaEnemigo, duracionStun);
+        
         
         // Transiciones entre estados de Patrulla, Persecución y Ataque
         Desde(estadoPatrulla, estadoSeguir, new FuncPredicate(() => detectarJugador.SePuedeDetectarAlJugador()));
@@ -135,16 +149,47 @@ public class Enemigo : MonoBehaviour
         
         Desde(estadoBloqueo, estadoPatrulla, new FuncPredicate(() =>
             !JugadorEstaAtacando() && !detectarJugador.SePuedeDetectarAlJugador()));
-        //
         
-        // // Entra al estado de Esquivar ataques desde cualquier estado
-        // DesdeCualquier(estadoEsquivarAtaques, new FuncPredicate(JugadorEstaAtacando));
+        // Estado de guardia rota
+        Desde(estadoBloqueo, estadoRompeGuardia, new FuncPredicate(() => vidaEnemigo.EnGuardBreak));
+        Desde(estadoRompeGuardia, estadoStun, new FuncPredicate(() => estadoRompeGuardia.guardBreakFinalizado));
+        
+        //Despues del Stun
+        Desde(estadoStun, estadoPatrulla, new FuncPredicate(() => estadoStun.stunFinalizado && !detectarJugador.SePuedeDetectarAlJugador()));
+        Desde(estadoStun, estadoSeguir, new FuncPredicate(() => estadoStun.stunFinalizado && detectarJugador.SePuedeDetectarAlJugador()));
+        Desde(estadoStun, estadoAtacar, new FuncPredicate(() => estadoStun.stunFinalizado && detectarJugador.SePuedeAtacarAlJugador()));
+
+        
+        // Rodear Jugador
+        Desde(estadoSeguir, estadoRodear, new FuncPredicate(() => !EstaAtacando() && detectarJugador.SePuedeDetectarAlJugador()));
+        Desde(estadoRodear, estadoAtacar, new FuncPredicate(() => atacando));
+        Desde(estadoAtacar, estadoRodear, new FuncPredicate(() => !atacando && detectarJugador.SePuedeDetectarAlJugador()));
+        
+        // Entra al estado de Esquivar ataques desde cualquier estado
+        // DesdeCualquier(estadoEsquivarAtaques, new FuncPredicate(SePuedeEsquivarAlJugador));
         //
-        // Desde(estadoEsquivarAtaques, estadoSecuenciaDeAtaques, new FuncPredicate(() => !JugadorEstaAtacando() && detectarJugador.SePuedeAtacarAlJugador()));
+        // Desde(estadoEsquivarAtaques, estadoAtacar, new FuncPredicate(() => !JugadorEstaAtacando() && detectarJugador.SePuedeAtacarAlJugador()));
         // Desde(estadoEsquivarAtaques, estadoSeguir, new FuncPredicate(() => !JugadorEstaAtacando() && detectarJugador.SePuedeDetectarAlJugador() && !detectarJugador.SePuedeAtacarAlJugador()));
         // Desde(estadoEsquivarAtaques, estadoPatrulla, new FuncPredicate(() => !JugadorEstaAtacando() && !detectarJugador.SePuedeDetectarAlJugador()));
         
         maquinaDeEstados.SetEstado(estadoPatrulla);
+    }
+    
+    
+    //Métodos para el EnemyManager.cs
+    public bool EstaDisponibleParaAtacar() => disponibleParaAtacar && !vidaEnemigo.EstaMuerto;
+    public bool EstaAtacando() => atacando;
+    
+    public void OrdenarAtacar()
+    {
+        disponibleParaAtacar = false;
+        atacando = true;
+    }
+    
+    public void TerminarAtaque()
+    {
+        atacando = false;
+        disponibleParaAtacar = true;
     }
     
     //Métodos Auxiliares
@@ -159,6 +204,8 @@ public class Enemigo : MonoBehaviour
     {
         maquinaDeEstados.Update();
         tempParaAtaques.Tick(Time.deltaTime);
+        vidaEnemigo.TickTimers(Time.deltaTime);
+        vidaEnemigo.RegenerarStamina(Time.deltaTime);
     }
 
     void FixedUpdate()
@@ -183,7 +230,7 @@ public class Enemigo : MonoBehaviour
         return ataquesDeJugador.getAtacando() && distancia <= rangoDeBloqueo;
     }
     
-    private bool intentoBloquear = false;
+    // private bool intentoBloquear = false;
 
     public bool SePuedeBloquearAlJugador()
     {
@@ -194,19 +241,37 @@ public class Enemigo : MonoBehaviour
         bool estaEnRango = distancia <= rangoDeBloqueo;
         bool jugadorAtacando = ataquesDeJugador.getAtacando();
 
-        if (jugadorAtacando && estaEnRango)
+        // Bloquear solo si:
+        // 1. Está en rango
+        // 2. El jugador ataca
+        // 3. El enemigo ya recibió los golpes necesarios para bloquear
+        // 4. No está en guard break
+        return jugadorAtacando && estaEnRango && vidaEnemigo.DebeBloquear() && !vidaEnemigo.EnGuardBreak;
+    }
+
+    public bool SePuedeEsquivarAlJugador()
+    {
+        var ataquesDeJugador = controladorDeCombate.GetComponent<ControladorCombate>();
+        if (ataquesDeJugador == null || detectarJugador == null) return false;
+
+        float distancia = Vector3.Distance(transform.position, detectarJugador.Player.position);
+        bool estaEnRango = distancia <= rangoDeBloqueo; // puedes usar otro rango distinto para el esquive
+        bool jugadorAtacando = ataquesDeJugador.getAtacando();
+
+        // Reinicia el intento cuando el jugador deja de atacar
+        if (!jugadorAtacando) intentoEsquivar = false;
+
+        // Si el jugador está atacando, todavía no intentamos esquivar,
+        // y pasa la probabilidad → esquiva
+        if (jugadorAtacando && estaEnRango && !intentoEsquivar)
         {
-            if (!intentoBloquear)
-            {
-                intentoBloquear = true;
-                return Random.value <= probabilidadDeBloqueo;
-            }
-        }
-        else
-        {
-            intentoBloquear = false;
+            intentoEsquivar = true;
+            return Random.value < probabilidadDeEsquivar;
         }
 
         return false;
     }
+
+
+
 }
