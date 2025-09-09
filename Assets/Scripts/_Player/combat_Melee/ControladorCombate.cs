@@ -218,30 +218,30 @@ public class ControladorCombate : MonoBehaviour
             }
         }
     }
-    public HealthbarEnemigo DetectarEnemigoStunned(float rango)
-    {
-        Collider[] hits = Physics.OverlapSphere(transform.position, rango, LayerMask.GetMask("Enemigo"));
+    //public HealthbarEnemigo DetectarEnemigoStunned(float rango)
+    //{
+    //    Collider[] hits = Physics.OverlapSphere(transform.position, rango, LayerMask.GetMask("Enemigo"));
 
-        foreach (var hit in hits)
-        {
-            var enemy = hit.GetComponent<HealthbarEnemigo>();
-            if (enemy != null && enemy.enemigoStunned)
-            {
-                return enemy;
-            }
-        }
+    //    foreach (var hit in hits)
+    //    {
+    //        var enemy = hit.GetComponent<HealthbarEnemigo>();
+    //        if (enemy != null && enemy.enemigoStunned)
+    //        {
+    //            return enemy;
+    //        }
+    //    }
 
-        return null;
-    }
+    //    return null;
+    //}
 
     public int EntregarDañoArmaDistancia()
     {
         if (tieneBufoDisparo)
         {
             tieneBufoDisparo = false;
-            return Mathf.RoundToInt(armaDistancia.dañoDisparo * 1.5f);
+            return Mathf.RoundToInt(armaDistancia.danoDisparo * 1.5f);
         }
-        return armaDistancia.dañoDisparo;
+        return armaDistancia.danoDisparo;
     }
     public void ActivarBufoDisparo()
     {

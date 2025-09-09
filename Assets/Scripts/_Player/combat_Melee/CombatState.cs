@@ -20,13 +20,13 @@ public abstract class CombatState
     // Método común para verificar finisher
     protected bool TryExecuteFinisher()
     {
-        var enemigo = combatController.DetectarEnemigoStunned(5f);
-        if (enemigo != null && InputJugador.instance.FinisherInput)
-        {
-            Debug.Log("Ejecutando finisher desde: " + this.GetType().Name);
-            stateMachine.ChangeState(new FinisherState(stateMachine, combatController, enemigo));
-            return true;
-        }
+        //var enemigo = combatController.DetectarEnemigoStunned(5f);
+        //if (enemigo != null && InputJugador.instance.FinisherInput)
+        //{
+        //    Debug.Log("Ejecutando finisher desde: " + this.GetType().Name);
+        //    stateMachine.ChangeState(new FinisherState(stateMachine, combatController, enemigo));
+        //    return true;
+        //}
         return false;
     }
 }
