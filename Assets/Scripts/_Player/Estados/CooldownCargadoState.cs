@@ -12,7 +12,6 @@ public class CooldownCargadoState : CombatState
     public override void Enter()
     {
         timer = 0f;
-        Debug.Log("entra al cooldown");
     }
 
     public override void Update()

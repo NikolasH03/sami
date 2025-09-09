@@ -62,18 +62,11 @@ public class InputJugador : MonoBehaviour
         ataqueLigeroAction = meleeMap.FindAction("AtaqueLigero", true);
         ataqueDistanciaAction = distanciaMap.FindAction("Disparar", true);
     }
-
-    public void Update()
-    {
-        Debug.Log(FinisherInput);
-    }
-
     public void OnMoverse(InputValue value) => moverse = value.Get<Vector2>();
     public void OnMirar(InputValue value) => mirar = value.Get<Vector2>();
     public void OnCorrer(InputValue value) => correr = value.isPressed;
     public void OnApuntar(InputValue value) => apuntar = value.isPressed;
     public void OnRecargar(InputValue value) => recargar = value.isPressed;
-    //public void OnAtaqueFuerte(InputValue value) => atacarFuerte = value.isPressed;
     public void OnAtaqueFuerte(InputValue value)
     {
         atacarFuerte = value.isPressed;

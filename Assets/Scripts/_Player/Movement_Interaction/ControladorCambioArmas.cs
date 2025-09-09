@@ -6,7 +6,7 @@ public class ControladorCambioArmas : MonoBehaviour
 {
     public List<GameObject> armasMelee;
     [SerializeField] private GameObject armaDistancia;
-    public int numeroArma;
+    [SerializeField] private int numeroArma;
 
     private ControladorCombate controladorCombate;
     private void Awake()

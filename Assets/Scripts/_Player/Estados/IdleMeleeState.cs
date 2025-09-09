@@ -33,8 +33,7 @@ public class IdleMeleeState : CombatState
         if (InputJugador.instance.cambiarArmaDistancia)
         {
             combatController.CambiarArmaDistancia();
-            InputJugador.instance.CambiarInputDistancia();
-            stateMachine.ChangeState(new IdleDistanciaState(stateMachine, combatController));
+            stateMachine.ChangeState(new VerificarTipoArmaState(stateMachine, combatController));
         }
 
         if (InputJugador.instance.cambiarProtagonista)
