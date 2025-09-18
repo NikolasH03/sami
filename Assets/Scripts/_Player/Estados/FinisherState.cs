@@ -28,8 +28,7 @@ public class FinisherState : CombatState
         combatController.setAtacando(false);
         combatController.camaraFinisher.LookAt = null;
         combatController.camaraFinisher.gameObject.SetActive(false);
-        target.setVidaActual();
-        // hay que darle muerte al enemigo definitivamente
+        target.SetFinisher();
 
     }
 }

@@ -101,9 +101,10 @@ public class HealthComp : MonoBehaviour
 
     public void setEsquivando(bool valor) => estaEsquivando = valor;
 
-    public void setVidaActual()
+    public void SetFinisher()
     {
         vidaActual = 0f;
+        estaMuerto = true;
     }
     public void Eliminar()
     {
