@@ -231,7 +231,7 @@ public class ControladorCombate : MonoBehaviour
         foreach (var hit in hits)
         {
             var enemy = hit.GetComponent<HealthComp>();
-            if (enemy != null && enemy.EstaStuneado)
+            if (enemy != null && enemy.SePuedeHacerFinisher())
             {
                 return enemy;
             }

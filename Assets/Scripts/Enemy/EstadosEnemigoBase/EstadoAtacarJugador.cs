@@ -4,15 +4,13 @@ using UnityEngine.AI;
 public class EstadoAtacarJugador : EstadoBase
 {
     private readonly NavMeshAgent agent;
-    private readonly Transform jugador;
     private readonly float rangoDeAtaque;
 
     public EstadoAtacarJugador(Enemigo enemigo, Animator animator, NavMeshAgent agent, 
-        Transform jugador, float rangoDeAtaque) 
+        float rangoDeAtaque) 
         : base(enemigo, animator)
     {
         this.agent = agent;
-        this.jugador = jugador;
         this.rangoDeAtaque = rangoDeAtaque;
     }
 
@@ -24,6 +22,9 @@ public class EstadoAtacarJugador : EstadoBase
 
     public override void Update()
     {
+        Transform jugador = enemigo.JugadorActual;
+        if (jugador == null) return;
+
         // Calcular posición de ataque
         Vector3 direccionAlJugador = (jugador.position - enemigo.transform.position).normalized;
         float distanciaDeseada = rangoDeAtaque;
@@ -39,5 +40,9 @@ public class EstadoAtacarJugador : EstadoBase
 
         // Ejecutar ataque
         enemigo.Atacar();
+    }
+    public override void OnExit()
+    {
+        enemigo.desactivarCollider();
     }
 }
