@@ -128,7 +128,7 @@ public class HealthComp : MonoBehaviour
     }
     public void Eliminar()
     {
-        InventarioEconomia.instance.enemigoMuerto(1);
+        //InventarioEconomia.instance.enemigoMuerto(1);
         Debug.Log("Enemigo eliminado");
         //gameObject.SetActive(false);
     }

@@ -183,6 +183,8 @@ MonoBehaviour:
   pauseGame: 1
   navegacionConMando: 1
   botonCerrar: {fileID: 0}
+  contenedorTeclado: {fileID: 0}
+  contenedorGamepad: {fileID: 0}
 --- !u!114 &6364878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,6 +201,8 @@ MonoBehaviour:
   pauseGame: 1
   navegacionConMando: 1
   botonCerrar: {fileID: 0}
+  contenedorTeclado: {fileID: 0}
+  contenedorGamepad: {fileID: 0}
 --- !u!1 &6907311
 GameObject:
   m_ObjectHideFlags: 0
@@ -2532,7 +2536,6 @@ GameObject:
   - component: {fileID: 222026527}
   - component: {fileID: 222026526}
   - component: {fileID: 222026525}
-  - component: {fileID: 222026524}
   m_Layer: 5
   m_Name: Combo1 (4)
   m_TagString: Untagged
@@ -2567,35 +2570,6 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: -465}
   m_SizeDelta: {x: 450, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &222026524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222026522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e3a651c95d7b24bb86ae07a1bbdf58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textoBoton: {fileID: 0}
-  efectoHalo: {fileID: 0}
-  escalaHover: {x: 1.1, y: 1.1, z: 1.1}
-  escalaSeleccionado: {x: 1.05, y: 1.05, z: 1.05}
-  escalaClick: {x: 0.95, y: 0.95, z: 0.95}
-  duracionAnimacion: 0.2
-  tipoEase: 6
-  colorNormal: {r: 1, g: 1, b: 1, a: 1}
-  colorHover: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  colorSeleccionado: {r: 0, g: 1, b: 1, a: 1}
-  usarEfectoHalo: 1
-  duracionHalo: 0.4
-  alphaHaloMax: 3
-  escalaHaloHover: 1.2
-  easeHalo: 6
-  efectoPulso: 0
-  intensidadPulso: 0.05
 --- !u!114 &222026525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2834,8 +2808,8 @@ Camera:
   m_GameObject: {fileID: 235663008}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.04705883, g: 0.09411766, b: 0.19215688, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -3608,7 +3582,6 @@ GameObject:
   - component: {fileID: 285311838}
   - component: {fileID: 285311837}
   - component: {fileID: 285311836}
-  - component: {fileID: 285311835}
   m_Layer: 5
   m_Name: Combo1 (4)
   m_TagString: Untagged
@@ -3643,35 +3616,6 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: -465}
   m_SizeDelta: {x: 450, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &285311835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 285311833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e3a651c95d7b24bb86ae07a1bbdf58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textoBoton: {fileID: 0}
-  efectoHalo: {fileID: 0}
-  escalaHover: {x: 1.1, y: 1.1, z: 1.1}
-  escalaSeleccionado: {x: 1.05, y: 1.05, z: 1.05}
-  escalaClick: {x: 0.95, y: 0.95, z: 0.95}
-  duracionAnimacion: 0.2
-  tipoEase: 6
-  colorNormal: {r: 1, g: 1, b: 1, a: 1}
-  colorHover: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  colorSeleccionado: {r: 0, g: 1, b: 1, a: 1}
-  usarEfectoHalo: 1
-  duracionHalo: 0.4
-  alphaHaloMax: 3
-  escalaHaloHover: 1.2
-  easeHalo: 6
-  efectoPulso: 0
-  intensidadPulso: 0.05
 --- !u!114 &285311836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5151,7 +5095,6 @@ GameObject:
   - component: {fileID: 427849113}
   - component: {fileID: 427849112}
   - component: {fileID: 427849111}
-  - component: {fileID: 427849110}
   m_Layer: 5
   m_Name: Combo1 (2)
   m_TagString: Untagged
@@ -5184,35 +5127,6 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: -245}
   m_SizeDelta: {x: 450, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &427849110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 427849108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e3a651c95d7b24bb86ae07a1bbdf58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textoBoton: {fileID: 0}
-  efectoHalo: {fileID: 0}
-  escalaHover: {x: 1.1, y: 1.1, z: 1.1}
-  escalaSeleccionado: {x: 1.05, y: 1.05, z: 1.05}
-  escalaClick: {x: 0.95, y: 0.95, z: 0.95}
-  duracionAnimacion: 0.2
-  tipoEase: 6
-  colorNormal: {r: 1, g: 1, b: 1, a: 1}
-  colorHover: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  colorSeleccionado: {r: 0, g: 1, b: 1, a: 1}
-  usarEfectoHalo: 1
-  duracionHalo: 0.4
-  alphaHaloMax: 3
-  escalaHaloHover: 1.2
-  easeHalo: 6
-  efectoPulso: 0
-  intensidadPulso: 0.05
 --- !u!114 &427849111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5514,7 +5428,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac2664813cb1eaf48b002e4bad4b1fff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pasosDeTutorial: []
 --- !u!1 &446271753
 GameObject:
   m_ObjectHideFlags: 0
@@ -6454,7 +6367,6 @@ GameObject:
   - component: {fileID: 533320931}
   - component: {fileID: 533320930}
   - component: {fileID: 533320929}
-  - component: {fileID: 533320928}
   m_Layer: 5
   m_Name: Combo1 (3)
   m_TagString: Untagged
@@ -6487,35 +6399,6 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: -355}
   m_SizeDelta: {x: 450, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &533320928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533320926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e3a651c95d7b24bb86ae07a1bbdf58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textoBoton: {fileID: 0}
-  efectoHalo: {fileID: 0}
-  escalaHover: {x: 1.1, y: 1.1, z: 1.1}
-  escalaSeleccionado: {x: 1.05, y: 1.05, z: 1.05}
-  escalaClick: {x: 0.95, y: 0.95, z: 0.95}
-  duracionAnimacion: 0.2
-  tipoEase: 6
-  colorNormal: {r: 1, g: 1, b: 1, a: 1}
-  colorHover: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  colorSeleccionado: {r: 0, g: 1, b: 1, a: 1}
-  usarEfectoHalo: 1
-  duracionHalo: 0.4
-  alphaHaloMax: 3
-  escalaHaloHover: 1.2
-  easeHalo: 6
-  efectoPulso: 0
-  intensidadPulso: 0.05
 --- !u!114 &533320929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6610,7 +6493,6 @@ GameObject:
   - component: {fileID: 538275294}
   - component: {fileID: 538275293}
   - component: {fileID: 538275295}
-  - component: {fileID: 538275296}
   m_Layer: 5
   m_Name: Combo1 (1)
   m_TagString: Untagged
@@ -6722,35 +6604,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &538275296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 538275291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e3a651c95d7b24bb86ae07a1bbdf58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textoBoton: {fileID: 0}
-  efectoHalo: {fileID: 0}
-  escalaHover: {x: 1.1, y: 1.1, z: 1.1}
-  escalaSeleccionado: {x: 1.05, y: 1.05, z: 1.05}
-  escalaClick: {x: 0.95, y: 0.95, z: 0.95}
-  duracionAnimacion: 0.2
-  tipoEase: 6
-  colorNormal: {r: 1, g: 1, b: 1, a: 1}
-  colorHover: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  colorSeleccionado: {r: 0, g: 1, b: 1, a: 1}
-  usarEfectoHalo: 1
-  duracionHalo: 0.4
-  alphaHaloMax: 3
-  escalaHaloHover: 1.2
-  easeHalo: 6
-  efectoPulso: 0
-  intensidadPulso: 0.05
 --- !u!1 &554271646
 GameObject:
   m_ObjectHideFlags: 0
@@ -7084,6 +6937,8 @@ MonoBehaviour:
   pauseGame: 1
   navegacionConMando: 1
   botonCerrar: {fileID: 0}
+  contenedorTeclado: {fileID: 0}
+  contenedorGamepad: {fileID: 0}
 --- !u!1 &588209004
 GameObject:
   m_ObjectHideFlags: 0
@@ -7171,7 +7026,6 @@ GameObject:
   - component: {fileID: 596244349}
   - component: {fileID: 596244348}
   - component: {fileID: 596244347}
-  - component: {fileID: 596244346}
   m_Layer: 5
   m_Name: Combo1 (6)
   m_TagString: Untagged
@@ -7202,35 +7056,6 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: -685}
   m_SizeDelta: {x: 450, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &596244346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 596244344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e3a651c95d7b24bb86ae07a1bbdf58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textoBoton: {fileID: 0}
-  efectoHalo: {fileID: 0}
-  escalaHover: {x: 1.1, y: 1.1, z: 1.1}
-  escalaSeleccionado: {x: 1.05, y: 1.05, z: 1.05}
-  escalaClick: {x: 0.95, y: 0.95, z: 0.95}
-  duracionAnimacion: 0.2
-  tipoEase: 6
-  colorNormal: {r: 1, g: 1, b: 1, a: 1}
-  colorHover: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  colorSeleccionado: {r: 0, g: 1, b: 1, a: 1}
-  usarEfectoHalo: 1
-  duracionHalo: 0.4
-  alphaHaloMax: 3
-  escalaHaloHover: 1.2
-  easeHalo: 6
-  efectoPulso: 0
-  intensidadPulso: 0.05
 --- !u!114 &596244347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8739,7 +8564,6 @@ GameObject:
   - component: {fileID: 699870211}
   - component: {fileID: 699870210}
   - component: {fileID: 699870209}
-  - component: {fileID: 699870208}
   m_Layer: 5
   m_Name: Combo1 (3)
   m_TagString: Untagged
@@ -8772,35 +8596,6 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: -355}
   m_SizeDelta: {x: 450, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &699870208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 699870206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e3a651c95d7b24bb86ae07a1bbdf58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textoBoton: {fileID: 0}
-  efectoHalo: {fileID: 0}
-  escalaHover: {x: 1.1, y: 1.1, z: 1.1}
-  escalaSeleccionado: {x: 1.05, y: 1.05, z: 1.05}
-  escalaClick: {x: 0.95, y: 0.95, z: 0.95}
-  duracionAnimacion: 0.2
-  tipoEase: 6
-  colorNormal: {r: 1, g: 1, b: 1, a: 1}
-  colorHover: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  colorSeleccionado: {r: 0, g: 1, b: 1, a: 1}
-  usarEfectoHalo: 1
-  duracionHalo: 0.4
-  alphaHaloMax: 3
-  escalaHaloHover: 1.2
-  easeHalo: 6
-  efectoPulso: 0
-  intensidadPulso: 0.05
 --- !u!114 &699870209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9669,7 +9464,6 @@ GameObject:
   - component: {fileID: 754170017}
   - component: {fileID: 754170016}
   - component: {fileID: 754170018}
-  - component: {fileID: 754170019}
   m_Layer: 5
   m_Name: Combo1 (2)
   m_TagString: Untagged
@@ -9784,35 +9578,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &754170019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 754170014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e3a651c95d7b24bb86ae07a1bbdf58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textoBoton: {fileID: 0}
-  efectoHalo: {fileID: 0}
-  escalaHover: {x: 1.1, y: 1.1, z: 1.1}
-  escalaSeleccionado: {x: 1.05, y: 1.05, z: 1.05}
-  escalaClick: {x: 0.95, y: 0.95, z: 0.95}
-  duracionAnimacion: 0.2
-  tipoEase: 6
-  colorNormal: {r: 1, g: 1, b: 1, a: 1}
-  colorHover: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  colorSeleccionado: {r: 0, g: 1, b: 1, a: 1}
-  usarEfectoHalo: 1
-  duracionHalo: 0.4
-  alphaHaloMax: 3
-  escalaHaloHover: 1.2
-  easeHalo: 6
-  efectoPulso: 0
-  intensidadPulso: 0.05
 --- !u!1 &759667528
 GameObject:
   m_ObjectHideFlags: 0
@@ -12006,6 +11771,8 @@ MonoBehaviour:
   pauseGame: 1
   navegacionConMando: 1
   botonCerrar: {fileID: 328447506}
+  contenedorTeclado: {fileID: 0}
+  contenedorGamepad: {fileID: 0}
 --- !u!1 &891883353
 GameObject:
   m_ObjectHideFlags: 0
@@ -12018,7 +11785,6 @@ GameObject:
   - component: {fileID: 891883358}
   - component: {fileID: 891883357}
   - component: {fileID: 891883356}
-  - component: {fileID: 891883355}
   m_Layer: 5
   m_Name: Combo1 (1)
   m_TagString: Untagged
@@ -12048,35 +11814,6 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: -135}
   m_SizeDelta: {x: 450, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &891883355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 891883353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e3a651c95d7b24bb86ae07a1bbdf58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textoBoton: {fileID: 0}
-  efectoHalo: {fileID: 0}
-  escalaHover: {x: 1.1, y: 1.1, z: 1.1}
-  escalaSeleccionado: {x: 1.05, y: 1.05, z: 1.05}
-  escalaClick: {x: 0.95, y: 0.95, z: 0.95}
-  duracionAnimacion: 0.2
-  tipoEase: 6
-  colorNormal: {r: 1, g: 1, b: 1, a: 1}
-  colorHover: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  colorSeleccionado: {r: 0, g: 1, b: 1, a: 1}
-  usarEfectoHalo: 1
-  duracionHalo: 0.4
-  alphaHaloMax: 3
-  escalaHaloHover: 1.2
-  easeHalo: 6
-  efectoPulso: 0
-  intensidadPulso: 0.05
 --- !u!114 &891883356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12315,37 +12052,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueManager: {fileID: 440368925}
-  tutorialManager: {fileID: 442379629}
   sections:
   - type: 0
-    videoClip: {fileID: 32900000, guid: 44b276e233015aa4aa58503f746db292, type: 3}
+    videoClip: {fileID: 32900000, guid: 876550d615cef4c4e9250d2111fab9e3, type: 3}
     showTutorial: 0
     TutorialID: 0
     musicData: {fileID: 0}
     ambienceData: {fileID: 0}
-    requiresSceneLoad: 0
-    sceneName: 
-  - type: 0
-    videoClip: {fileID: 32900000, guid: 8dbb611ea87afa44ea61f043d77982e4, type: 3}
-    showTutorial: 0
-    TutorialID: 0
-    musicData: {fileID: 0}
-    ambienceData: {fileID: 0}
-    requiresSceneLoad: 0
-    sceneName: 
-  - type: 1
-    videoClip: {fileID: 0}
-    showTutorial: 0
-    TutorialID: 0
-    musicData: {fileID: 11400000, guid: 59df38d4d6ebdd7438af1cf946ef3351, type: 2}
-    ambienceData: {fileID: 11400000, guid: 427af0e60f45b584d8df2fb3cc916ff1, type: 2}
     requiresSceneLoad: 0
     sceneName: 
   - type: 2
     videoClip: {fileID: 0}
-    showTutorial: 1
+    showTutorial: 0
     TutorialID: 1
-    musicData: {fileID: 11400000, guid: 8b6c0326499113843b6a4713c6cde500, type: 2}
+    musicData: {fileID: 11400000, guid: 57cedf304fada2b459104051d0f66153, type: 2}
     ambienceData: {fileID: 11400000, guid: 427af0e60f45b584d8df2fb3cc916ff1, type: 2}
     requiresSceneLoad: 0
     sceneName: 
@@ -13261,19 +12981,12 @@ MonoBehaviour:
   ambienceSource: {fileID: 1745074332}
   voicesSource: {fileID: 441113312}
   sfxGroup: {fileID: 4380128206426532936, guid: d8e8213053805d843808dd60b6ba5ee0, type: 2}
-  mus_exploracion: {fileID: 11400000, guid: 59df38d4d6ebdd7438af1cf946ef3351, type: 2}
-  mus_combate: {fileID: 11400000, guid: 8b6c0326499113843b6a4713c6cde500, type: 2}
-  mus_bossFight: {fileID: 0}
-  mus_menu: {fileID: 0}
-  mus_death: {fileID: 0}
-  mus_EndBossFight: {fileID: 0}
-  amb_naturaleza: {fileID: 11400000, guid: 427af0e60f45b584d8df2fb3cc916ff1, type: 2}
-  amb_fire: {fileID: 0}
-  amb_cascada: {fileID: 0}
-  efecto_menuPausa: {fileID: 11400000, guid: db7b608210449df4591f56b33f5c7678, type: 2}
+  mus_menu: {fileID: 11400000, guid: 9081ac6a39759634ca25e398b76df7c7, type: 2}
+  mus_death: {fileID: 11400000, guid: 3f7eb539a547e9045aa8ab74c4cec86e, type: 2}
+  efecto_AbrirMenuPausa: {fileID: 11400000, guid: 7a72474a255c222428fa92b93abec448, type: 2}
   efecto_agarrarObjeto: {fileID: 11400000, guid: d934e46329e1bb74e9dcddab7dd25748, type: 2}
   efecto_oprimirBoton: {fileID: 11400000, guid: 410703005e413b24899239eb7094187c, type: 2}
-  voice_Amenazar: {fileID: 0}
+  efecto_hoverBoton: {fileID: 0}
 --- !u!1 &1000930413
 GameObject:
   m_ObjectHideFlags: 0
@@ -13337,6 +13050,8 @@ MonoBehaviour:
   pauseGame: 1
   navegacionConMando: 1
   botonCerrar: {fileID: 803746610}
+  contenedorTeclado: {fileID: 0}
+  contenedorGamepad: {fileID: 0}
 --- !u!1 &1027583946
 GameObject:
   m_ObjectHideFlags: 0
@@ -13484,7 +13199,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1035823917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14708,7 +14423,7 @@ GameObject:
   - component: {fileID: 1125315717}
   - component: {fileID: 1125315716}
   m_Layer: 5
-  m_Name: PatadaVoladora
+  m_Name: Titulo1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14730,7 +14445,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -120.50004, y: 359.6}
+  m_AnchoredPosition: {x: -120.49994, y: 359.60007}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1125315716
@@ -15201,7 +14916,6 @@ GameObject:
   - component: {fileID: 1171975998}
   - component: {fileID: 1171975997}
   - component: {fileID: 1171975996}
-  - component: {fileID: 1171975995}
   m_Layer: 5
   m_Name: Combo1 (6)
   m_TagString: Untagged
@@ -15232,35 +14946,6 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: -685}
   m_SizeDelta: {x: 450, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1171975995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1171975993}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e3a651c95d7b24bb86ae07a1bbdf58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textoBoton: {fileID: 0}
-  efectoHalo: {fileID: 0}
-  escalaHover: {x: 1.1, y: 1.1, z: 1.1}
-  escalaSeleccionado: {x: 1.05, y: 1.05, z: 1.05}
-  escalaClick: {x: 0.95, y: 0.95, z: 0.95}
-  duracionAnimacion: 0.2
-  tipoEase: 6
-  colorNormal: {r: 1, g: 1, b: 1, a: 1}
-  colorHover: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  colorSeleccionado: {r: 0, g: 1, b: 1, a: 1}
-  usarEfectoHalo: 1
-  duracionHalo: 0.4
-  alphaHaloMax: 3
-  escalaHaloHover: 1.2
-  easeHalo: 6
-  efectoPulso: 0
-  intensidadPulso: 0.05
 --- !u!114 &1171975996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17435,7 +17120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1337289101
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17761,7 +17446,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1406765502}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: c56f8bfbf45753244928c467965a0ee5, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 9bac63453cf9ccd458c7c539b76347b6, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -17876,7 +17561,7 @@ GameObject:
   - component: {fileID: 1410303833}
   - component: {fileID: 1410303832}
   m_Layer: 5
-  m_Name: PatadaVoladora
+  m_Name: Titulo2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17898,7 +17583,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -120.50004, y: 359.6}
+  m_AnchoredPosition: {x: -120.49994, y: 359.60007}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1410303832
@@ -18720,7 +18405,6 @@ GameObject:
   - component: {fileID: 1473628380}
   - component: {fileID: 1473628379}
   - component: {fileID: 1473628378}
-  - component: {fileID: 1473628377}
   m_Layer: 5
   m_Name: Combo1 (5)
   m_TagString: Untagged
@@ -18751,35 +18435,6 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: -575}
   m_SizeDelta: {x: 450, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1473628377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1473628375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e3a651c95d7b24bb86ae07a1bbdf58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textoBoton: {fileID: 0}
-  efectoHalo: {fileID: 0}
-  escalaHover: {x: 1.1, y: 1.1, z: 1.1}
-  escalaSeleccionado: {x: 1.05, y: 1.05, z: 1.05}
-  escalaClick: {x: 0.95, y: 0.95, z: 0.95}
-  duracionAnimacion: 0.2
-  tipoEase: 6
-  colorNormal: {r: 1, g: 1, b: 1, a: 1}
-  colorHover: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  colorSeleccionado: {r: 0, g: 1, b: 1, a: 1}
-  usarEfectoHalo: 1
-  duracionHalo: 0.4
-  alphaHaloMax: 3
-  escalaHaloHover: 1.2
-  easeHalo: 6
-  efectoPulso: 0
-  intensidadPulso: 0.05
 --- !u!114 &1473628378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20037,6 +19692,8 @@ MonoBehaviour:
   pauseGame: 1
   navegacionConMando: 1
   botonCerrar: {fileID: 803746610}
+  contenedorTeclado: {fileID: 0}
+  contenedorGamepad: {fileID: 0}
 --- !u!224 &1595350394 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7685293876222914553, guid: 4b70ff31675739040babc2926682a1a9, type: 3}
@@ -20528,6 +20185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac5c728f19c88ed47b9b171952ad05fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DatosJugadorGuardados: 0
 --- !u!114 &1645543982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21047,7 +20705,6 @@ GameObject:
   - component: {fileID: 1687727226}
   - component: {fileID: 1687727225}
   - component: {fileID: 1687727224}
-  - component: {fileID: 1687727223}
   m_Layer: 5
   m_Name: Combo1 (5)
   m_TagString: Untagged
@@ -21078,35 +20735,6 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: -575}
   m_SizeDelta: {x: 450, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1687727223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1687727221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e3a651c95d7b24bb86ae07a1bbdf58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textoBoton: {fileID: 0}
-  efectoHalo: {fileID: 0}
-  escalaHover: {x: 1.1, y: 1.1, z: 1.1}
-  escalaSeleccionado: {x: 1.05, y: 1.05, z: 1.05}
-  escalaClick: {x: 0.95, y: 0.95, z: 0.95}
-  duracionAnimacion: 0.2
-  tipoEase: 6
-  colorNormal: {r: 1, g: 1, b: 1, a: 1}
-  colorHover: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  colorSeleccionado: {r: 0, g: 1, b: 1, a: 1}
-  usarEfectoHalo: 1
-  duracionHalo: 0.4
-  alphaHaloMax: 3
-  escalaHaloHover: 1.2
-  easeHalo: 6
-  efectoPulso: 0
-  intensidadPulso: 0.05
 --- !u!114 &1687727224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22021,9 +21649,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1195801783}
     m_Modifications:
+    - target: {fileID: 265891895887451458, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1195801784}
+    - target: {fileID: 265891895887451458, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AbrirVolumen
+      objectReference: {fileID: 0}
+    - target: {fileID: 265891895887451458, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuGraficos, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 1273019457627036973, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
       propertyPath: m_Name
       value: BarraOpciones
+      objectReference: {fileID: 0}
+    - target: {fileID: 5182458160977454295, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1195801784}
+    - target: {fileID: 5182458160977454295, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AbrirControles
+      objectReference: {fileID: 0}
+    - target: {fileID: 5182458160977454295, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuGraficos, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5507852461980402775, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
       propertyPath: m_Pivot.x
@@ -22507,9 +22159,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 740131282}
     m_Modifications:
+    - target: {fileID: 265891895887451458, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 740131283}
+    - target: {fileID: 265891895887451458, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AbrirVolumen
+      objectReference: {fileID: 0}
+    - target: {fileID: 265891895887451458, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuControles, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 1273019457627036973, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
       propertyPath: m_Name
       value: BarraOpciones
+      objectReference: {fileID: 0}
+    - target: {fileID: 5182458160977454295, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5182458160977454295, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 740131281}
+    - target: {fileID: 5182458160977454295, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5507852461980402775, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
       propertyPath: m_Pivot.x
@@ -22602,6 +22278,18 @@ PrefabInstance:
     - target: {fileID: 5507852461980402775, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191902048503404992, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 740131283}
+    - target: {fileID: 9191902048503404992, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AbrirGraficos
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191902048503404992, guid: 54b2f92fcae3e574ea921c16f9438309, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuControles, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25802,10 +25490,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mixer: {fileID: 24100000, guid: d8e8213053805d843808dd60b6ba5ee0, type: 2}
   sliderMaster: {fileID: 71901488}
-  sliderMusic: {fileID: 0}
-  sliderAmbience: {fileID: 0}
-  sliderSFX: {fileID: 0}
-  sliderVoices: {fileID: 0}
+  sliderMusic: {fileID: 809881864}
+  sliderAmbience: {fileID: 407140571}
+  sliderSFX: {fileID: 127415700}
+  sliderVoices: {fileID: 277039923}
   cargarEnAwake: 1
   guardarAutomaticamente: 0
 --- !u!4 &1994433205
