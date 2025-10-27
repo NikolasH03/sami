@@ -26,9 +26,16 @@ public class FightState : GameState
             Debug.Log($"[CombatState] Activando barrera: {barrier.name}");
         }
 
+        if (config.showTutorial)
+            GameFlowManager.Instance.StartCoroutine(MostrarTutorialConRetraso(config.TutorialID, 2f));
+
         GameFlowManager.Instance.StartCoroutine(CheckCombatEndRoutine());
     }
-
+    private IEnumerator MostrarTutorialConRetraso(int tutorialIndex, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        MenuManager.Instance?.AbrirPanelTutorial(tutorialIndex);
+    }
     private IEnumerator CheckCombatEndRoutine()
     {
         yield return new WaitForSeconds(2f); // pequeño delay de seguridad
@@ -70,7 +77,9 @@ public class FightState : GameState
         // Si no requiere cambio de escena, continuar normalmente
         GameFlowManager.Instance.GoToNextSection();
     }
-
+    public override void Update() 
+    {
+    }
     public override void Exit()
     {
         if (barriers != null)
@@ -80,5 +89,5 @@ public class FightState : GameState
         }
     }
 
-    public override void Update() { }
+
 }

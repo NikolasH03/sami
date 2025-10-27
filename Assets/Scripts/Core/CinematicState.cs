@@ -8,10 +8,10 @@ public class CinematicState : GameState
 
     public override void Enter()
     {
-        //ControladorCambiarPersonaje.instance.OcultarTodosLosHUD();
         cinematicPlayer = GameObject.FindObjectOfType<CinematicPlayer>();
         cinematicPlayer.OnCinematicFinished += OnCinematicEnd;
         cinematicPlayer.PlayCinematic(config.videoClip);
+
     }
 
     private void OnCinematicEnd()
@@ -21,6 +21,7 @@ public class CinematicState : GameState
     }
     public override void Update()
     {
+        ControladorCambiarPersonaje.instance.OcultarTodosLosHUD();
     }
 
     public override void Exit()
@@ -28,7 +29,7 @@ public class CinematicState : GameState
         if (cinematicPlayer != null)
             cinematicPlayer.OnCinematicFinished -= OnCinematicEnd;
 
-        //ControladorCambiarPersonaje.instance.ActivarHUDPausa();
+        ControladorCambiarPersonaje.instance.ActivarHUDPausa();
     }
 }
 

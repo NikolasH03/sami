@@ -6,6 +6,9 @@ public class EventosAnimacion : MonoBehaviour
     [Header("SFX del personaje")]
     [SerializeField] private List<SoundData> sonidos;
 
+    [Header("SFX aleatorios")]
+    [SerializeField] private List<RandomSoundSet> sonidosAleatorios;
+
     [Header("VFX del personaje")]
     [SerializeField] private List<VFXData> efectos;
 
@@ -13,7 +16,7 @@ public class EventosAnimacion : MonoBehaviour
     [SerializeField] private List<Transform> pivotsImpacto;
 
     // Reproduce un sonido desde un punto de impacto específico.
-    public void ReproducirSonidoImpacto(int indexSonido, int indexPivot = 0)
+    public void ReproducirSonidoPivoteEstablecido(int indexSonido, int indexPivot = 0)
     {
         if (indexSonido >= 0 && indexSonido < sonidos.Count)
         {
@@ -25,7 +28,30 @@ public class EventosAnimacion : MonoBehaviour
             Debug.LogWarning($"{name}: índice de sonido fuera de rango.");
         }
     }
-
+    public void ReproducirSonidoAleatorio(int indexSonido, int indexPivot = 0)
+    {
+        if (indexSonido >= 0 && indexSonido < sonidosAleatorios.Count)
+        {
+            Vector3 posicion = ObtenerPosicionPivot(indexPivot);
+            AudioManager.Instance.PlayRandomSFX(sonidosAleatorios[indexSonido], posicion);
+        }
+        else
+        {
+            Debug.LogWarning($"{name}: índice de sonido aleatorio fuera de rango.");
+        }
+    }
+    public void ReproducirSonidoTransform(int indexSonido, GameObject pivote)
+    {
+        if (indexSonido >= 0 && indexSonido < sonidos.Count)
+        {
+            Vector3 posicion = pivote.transform.position;
+            AudioManager.Instance.PlaySFX(sonidos[indexSonido], posicion);
+        }
+        else
+        {
+            Debug.LogWarning($"{name}: índice de sonido fuera de rango.");
+        }
+    }
 
     // Reproduce un VFX desde un punto de impacto específico.
     public void ReproducirVFX(int indexVFX, int indexPivot = 0)

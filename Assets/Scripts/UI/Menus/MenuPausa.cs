@@ -39,6 +39,10 @@ public class MenuPausa : MenuBaseConNavegacion
             primerSeleccionable = botonReanudar;
         }
     }
+    //public void Start()
+    //{
+    //    AudioManager.Instance.PlaySFX(AudioManager.Instance.efecto_AbrirMenuPausa, this.transform.position);
+    //}
 
     public void Reanudar()
     {
@@ -67,6 +71,7 @@ public class MenuPausa : MenuBaseConNavegacion
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Menu");
+        GameFlowManager.Instance.ReiniciarFlujoDeJuego();
     }
     public void SalirJuego()
     {

@@ -8,20 +8,12 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource voicesSource;
     [SerializeField] private AudioMixerGroup sfxGroup;
 
-    public SoundData mus_exploracion;
-    public SoundData mus_combate;
-    public SoundData mus_bossFight;
     public SoundData mus_menu;
     public SoundData mus_death;
-    public SoundData mus_EndBossFight;
-    public SoundData amb_naturaleza;
-    public SoundData amb_fire;
-    public SoundData amb_cascada;
-    public SoundData efecto_menuPausa;
+    public SoundData efecto_AbrirMenuPausa;
     public SoundData efecto_agarrarObjeto;
     public SoundData efecto_oprimirBoton;
-    public SoundData voice_Amenazar;
-    //public SoundData efecto_hoverBoton;
+    public SoundData efecto_hoverBoton;
 
     public static AudioManager Instance { get; private set; }
 
@@ -81,6 +73,11 @@ public class AudioManager : MonoBehaviour
         musicSource.pitch = data.pitch;
         musicSource.loop = data.loop;
         musicSource.Play();
+    }
+    public void StopMusic()
+    {
+        if (musicSource == null) return;
+        musicSource.Stop();
     }
     public void PlayAmbience(SoundData data)
     {

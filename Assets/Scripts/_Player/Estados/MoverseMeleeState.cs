@@ -74,25 +74,30 @@ public class MoverseMeleeState : CombatState
         if (InputJugador.instance.AtaqueLigero && !combatController.anim.GetBool("running"))
         {
             combatController.inputBufferCombo = TipoInputCombate.Ligero;
+            combatController.ultimoInputMovimiento = InputJugador.instance.moverse;
         }
         else if (InputJugador.instance.AtaqueLigero && combatController.anim.GetBool("running"))
         {
             combatController.inputBufferCombo = TipoInputCombate.CorriendoLigero;
+            combatController.ultimoInputMovimiento = InputJugador.instance.moverse;
         }
 
         if (InputJugador.instance.atacarFuerte && combatController.anim.GetBool("running"))
         {
             combatController.inputBufferCombo = TipoInputCombate.CorriendoFuerte;
+            combatController.ultimoInputMovimiento = InputJugador.instance.moverse;
         }
 
         else if (InputJugador.instance.atacarFuerte && !combatController.anim.GetBool("running"))
         {
             combatController.inputBufferCombo = TipoInputCombate.Fuerte;
+            combatController.ultimoInputMovimiento = InputJugador.instance.moverse;
         }
 
         if (InputJugador.instance.holdStart && !combatController.anim.GetBool("running"))
         {
             stateMachine.ChangeState(new CargandoAtaque(stateMachine, combatController));
+            combatController.ultimoInputMovimiento = InputJugador.instance.moverse;
         }
         if (combatController.inputBufferCombo != TipoInputCombate.Ninguno)
         {

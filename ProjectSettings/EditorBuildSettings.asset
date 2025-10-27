@@ -16,7 +16,7 @@ EditorBuildSettings:
     guid: 6f6f9f25611e46340ab8c601b027394e
   - enabled: 1
     path: Assets/Scenes/Demo-Combate2.unity
-    guid: 371e8b8cbd3b0a047ba4cab4e85f074d
+    guid: b0ee57dfb46949748a4eaa87362c5009
   - enabled: 0
     path: Assets/Scenes/ArbolHabilidades.unity
     guid: 2f2ac72108cf21f4e9f1adbdbef52507

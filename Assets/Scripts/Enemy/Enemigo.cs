@@ -1,74 +1,81 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(DetectarJugador))]
-[RequireComponent((typeof(HealthComp)))]
-
+[RequireComponent(typeof(HealthComp))]
 public class Enemigo : MonoBehaviour
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Animator animator;
-    
+
     MaquinaDeEstados maquinaDeEstados;
     HealthComp vidaEnemigo;
-    public GameObject Jugador;
+    private GameObject Jugador;
+
+    [Header("Utility AI")]
+    public UtilityAI_Grupal utilityGrupal;
+    public UtilityAI_Tactico utilityTactico;
 
     private bool atacando = false;
     private bool disponibleParaAtacar = true;
 
-    [Header("Stats del Enemigo")] 
+    [Header("Stats del Enemigo")]
     [SerializeField] private EnemyStats stats;
 
-    [Header("Sistema de Combo")] 
+    [Header("Sistema de Combo")]
     private int ataqueActualEnCombo = 0;
     private bool estaEnCombo = false;
     private TipoAtaque tipoAtaqueActual = TipoAtaque.Ligero;
 
-    [Header("Parametros Para Estado Patrulla")]
-    [SerializeField] public float tiempoDeEspera = 1.5f;
-    [SerializeField] public float radioDePatrulla = 8f;
-    
-    [Header("Parametros Para Estado Seguir")]
+    [Header("Detección")]
     [SerializeField] public DetectarJugador detectarJugador;
-
-    [SerializeField] public float velocidadEnEstadoSeguir = 4f;
 
     [Header("Parametros Para Estado Atacar")]
     [SerializeField] public Collider ColliderArma;
-    [SerializeField] public float tiempoEntreAtaques = 1f;
-    [SerializeField] public float rangoDeAtaque = 1f;
-    Temporizador tempParaAtaques;
+    [SerializeField] public float rangoDeAtaque = 3f;
     private EstadoAtacarJugador estadoAtacarActual;
 
-    [Header("Parametros Para Estado de Bloqueo")]
-    [SerializeField] public float rangoDeBloqueo = 4f;
+    [Header("Parametros Estado Patrulla")]
+    [SerializeField] private float tiempoDeEspera = 1.5f;
+    [SerializeField] private float radioDePatrulla = 15f;
 
-    [Header("Parametros para estado de Esquivar Ataques")] 
-    [SerializeField] public float probabilidadDeEsquivar = 1f;
+    [Header("Parametros Estado Seguir")]
+    [SerializeField] public float velocidadEnEstadoSeguir = 4f;
+
+    [Header("Parametros para Esquivar")]
     [SerializeField] public float distanciaEsquivar = 3f;
     [SerializeField] public float velocidadEsquivar = 10f;
-    private bool intentoEsquivar = false;
-    
-    [Header("Parametros Para Estado Recibir Daño")]
+    [SerializeField] private int layerNormal; 
+    [SerializeField] private int layerInvulnerable;
+
+    [Header("Parametros Estado Daño")]
     [SerializeField] public float duracionDanoRecibido = 1.10f;
-    
-    [Header("Parametros Para Estado Stun")]
-    [SerializeField] public float duracionStun = 5f;
-    
-    [Header("Parametros Para Estado De Muerte")]
+
+    [Header("Parametros Estado Muerte")]
     [SerializeField] public float tiempoDeDesaparicion = 2f;
 
+    // Cache de estados
+    private Dictionary<Type, IEstado> estadosCache = new Dictionary<Type, IEstado>();
+
+    // Estados reactivos
+    private EstadoRebirDano estadoRecibirDano;
+    private EstadoMuerte estadoMuerte;
+    private EstadoStun estadoStun;
+    private EstadoDeBloqueo estadoBloqueo;
+    private EstadoRomperGuardia estadoRompeGuardia;
+    private EstadoDeEsquivar estadoEsquivar;
+
+    // Propiedades públicas
     public Transform JugadorActual => detectarJugador.Player;
     public EnemyStats Stats => stats;
     public int AtaqueActualEnCombo => ataqueActualEnCombo;
     public bool EstaEnCombo => estaEnCombo;
     public TipoAtaque TipoAtaqueActual => tipoAtaqueActual;
-
+    public NavMeshAgent Agent => agent;
+    public Animator Animator => animator;
 
     public void Awake()
     {
@@ -76,151 +83,211 @@ public class Enemigo : MonoBehaviour
         this.animator = this.GetComponentInChildren<Animator>();
         this.vidaEnemigo = GetComponent<HealthComp>();
         BuscarJugador();
-        tempParaAtaques = new Temporizador(tiempoEntreAtaques);
+
+        layerNormal = LayerMask.NameToLayer("Enemigo");
+        layerInvulnerable = LayerMask.NameToLayer("EnemigoInvulnerable");
     }
+
     public void BuscarJugador()
     {
         this.Jugador = GameObject.FindGameObjectWithTag("Player");
     }
 
-    private void OnValidate()
-    {
-        Debug.Assert(this.agent != null, "Se Debe Asignar un Enemigo");
-        Debug.Assert(this.animator != null, "Se Debe Asignar un Animator");
-    }
     void Start()
     {
         maquinaDeEstados = new MaquinaDeEstados();
 
-        if (stats == null)
+        if (EnemyManager.instance != null)
         {
-            Debug.LogError($"Enemigo {gameObject.name} no tiene EnemyStats asignado!");
+            utilityGrupal = new UtilityAI_Grupal(this, EnemyManager.instance);
+            utilityTactico = new UtilityAI_Tactico(this);
+        }
+        else
+        {
+            Debug.LogError($"[{name}] EnemyManager no encontrado!");
         }
 
-        var estadoPatrulla = new EstadoPatrullaEnemigo(this, animator, agent, radioDePatrulla, tiempoDeEspera);
-        var estadoSeguir = new EstadoSeguirJugador(this, animator, agent, velocidadEnEstadoSeguir);
-        var estadoAtacar = new EstadoAtacarJugador(this, animator, agent, rangoDeAtaque);
-        var estadoRecibirDano = new EstadoRebirDano(this, animator, vidaEnemigo, duracionDanoRecibido);
-        var estadoMuerte = new EstadoMuerte(this, animator, vidaEnemigo, tiempoDeDesaparicion);
-        var estadoBloqueo = new EstadoDeBloqueo(this, animator, agent, vidaEnemigo);
-        //var estadoSecuenciaDeAtaques = new EstadoSecuenciaDeAtaques(this, animator, agent, detectarJugador.Player,
-        //    secuenciaAtaques, tempParaSecuencia, delayEntreAtaques);
-        var estadoEsquivarAtaques = new EstadoDeEsquivar(this, animator, agent, vidaEnemigo, distanciaEsquivar, velocidadEsquivar);
-        var estadoRompeGuardia = new EstadoRomperGuardia(this, animator, agent, vidaEnemigo);
-        var estadoRodear = new EstadoRodearJugador(this, animator, agent);
-        var estadoStun = new EstadoStun(this, animator, agent, vidaEnemigo, duracionStun);
+        if (stats == null)
+        {
+            Debug.LogError($"[{name}] No tiene EnemyStats asignado!");
+        }
 
+        InicializarEstadosReactivos();
+        ConfigurarTransicionesReactivas();
 
-        // Transiciones entre estados de Patrulla, Persecución y Ataque
-        Desde(estadoPatrulla, estadoSeguir, new FuncPredicate(() => detectarJugador.SePuedeDetectarAlJugador()));
-        Desde(estadoSeguir, estadoPatrulla, new FuncPredicate(() => !detectarJugador.SePuedeDetectarAlJugador()));
-
-        // Transiciones en el estado atacar normal
-        Desde(estadoSeguir, estadoAtacar, new FuncPredicate(() => detectarJugador.SePuedeAtacarAlJugador()));
-        Desde(estadoAtacar, estadoSeguir, new FuncPredicate(() => !detectarJugador.SePuedeAtacarAlJugador()));
-
-        // Transiciones en el estado atacar en secuencia
-        // Desde(estadoSeguir, estadoSecuenciaDeAtaques, new FuncPredicate(() =>
-        //     detectarJugador.SePuedeAtacarAlJugador()));
-        // Desde(estadoSecuenciaDeAtaques, estadoSeguir, new FuncPredicate(() =>
-        //     !detectarJugador.SePuedeAtacarAlJugador()));
-
-        // Entrar al estado de recibir daño desde cualquier otro estado 
-        DesdeCualquier(estadoRecibirDano, new FuncPredicate(() => vidaEnemigo.EnemigoFueDanado()));
-
-        // Transiciones para salir del estado de daño a cualquier otro estado
-        Desde(estadoRecibirDano, estadoPatrulla, new FuncPredicate(() =>
-            estadoRecibirDano.TerminoTiempoDano &&
-            !detectarJugador.SePuedeDetectarAlJugador()));
-        Desde(estadoRecibirDano, estadoSeguir, new FuncPredicate(() =>
-            estadoRecibirDano.TerminoTiempoDano &&
-            detectarJugador.SePuedeDetectarAlJugador()));
-        Desde(estadoRecibirDano, estadoAtacar, new FuncPredicate(() =>
-            estadoRecibirDano.TerminoTiempoDano &&
-            detectarJugador.SePuedeAtacarAlJugador()));
-
-        // Entrar al estado de muerte desde cualquier otro estado
-        DesdeCualquier(estadoMuerte, new FuncPredicate(() => vidaEnemigo.EnemigoHaMuerto()));
-
-        // Entrar al estado de bloqueo desde cualquier otro estado
-        DesdeCualquier(estadoBloqueo, new FuncPredicate(SePuedeBloquearAlJugador));
-
-        // Transiciones para salir del estado de bloqueo
-        Desde(estadoBloqueo, estadoAtacar, new FuncPredicate(() =>
-            !JugadorEstaAtacando() && detectarJugador.SePuedeAtacarAlJugador()));
-        Desde(estadoBloqueo, estadoSeguir, new FuncPredicate(() =>
-            !JugadorEstaAtacando() && detectarJugador.SePuedeDetectarAlJugador() && !detectarJugador.SePuedeAtacarAlJugador()));
-        Desde(estadoBloqueo, estadoPatrulla, new FuncPredicate(() =>
-            !JugadorEstaAtacando() && !detectarJugador.SePuedeDetectarAlJugador()));
-
-        // Estado de guardia rota
-        Desde(estadoBloqueo, estadoRompeGuardia, new FuncPredicate(() => vidaEnemigo.EnGuardBreak));
-        Desde(estadoRompeGuardia, estadoStun, new FuncPredicate(() => estadoRompeGuardia.guardBreakFinalizado));
-
-        // Primero evalúa si puede bloquear (mayor prioridad)
-        Desde(estadoStun, estadoBloqueo, new FuncPredicate(() =>
-            estadoStun.stunFinalizado && SePuedeBloquearAlJugador()));
-
-        // Luego las demás transiciones
-        Desde(estadoStun, estadoAtacar, new FuncPredicate(() =>
-            estadoStun.stunFinalizado &&
-            !SePuedeBloquearAlJugador() && // ← NUEVO: Solo atacar si NO debe bloquear
-            detectarJugador.SePuedeAtacarAlJugador()));
-
-        Desde(estadoStun, estadoSeguir, new FuncPredicate(() =>
-            estadoStun.stunFinalizado &&
-            !SePuedeBloquearAlJugador() && // ← NUEVO
-            detectarJugador.SePuedeDetectarAlJugador()));
-
-        Desde(estadoStun, estadoPatrulla, new FuncPredicate(() =>
-            estadoStun.stunFinalizado &&
-            !detectarJugador.SePuedeDetectarAlJugador()));
-
-
-        // Rodear Jugador
-        Desde(estadoSeguir, estadoRodear, new FuncPredicate(() => !EstaAtacando() && detectarJugador.SePuedeDetectarAlJugador()));
-        Desde(estadoRodear, estadoAtacar, new FuncPredicate(() => atacando));
-        Desde(estadoAtacar, estadoRodear, new FuncPredicate(() => !atacando && detectarJugador.SePuedeDetectarAlJugador()));
-
-        // Esquivar
-        DesdeCualquier(estadoEsquivarAtaques, new FuncPredicate(SePuedeEsquivarAlJugador));
-        Desde(estadoEsquivarAtaques, estadoAtacar, new FuncPredicate(() => !JugadorEstaAtacando() && detectarJugador.SePuedeAtacarAlJugador()));
-        Desde(estadoEsquivarAtaques, estadoSeguir, new FuncPredicate(() => !JugadorEstaAtacando() && detectarJugador.SePuedeDetectarAlJugador() && !detectarJugador.SePuedeAtacarAlJugador()));
-        Desde(estadoEsquivarAtaques, estadoPatrulla, new FuncPredicate(() => !JugadorEstaAtacando() && !detectarJugador.SePuedeDetectarAlJugador()));
-
-        maquinaDeEstados.SetEstado(estadoPatrulla);
+        // Iniciar en patrulla
+        var estadoInicial = new EstadoPatrullaEnemigo(this, animator, agent, radioDePatrulla, tiempoDeEspera);
+        estadosCache[typeof(EstadoPatrullaEnemigo)] = estadoInicial;
+        maquinaDeEstados.SetEstado(estadoInicial);
     }
 
-    //Métodos para el EnemyManager.cs
+    private void InicializarEstadosReactivos()
+    {
+        estadoRecibirDano = new EstadoRebirDano(this, animator, vidaEnemigo, duracionDanoRecibido);
+        estadoMuerte = new EstadoMuerte(this, animator, vidaEnemigo, tiempoDeDesaparicion);
+        estadoStun = new EstadoStun(this, animator, agent, vidaEnemigo, vidaEnemigo.DuracionStun);
+        estadoBloqueo = new EstadoDeBloqueo(this, animator, agent, vidaEnemigo);
+        estadoRompeGuardia = new EstadoRomperGuardia(this, animator, agent, vidaEnemigo);
+        estadoEsquivar = new EstadoDeEsquivar(this, animator, agent, vidaEnemigo, distanciaEsquivar, velocidadEsquivar);
+    }
+
+    private void ConfigurarTransicionesReactivas()
+    {
+        // Muerte (máxima prioridad)
+        DesdeCualquier(estadoMuerte, new FuncPredicate(() => vidaEnemigo.EnemigoHaMuerto()));
+
+        // Recibir daño
+        DesdeCualquier(estadoRecibirDano, new FuncPredicate(() => vidaEnemigo.EnemigoFueDanado()));
+
+        // Guard break → Stun
+        Desde(estadoBloqueo, estadoRompeGuardia, new FuncPredicate(() => vidaEnemigo.EnGuardBreak));
+        Desde(estadoRompeGuardia, estadoStun, new FuncPredicate(() => estadoRompeGuardia.guardBreakFinalizado));
+    }
+
+    // Método principal de evaluación (llamado por EnemyManager)
+    public void EvaluarComportamiento()
+    {
+        if (vidaEnemigo == null || vidaEnemigo.EstaMuerto) return;
+
+        // No evaluar si está en estados críticos
+        if (estaEnCombo || vidaEnemigo.EstaStuneado || vidaEnemigo.EnGuardBreak || vidaEnemigo.EstaSiendoDanado)
+        {
+            return;
+        }
+
+        // ¿Detecta al jugador?
+        if (!detectarJugador.SePuedeDetectarAlJugador())
+        {
+            // NO detecta → Patrullar
+            CambiarAEstado<EstadoPatrullaEnemigo>();
+            return;
+        }
+
+        // SÍ detecta → Decidir con Utility AI
+        AccionGrupal accionGrupal = utilityGrupal.DecidirAccion();
+
+        switch (accionGrupal)
+        {
+            case AccionGrupal.Atacar:
+                // Verificar si puede atacar por rango
+                if (detectarJugador.SePuedeAtacarAlJugador())
+                {
+                    // Decidir tipo de ataque
+                    TipoDecisionTactica tactica = utilityTactico.DecidirAccionTactica();
+
+                    if (tactica == TipoDecisionTactica.AtaqueLigero)
+                        tipoAtaqueActual = TipoAtaque.Ligero;
+                    else if (tactica == TipoDecisionTactica.AtaqueFuerte)
+                        tipoAtaqueActual = TipoAtaque.Fuerte;
+
+                    CambiarAEstado<EstadoAtacarJugador>();
+                }
+                else
+                {
+                    // Fuera de rango → Perseguir
+                    CambiarAEstado<EstadoSeguirJugador>();
+                }
+                break;
+
+            case AccionGrupal.Rodear:
+            case AccionGrupal.Flanquear:
+            case AccionGrupal.Retirarse:
+                atacando = false;
+                disponibleParaAtacar = true;
+                CambiarAEstado<EstadoRodearJugador>();
+                break;
+        }
+    }
+
+    // Verificar si debe bloquear (llamado en Update)
+    public void VerificarBloqueoYEsquive()
+    {
+        if (vidaEnemigo.EstaMuerto || vidaEnemigo.EnGuardBreak || vidaEnemigo.EstaStuneado) return;
+        if (estaEnCombo) return; // No interrumpir combos
+
+        if (!JugadorEstaAtacando()) return;
+
+        // Decidir bloquear o esquivar
+        TipoDecisionTactica decision = utilityTactico.DecidirAccionTactica();
+
+        if (decision == TipoDecisionTactica.Bloquear && !vidaEnemigo.getBloqueando())
+        {
+            maquinaDeEstados.CambiarEstado(estadoBloqueo);
+        }
+        else if (decision == TipoDecisionTactica.Esquivar && !vidaEnemigo.EstaEsquivando)
+        {
+            maquinaDeEstados.CambiarEstado(estadoEsquivar);
+        }
+    }
+
+    public void CambiarAEstado<T>() where T : IEstado
+    {
+        Type tipoEstado = typeof(T);
+
+        if (!estadosCache.ContainsKey(tipoEstado))
+        {
+            IEstado nuevoEstado = CrearEstado<T>();
+            if (nuevoEstado == null)
+            {
+                Debug.LogError($"[{name}] No se pudo crear {tipoEstado.Name}");
+                return;
+            }
+            estadosCache[tipoEstado] = nuevoEstado;
+        }
+
+        maquinaDeEstados.CambiarEstado(estadosCache[tipoEstado]);
+    }
+
+    private IEstado CrearEstado<T>() where T : IEstado
+    {
+        Type tipo = typeof(T);
+
+        if (tipo == typeof(EstadoPatrullaEnemigo))
+            return new EstadoPatrullaEnemigo(this, animator, agent, radioDePatrulla, tiempoDeEspera);
+
+        if (tipo == typeof(EstadoSeguirJugador))
+            return new EstadoSeguirJugador(this, animator, agent, velocidadEnEstadoSeguir);
+
+        if (tipo == typeof(EstadoAtacarJugador))
+            return new EstadoAtacarJugador(this, animator, agent, rangoDeAtaque);
+
+        if (tipo == typeof(EstadoRodearJugador))
+            return new EstadoRodearJugador(this, animator, agent);
+
+        return null;
+    }
+
+    // Métodos para EnemyManager
     public bool EstaDisponibleParaAtacar() => disponibleParaAtacar && !vidaEnemigo.EstaMuerto;
     public bool EstaAtacando() => atacando;
-    public bool EstaMuerto() => vidaEnemigo != null && vidaEnemigo.EstaMuerto;
-    
+    public bool EstaMuerto() => vidaEnemigo.EstaMuerto;
+
     public void OrdenarAtacar()
     {
         disponibleParaAtacar = false;
         atacando = true;
     }
-    
+
     public void TerminarAtaque()
     {
         atacando = false;
         disponibleParaAtacar = true;
     }
-    
-    //Métodos Auxiliares
-    
-    // Transición desde un estado especifico hacia otro
-    void Desde(IEstado estadoActual, IEstado estadoSiguiente, IPredicate condicion) => maquinaDeEstados.AgregarTransicion(estadoActual, estadoSiguiente, condicion);
-    
-    // Transición desde caulquier estado a otro
-    void DesdeCualquier(IEstado estadoSiguiente, IPredicate condicion) => maquinaDeEstados.AgregarTransicionGlobal(estadoSiguiente, condicion);
+
+    // Métodos auxiliares
+    void Desde(IEstado estadoActual, IEstado estadoSiguiente, IPredicate condicion) =>
+        maquinaDeEstados.AgregarTransicion(estadoActual, estadoSiguiente, condicion);
+
+    void DesdeCualquier(IEstado estadoSiguiente, IPredicate condicion) =>
+        maquinaDeEstados.AgregarTransicionGlobal(estadoSiguiente, condicion);
 
     void Update()
     {
         maquinaDeEstados.Update();
-        tempParaAtaques.Tick(Time.deltaTime);
         vidaEnemigo.TickTimers(Time.deltaTime);
+
+        // Verificar bloqueo/esquive constantemente
+        VerificarBloqueoYEsquive();
     }
 
     void FixedUpdate()
@@ -228,25 +295,17 @@ public class Enemigo : MonoBehaviour
         maquinaDeEstados.FixedUpdate();
     }
 
-    //public void Atacar()
-    //{
-    //    if (tempParaAtaques.EstaCorriendo) return;
-
-    //    tempParaAtaques.Empezar();
-    //    //logica para hacer daño
-    //}
+    // Métodos de combo
     public void IniciarCombo(TipoAtaque tipoAtaque)
     {
         estaEnCombo = true;
         ataqueActualEnCombo = 0;
         tipoAtaqueActual = tipoAtaque;
-        Debug.Log($"Iniciando combo de tipo: {tipoAtaque}");
     }
 
     public void SiguienteAtaqueEnCombo()
     {
         ataqueActualEnCombo++;
-
         int maxAtaques = tipoAtaqueActual == TipoAtaque.Ligero
             ? stats.MaxAtaquesLigerosEnCombo
             : stats.MaxAtaquesFuertesEnCombo;
@@ -261,7 +320,6 @@ public class Enemigo : MonoBehaviour
     {
         estaEnCombo = false;
         ataqueActualEnCombo = 0;
-        Debug.Log("Combo finalizado");
     }
 
     public bool ComboCompletado()
@@ -272,11 +330,7 @@ public class Enemigo : MonoBehaviour
 
         return ataqueActualEnCombo >= maxAtaques;
     }
-    public void OnAtaqueCompletado()
-    {
-        Debug.Log("Animación de ataque completada");
-        // Este método será llamado por los estados que lo necesiten
-    }
+
     public void RegistrarEstadoAtacar(EstadoAtacarJugador estado)
     {
         estadoAtacarActual = estado;
@@ -287,86 +341,51 @@ public class Enemigo : MonoBehaviour
         estadoAtacarActual = null;
     }
 
-    // ← NUEVO: Método llamado desde Animation Event
     public void OnAnimacionAtaqueCompletada()
     {
-        Debug.Log("Animation Event: Ataque completado");
-
-        // Notificar al estado si existe
         if (estadoAtacarActual != null)
         {
             estadoAtacarActual.OnAnimacionAtaqueCompletada();
         }
     }
+
     public bool JugadorEstaAtacando()
     {
-        var ataquesDeJugador = Jugador.GetComponent<ControladorCombate>();
-        if (ataquesDeJugador == null || detectarJugador == null) return false;
-    
-        float distancia = Vector3.Distance(transform.position, detectarJugador.Player.position);
-        return ataquesDeJugador.getAtacando() && distancia <= rangoDeBloqueo;
-    }
-    
-    // private bool intentoBloquear = false;
+        if (Jugador == null || detectarJugador == null) return false;
 
-    public bool SePuedeBloquearAlJugador()
-    {
-        var ataquesDeJugador = Jugador.GetComponent<ControladorCombate>();
-        if (ataquesDeJugador == null || detectarJugador == null) return false;
+        var combate = Jugador.GetComponent<ControladorCombate>();
+        if (combate == null) return false;
 
-        float distancia = Vector3.Distance(transform.position, detectarJugador.Player.position);
-        bool estaEnRango = distancia <= rangoDeBloqueo;
-        bool jugadorAtacando = ataquesDeJugador.getAtacando();
-
-        // Bloquear solo si:
-        // 1. Está en rango
-        // 2. El jugador ataca
-        // 3. El enemigo ya recibió los golpes necesarios para bloquear
-        // 4. No está en guard break
-        return jugadorAtacando && estaEnRango && vidaEnemigo.DebeBloquear() && !vidaEnemigo.EnGuardBreak;
-    }
-
-    public bool SePuedeEsquivarAlJugador()
-    {
-        var ataquesDeJugador = Jugador.GetComponent<ControladorCombate>();
-        if (ataquesDeJugador == null || detectarJugador == null) return false;
-
-        float distancia = Vector3.Distance(transform.position, detectarJugador.Player.position);
-        bool estaEnRango = distancia <= rangoDeBloqueo; // puedes usar otro rango distinto para el esquive
-        bool jugadorAtacando = ataquesDeJugador.getAtacando();
-
-        // Reinicia el intento cuando el jugador deja de atacar
-        if (!jugadorAtacando) intentoEsquivar = false;
-
-        // Si el jugador está atacando, todavía no intentamos esquivar,
-        // y pasa la probabilidad → esquiva
-        if (jugadorAtacando && estaEnRango && !intentoEsquivar)
-        {
-            intentoEsquivar = true;
-            return Random.value < probabilidadDeEsquivar;
-        }
-
-        return false;
+        return combate.getAtacando();
     }
 
     public int ObtenerDanoActual()
     {
-        if(tipoAtaqueActual == TipoAtaque.Ligero)
-        {
-            return stats.DanoAtaqueLigero;
-        }
-        else
-        {
-            return stats.DanoAtaqueFuerte;
-        }
+        return tipoAtaqueActual == TipoAtaque.Ligero
+            ? stats.DanoAtaqueLigero
+            : stats.DanoAtaqueFuerte;
+    }
+    public void ActivarInvulnerabilidad()
+    {
+        gameObject.layer = layerInvulnerable;
+    }
+
+    public void DesactivarInvulnerabilidad()
+    {
+        gameObject.layer = layerNormal;
     }
     public void desactivarCollider()
     {
         ColliderArma.enabled = false;
     }
+
     public void activarCollider()
     {
         ColliderArma.enabled = true;
     }
 
+    public HealthComp GetHealthComp()
+    {
+        return vidaEnemigo;
+    }
 }

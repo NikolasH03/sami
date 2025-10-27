@@ -22,13 +22,16 @@ public abstract class MenuBaseConNavegacion : MenuBase
 
         if (navegacionConMando && primerSeleccionable != null)
         {
+
             StartCoroutine(SeleccionarEnProximoFrame());
         }
     }
 
     private System.Collections.IEnumerator SeleccionarEnProximoFrame()
     {
+
         yield return null;
+
         eventSystem.SetSelectedGameObject(primerSeleccionable.gameObject);
     }
 

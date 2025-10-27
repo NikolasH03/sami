@@ -36,10 +36,8 @@ public class ControladorCambiarPersonaje : MonoBehaviour
 
         objetivoCamaraMuisca = muisca.transform.Find("camaraTarget");
         objetivoCamaraEspanol = espanol.transform.Find("camaraTarget");
-    }
-    void Start()
-    {
-        activarEspanol();
+        activarMuisca();
+        enemigos.ActualizarJugador();
     }
 
     public void CambiarProtagonista()

@@ -9986,7 +9986,7 @@ GameObject:
   - component: {fileID: 8882054446931800177}
   - component: {fileID: 9041462721322819090}
   - component: {fileID: 6471007133092895587}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: escudo
   m_TagString: arma
   m_Icon: {fileID: 0}

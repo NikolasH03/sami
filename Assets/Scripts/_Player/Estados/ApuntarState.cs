@@ -18,6 +18,7 @@ public class ApuntarState : CombatState
         combatController.anim.SetTrigger("Apuntar");
         apuntado.TransicionarLayerPeso(1, 1f, 0.2f);
         combatController.CambiarCanMove(true);
+        combatController.ReproducirSonido(1, 2);
     }
 
     public override void HandleInput()

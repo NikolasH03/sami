@@ -11,9 +11,10 @@ public class AtaqueFuerte1 : CombatState
     {
 
         combatController.tipoAtaque = "fuerte";
-        combatController.OrientarJugador();
+        combatController.OrientarJugador(combatController.ultimoInputMovimiento);
         combatController.anim.SetTrigger("Fuerte1");
         combatController.setAtacando(true);
+        combatController.ReproducirSonidoSlash();
     }
     public override void HandleInput()
     {

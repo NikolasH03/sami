@@ -31688,12 +31688,12 @@ AnimationClip:
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 1
+    intParameter: 5
     messageOptions: 0
   - time: 0.56666666
     functionName: AnimationEvent_ReproducirPieDer
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 1
+    intParameter: 5
     messageOptions: 0

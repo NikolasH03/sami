@@ -10,8 +10,8 @@ public class HealthComp : MonoBehaviour
     private float vidaActual;
     
     [Header("Golpes Para Empezar A Bloquear")]
-    [SerializeField] private int golpesAntesDeBloquear = 3;
-    [SerializeField] private int golpesRecibidos = 0;
+    private int golpesAntesDeBloquear = 2;
+    private int golpesRecibidos = 0;
     
     [Header("Stamina")]
     [SerializeField] private float staminaMax = 10f;
@@ -79,6 +79,14 @@ public class HealthComp : MonoBehaviour
             return;
         }
 
+        if (estaStuneado)
+        {
+            Debug.Log("Enemigo stuneado recibió daño normal - saliendo del stun");
+            estaStuneado = false;
+            OcultarUIFinisher();
+            MostrarUIBarras();
+        }
+
         golpesRecibidos++;
         vidaActual -= cantidad;
         ActualizarBarra();
@@ -122,7 +130,7 @@ public class HealthComp : MonoBehaviour
     {
         InventarioEconomia.instance.enemigoMuerto(1);
         Debug.Log("Enemigo eliminado");
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
     
     public bool EnemigoFueDanado()
@@ -246,7 +254,7 @@ public class HealthComp : MonoBehaviour
 
     }
 
-    private void OcultarUIBarras()
+    public void OcultarUIBarras()
     {
         if (uiBarrasNormales != null)
             uiBarrasNormales.SetActive(false);
@@ -274,5 +282,17 @@ public class HealthComp : MonoBehaviour
     public void SetGolpesRecibidos(int golpes)
     {
         golpesRecibidos = golpes;
+    }
+    public float GetVidaActual()
+    {
+        return vidaActual;  
+    }
+    public float GetVidaMaxima()
+    {
+        return vidaMax;
+    }
+    public float GetVidaNormalizada()
+    {
+        return Mathf.Clamp01(vidaActual / vidaMax);
     }
 }

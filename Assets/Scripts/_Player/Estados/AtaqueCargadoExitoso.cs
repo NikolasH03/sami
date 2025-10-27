@@ -7,10 +7,11 @@ public class AtaqueCargadoExitoso : CombatState
     public override void Enter()
     {
         combatController.tipoAtaque = "cargado";
-        combatController.OrientarJugador();
+        combatController.OrientarJugador(combatController.ultimoInputMovimiento);
         combatController.InvulneravilidadJugador();
         combatController.anim.SetTrigger("CargadoExitoso");
         combatController.setAtacando(true);
+        combatController.ReproducirSonido(6, 1);
         Debug.Log("el ataque cargado fue exitoso");
     }
 

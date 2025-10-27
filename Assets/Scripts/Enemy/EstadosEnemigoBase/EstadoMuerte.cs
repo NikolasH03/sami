@@ -23,6 +23,8 @@ public class EstadoMuerte : EstadoBase
         var rb = enemigo.GetComponent<Rigidbody>();
         if (rb != null) rb.isKinematic = true;
 
+        vidaEnemigo.OcultarUIBarras();
+
         enemigo.StartCoroutine(EliminarEnemigo(tiempoDeDesaparicion));
     }
 

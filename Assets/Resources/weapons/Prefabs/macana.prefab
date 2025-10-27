@@ -10038,8 +10038,8 @@ GameObject:
   - component: {fileID: 1218069580185504623}
   - component: {fileID: 6509699662235880984}
   - component: {fileID: 6784477611778900441}
-  m_Layer: 0
-  m_Name: Macana
+  m_Layer: 9
+  m_Name: macana
   m_TagString: arma
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

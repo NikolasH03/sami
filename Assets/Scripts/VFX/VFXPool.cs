@@ -28,7 +28,16 @@ public class VFXPool : MonoBehaviour
         if (pools[data].Count > 0)
         {
             obj = pools[data].Dequeue();
-            obj.SetActive(true);
+
+            // Si el objeto fue destruido por cambio de escena, elimínalo y crea uno nuevo
+            if (obj == null)
+            {
+                obj = Instantiate(data.prefab, transform);
+            }
+            else
+            {
+                obj.SetActive(true);
+            }
         }
         else
         {
@@ -43,7 +52,17 @@ public class VFXPool : MonoBehaviour
     private IEnumerator<WaitForSeconds> DespawnVFX(VFXData data, GameObject obj, float time)
     {
         yield return new WaitForSeconds(time);
-        obj.SetActive(false);
-        pools[data].Enqueue(obj);
+
+        if (obj != null)
+        {
+            obj.SetActive(false);
+
+            // Si el diccionario se reseteó (por seguridad en cambios de escena)
+            if (!pools.ContainsKey(data))
+                pools[data] = new Queue<GameObject>();
+
+            pools[data].Enqueue(obj);
+        }
+
     }
 }
