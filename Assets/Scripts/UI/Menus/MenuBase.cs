@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public abstract class MenuBase : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public abstract class MenuBase : MonoBehaviour
         if (isOpen) return;
 
         isOpen = true;
+        EventSystem.current.SetSelectedGameObject(null);
         menuContainer.SetActive(true);
 
         if (pauseGame)
