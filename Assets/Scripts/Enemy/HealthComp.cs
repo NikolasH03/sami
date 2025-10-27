@@ -130,7 +130,7 @@ public class HealthComp : MonoBehaviour
     {
         //InventarioEconomia.instance.enemigoMuerto(1);
         Debug.Log("Enemigo eliminado");
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
     
     public bool EnemigoFueDanado()

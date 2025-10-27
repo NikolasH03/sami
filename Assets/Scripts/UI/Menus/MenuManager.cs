@@ -61,8 +61,11 @@ public class MenuManager : MonoBehaviour
         {
             if (menuPausa != null && (menuPrincipal == null || !menuPrincipal.IsOpen))
             {
-                OpenMenu(menuPausa);
-                ControladorCambiarPersonaje.instance.OcultarTodosLosHUD();
+                if (ControladorCambiarPersonaje.instance.PuedePausar)
+                {
+                    OpenMenu(menuPausa);
+                    ControladorCambiarPersonaje.instance.OcultarTodosLosHUD();
+                }
             }
                 
 

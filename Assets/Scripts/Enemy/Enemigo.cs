@@ -82,6 +82,7 @@ public class Enemigo : MonoBehaviour
         this.agent = this.GetComponent<NavMeshAgent>();
         this.animator = this.GetComponentInChildren<Animator>();
         this.vidaEnemigo = GetComponent<HealthComp>();
+        desactivarCollider();
         BuscarJugador();
 
         layerNormal = LayerMask.NameToLayer("Enemigo");

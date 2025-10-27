@@ -12,8 +12,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float intervaloEvaluacionAI = 0.1f;
     [SerializeField] private float intervaloGestionSlots = 0.1f;
 
-    private List<Enemigo> todosLosEnemigos = new List<Enemigo>();
-    private List<Enemigo> enemigosAtacando = new List<Enemigo>();
+    public List<Enemigo> todosLosEnemigos = new List<Enemigo>();
+    public List<Enemigo> enemigosAtacando = new List<Enemigo>();
 
     private Coroutine aiLoopCoroutine;
     private Coroutine gestionSlotsCoroutine;
@@ -47,6 +47,13 @@ public class EnemyManager : MonoBehaviour
         aiLoopCoroutine = StartCoroutine(AILoop());
         gestionSlotsCoroutine = StartCoroutine(GestionarSlots());
     }
+    public void OnOleadaActivada(Transform oleada)
+    {
+        todosLosEnemigos.Clear();
+        Enemigo[] enemigos = oleada.GetComponentsInChildren<Enemigo>(true);
+        todosLosEnemigos.AddRange(enemigos);
+    }
+
 
     /// <summary>
     /// Loop de evaluación de IA
@@ -213,7 +220,10 @@ public class EnemyManager : MonoBehaviour
     public bool AreAllEnemiesDead()
     {
         LimpiarEnemigos();
+        Debug.Log("el numero de enemigos es " + todosLosEnemigos.Count);
         return todosLosEnemigos.Count == 0;
+
+
     }
 
     public int ContarEnemigosAtacando()

@@ -18,6 +18,7 @@ public class ControladorCambiarPersonaje : MonoBehaviour
 
     //logica para cambiar el personaje
     private bool esMuisca;
+    public bool PuedePausar = false;
 
     //otras referencias
     [SerializeField] EnemyManager enemigos;

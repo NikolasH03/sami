@@ -9,6 +9,7 @@ using UnityEngine.Windows;
 public class ControladorCombate : MonoBehaviour
 {
     public Animator anim;
+    public bool PuedePausar = false;
 
     //ataque
     [SerializeField] bool atacando = false;
@@ -149,14 +150,14 @@ public class ControladorCombate : MonoBehaviour
 
 
         armaInstanciada = Instantiate(nuevaArma.prefabArmaPrincipal, puntoSujecionArmaPrincipal);
-        armaInstanciada.transform.localPosition = Vector3.zero;
-        armaInstanciada.transform.localRotation = Quaternion.identity;
-        armaInstanciada.transform.localScale = Vector3.one;
+        //armaInstanciada.transform.localPosition = Vector3.zero;
+        //armaInstanciada.transform.localRotation = Quaternion.identity;
+        //armaInstanciada.transform.localScale = Vector3.one;
 
         armaSecundariaInstanciada = Instantiate(nuevaArma.prefabArmaSecundaria, puntoSujecionArmaSecundaria);
-        armaSecundariaInstanciada.transform.localPosition = Vector3.zero;
-        armaSecundariaInstanciada.transform.localRotation = Quaternion.identity;
-        armaSecundariaInstanciada.transform.localScale = Vector3.one;
+        //armaSecundariaInstanciada.transform.localPosition = Vector3.zero;
+        //armaSecundariaInstanciada.transform.localRotation = Quaternion.identity;
+        //armaSecundariaInstanciada.transform.localScale = Vector3.one;
 
         vfxPrincipal = armaInstanciada.GetComponent<ArmaVFX>();
         vfxSecundaria = armaSecundariaInstanciada.GetComponent<ArmaVFX>();
