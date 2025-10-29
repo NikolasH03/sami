@@ -10,9 +10,10 @@ public class AtaqueLigero2 : CombatState
     public override void Enter()
     {
         combatController.tipoAtaque = "ligero";
-        combatController.OrientarJugador();
+        combatController.OrientarJugador(combatController.ultimoInputMovimiento);
         combatController.anim.SetTrigger("Ligero2");
         combatController.setAtacando(true);
+        combatController.ReproducirSonidoSlash();
     }
 
     public override void HandleInput()

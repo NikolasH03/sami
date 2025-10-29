@@ -15,7 +15,12 @@ public class DispararState : CombatState
     {
         combatController.anim.SetTrigger("Disparo");
         combatController.InvulneravilidadJugador();
-        if (ControladorCambiarPersonaje.instance.getEsMuisca()) { apuntado.InstanciarBala(apuntado.ObtenerPosicionObjetivo()); }
+        if (ControladorCambiarPersonaje.instance.getEsMuisca()) 
+        { 
+            apuntado.InstanciarBala(apuntado.ObtenerPosicionObjetivo());
+            combatController.ReproducirSonido(8, 5);
+
+        }
 
         else
         {

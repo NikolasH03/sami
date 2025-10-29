@@ -6,6 +6,7 @@ public class CargandoDisparo : CombatState
     public override void Enter()
     {
         combatController.anim.SetTrigger("CargarDisparo");
+        combatController.ReproducirSonido(5, 1);
     }
     public override void HandleInput()
     {

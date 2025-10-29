@@ -6,7 +6,6 @@ public class BossBattleState : GameState
 
     public override void Enter()
     {
-        AudioManager.Instance.PlayMusic(AudioManager.Instance.mus_bossFight);
         //manager.dialogueManager.PlayDialogue("BossIntro");
         //BossController.Instance?.StartBattle(); INICIAR PELEA CON JEFE
     }
@@ -21,6 +20,5 @@ public class BossBattleState : GameState
 
     public override void Exit()
     {
-        AudioManager.Instance.PlayMusic(AudioManager.Instance.mus_EndBossFight);
     }
 }

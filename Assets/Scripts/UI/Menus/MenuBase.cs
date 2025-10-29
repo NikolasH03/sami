@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public abstract class MenuBase : MonoBehaviour
 {
     [SerializeField] protected GameObject menuContainer;
-    [SerializeField] protected bool pauseGame = false;
+    public bool pauseGame = false;
 
     protected bool isOpen = false;
 
@@ -33,6 +33,7 @@ public abstract class MenuBase : MonoBehaviour
         if (!isOpen) return;
 
         isOpen = false;
+        EventSystem.current.SetSelectedGameObject(null);
         menuContainer.SetActive(false);
 
         if (pauseGame)
@@ -44,6 +45,7 @@ public abstract class MenuBase : MonoBehaviour
 
         OnMenuClosed();
     }
+    public bool Pause => pauseGame;
 
     public bool IsOpen => isOpen;
 

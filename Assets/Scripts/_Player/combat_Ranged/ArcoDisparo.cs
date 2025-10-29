@@ -12,9 +12,9 @@ public class ArcoDisparo : MonoBehaviour
     [SerializeField] private LayerMask capasDeteccion = -1; 
 
     [Header("Configuración de Destrucción")]
-    [SerializeField] private float tiempoVidaMaximo = 5f;
-    [SerializeField] private float distanciaMaxima = 150f;
-    [SerializeField] private float alturaMaxima = 50f;
+    [SerializeField] private float tiempoVidaMaximo = 8f;
+    [SerializeField] private float distanciaMaxima = 900f;
+    //[SerializeField] private float alturaMaxima = 50f;
 
 
     private HealthComp enemigo;
@@ -27,7 +27,7 @@ public class ArcoDisparo : MonoBehaviour
     {
         proyectilRB = GetComponent<Rigidbody>();
 
-        gameObject.layer = LayerMask.NameToLayer("Proyectil");
+        gameObject.layer = LayerMask.NameToLayer("Arma");
 
         posicionInicial = transform.position;
         tiempoInicio = Time.time;
@@ -63,12 +63,12 @@ public class ArcoDisparo : MonoBehaviour
             return;
         }
 
-        if (transform.position.y > alturaMaxima)
-        {
-            Debug.Log($"Flecha destruida por altura máxima: {transform.position.y}m");
-            DestruirFlecha();
-            return;
-        }
+        //if (transform.position.y > alturaMaxima)
+        //{
+        //    Debug.Log($"Flecha destruida por altura máxima: {transform.position.y}m");
+        //    DestruirFlecha();
+        //    return;
+        //}
 
         if (transform.position.y < posicionInicial.y - 20f)
         {
@@ -122,7 +122,7 @@ public class ArcoDisparo : MonoBehaviour
             }
         }
 
-        // ReproducirEfectoImpactoEnemigo();
+        player.ReproducirSonidoTransform(3, this.gameObject);
 
         DestruirFlecha();
     }
@@ -133,11 +133,9 @@ public class ArcoDisparo : MonoBehaviour
 
         Debug.Log($"Flecha impactó obstáculo: {obstaculoCollider.gameObject.name}");
 
-        // ReproducirEfectoImpactoObstaculo();
+        player.ReproducirSonidoTransform(4, this.gameObject);
 
         ClavaEnPared(obstaculoCollider);
-
-        //DestruirFlecha();
     }
 
     private void DestruirFlecha()

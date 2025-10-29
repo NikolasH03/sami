@@ -9,6 +9,7 @@ using UnityEngine.Windows;
 public class ControladorCombate : MonoBehaviour
 {
     public Animator anim;
+    public bool PuedePausar = false;
 
     //ataque
     [SerializeField] bool atacando = false;
@@ -62,11 +63,18 @@ public class ControladorCombate : MonoBehaviour
     private ControladorMovimiento controladorMovimiento;
     private CombatStateMachine fsm;
     private AutoTargeting targeting;
+    [HideInInspector] public Vector2 ultimoInputMovimiento;
     //[SerializeField] HabilidadesJugador habilidadesJugador;
 
     void Awake()
     {
         stats = new EstadisticasCombate(statsBase);
+
+        if (GameDataManager.Instance.DatosJugadorGuardados)
+        {
+            GameDataManager.Instance.CargarEnJugador(this);
+        }
+
         EquiparArma(armaActual);
     }
     private void Start()
@@ -142,14 +150,14 @@ public class ControladorCombate : MonoBehaviour
 
 
         armaInstanciada = Instantiate(nuevaArma.prefabArmaPrincipal, puntoSujecionArmaPrincipal);
-        armaInstanciada.transform.localPosition = Vector3.zero;
-        armaInstanciada.transform.localRotation = Quaternion.identity;
-        armaInstanciada.transform.localScale = Vector3.one;
+        //armaInstanciada.transform.localPosition = Vector3.zero;
+        //armaInstanciada.transform.localRotation = Quaternion.identity;
+        //armaInstanciada.transform.localScale = Vector3.one;
 
         armaSecundariaInstanciada = Instantiate(nuevaArma.prefabArmaSecundaria, puntoSujecionArmaSecundaria);
-        armaSecundariaInstanciada.transform.localPosition = Vector3.zero;
-        armaSecundariaInstanciada.transform.localRotation = Quaternion.identity;
-        armaSecundariaInstanciada.transform.localScale = Vector3.one;
+        //armaSecundariaInstanciada.transform.localPosition = Vector3.zero;
+        //armaSecundariaInstanciada.transform.localRotation = Quaternion.identity;
+        //armaSecundariaInstanciada.transform.localScale = Vector3.one;
 
         vfxPrincipal = armaInstanciada.GetComponent<ArmaVFX>();
         vfxSecundaria = armaSecundariaInstanciada.GetComponent<ArmaVFX>();
@@ -257,9 +265,9 @@ public class ControladorCombate : MonoBehaviour
 
         fsm.ChangeState(new VerificarTipoArmaState(fsm, this));
     }
-    public void OrientarJugador()
+    public void OrientarJugador(Vector2? inputDireccion)
     {
-        targeting.BuscarYOrientar();
+        targeting.BuscarSegunDireccionDeMirada(InputJugador.instance.moverse);
     }
     public void ReproducirVFX(int indexVFX, int indexPivot = 0)
     {
@@ -268,7 +276,15 @@ public class ControladorCombate : MonoBehaviour
 
     public void ReproducirSonido(int indexSonido, int indexPivot = 0)
     {
-        eventosAnimacion.ReproducirSonidoImpacto(indexSonido, indexPivot);
+        eventosAnimacion.ReproducirSonidoPivoteEstablecido(indexSonido, indexPivot);
+    }
+    public void ReproducirSonidoAleatorio(int indexSonido, int indexPivot = 0)
+    {
+        eventosAnimacion.ReproducirSonidoAleatorio(indexSonido, indexPivot);
+    }
+    public void ReproducirSonidoTransform(int indexSonido, GameObject pivote)
+    {
+        eventosAnimacion.ReproducirSonidoTransform(indexSonido, pivote);
     }
 
     // funciones para los Animation Events
@@ -351,6 +367,7 @@ public class ControladorCombate : MonoBehaviour
         setAtacando(false);
         inputBufferCombo = TipoInputCombate.Ninguno;
         puedeHacerCombo = false;
+        TerminarInvulnerabilidad();
 
         // Apuntado/Distancia
         ControladorApuntado apuntado = GetComponent<ControladorApuntado>();
@@ -402,21 +419,37 @@ public class ControladorCombate : MonoBehaviour
         ColliderArmaSecundaria.enabled = false;
         ColliderPierna.enabled = false;
     }
-    public void AnimationEvent_ReproducirPieIzq(int indexVFX)
+    public void AnimationEvent_ReproducirPieIzq()
     {
-        eventosAnimacion.ReproducirVFX(indexVFX, 3);
-        eventosAnimacion.ReproducirSonidoImpacto(indexVFX, 3);
+        eventosAnimacion.ReproducirVFX(1, 3);
+
+        if (!anim.GetBool("running"))
+            eventosAnimacion.ReproducirSonidoAleatorio(4, 3);
+        else
+            eventosAnimacion.ReproducirSonidoAleatorio(5, 3);
+
+
+
     }
-    public void AnimationEvent_ReproducirPieDer(int indexVFX)
+    public void AnimationEvent_ReproducirPieDer()
     {
-        eventosAnimacion.ReproducirVFX(indexVFX, 4);
-        eventosAnimacion.ReproducirSonidoImpacto(indexVFX, 4);
+        eventosAnimacion.ReproducirVFX(1, 4);
+
+        if (!anim.GetBool("running"))
+            eventosAnimacion.ReproducirSonidoAleatorio(4, 4);
+        else
+            eventosAnimacion.ReproducirSonidoAleatorio(5, 4);
+
     }
 
-    public void AnimationEvent_ReproducirBloqueo(int indexVFX)
+    public void AnimationEvent_ReproducirBloqueo()
     {
-        eventosAnimacion.ReproducirVFX(indexVFX, 0);
-        eventosAnimacion.ReproducirSonidoImpacto(indexVFX, 0);
+        eventosAnimacion.ReproducirVFX(0, 0);
+        eventosAnimacion.ReproducirSonidoAleatorio(3, 0);
+    }
+    public void ReproducirSonidoSlash()
+    {
+        eventosAnimacion.ReproducirSonidoAleatorio(0, 1);
     }
     public void ActivarTrailArmaPrincipal()
     {
@@ -451,6 +484,22 @@ public class ControladorCombate : MonoBehaviour
 
 
     //setters y getters
+
+    public void CargarEstadisticasActuales(float vidaMax, float EstaminaMax, float VidaActual)
+    {
+        stats.CargarEstadisticasActuales(vidaMax, EstaminaMax, VidaActual);
+    }
+
+    public void AumentarNumeroMuertes()
+    {
+        muertesActuales++;
+        HUDJugador hudJugador = GetComponent<HUDJugador>();
+        hudJugador.ActualizarContadorMuertes();
+    }
+    public void SetNumeroMuertes(int muertes)
+    {
+        muertesActuales = muertes;
+    }
 
     public bool getAtacando()
     {

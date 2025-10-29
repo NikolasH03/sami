@@ -61,8 +61,11 @@ public class MenuManager : MonoBehaviour
         {
             if (menuPausa != null && (menuPrincipal == null || !menuPrincipal.IsOpen))
             {
-                OpenMenu(menuPausa);
-                ControladorCambiarPersonaje.instance.OcultarTodosLosHUD();
+                if (ControladorCambiarPersonaje.instance.PuedePausar)
+                {
+                    OpenMenu(menuPausa);
+                    ControladorCambiarPersonaje.instance.OcultarTodosLosHUD();
+                }
             }
                 
 
@@ -271,12 +274,17 @@ public class MenuManager : MonoBehaviour
             OpenMenu(menuPrincipal);
         }
     }
-    public void AbrirPanelTutorial(int IndexPanel)
+    public void AbrirPanelTutorial(int indexPanel)
     {
-        if (PanelesTutorial[IndexPanel + 1] != null)
-            OpenMenu(PanelesTutorial[IndexPanel + 1]);
+        if (indexPanel >= 0 && indexPanel < PanelesTutorial.Count)
+        {
+            OpenMenu(PanelesTutorial[indexPanel]);
+            Debug.Log($"[MenuManager] Mostrando panel de tutorial {indexPanel}");
+        }
         else
-            Debug.LogWarning($"No se encontró el panel de tutorial: {PanelesTutorial[IndexPanel + 1]}");
+        {
+            Debug.LogWarning($"[MenuManager] Índice de tutorial inválido: {indexPanel}");
+        }
     }
 
 
@@ -299,7 +307,10 @@ public class MenuManager : MonoBehaviour
         }
         return false;
     }
-
+    public bool EstaEnPausa()
+    {
+        return currentMenu.Pause;
+    }
 
     // Métodos de acceso rápido
     public MenuInicial MenuInicial => menuInicial;

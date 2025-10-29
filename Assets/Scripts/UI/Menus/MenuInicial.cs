@@ -21,6 +21,8 @@ public class MenuInicial : MenuBase
 
     protected override void OnMenuOpened()
     {
+        GameDataManager.Instance.ReiniciarDatosJugador();
+        AudioManager.Instance.PlayMusic(AudioManager.Instance.mus_menu);
         esperandoInput = true;
 
         // Cambiar a input UI para detectar cualquier tecla
