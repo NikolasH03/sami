@@ -4264,7 +4264,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &275152863
 Transform:
   m_ObjectHideFlags: 0
@@ -21793,8 +21793,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8304606163710592214}
   - {fileID: 6903730168095564636}
+  - {fileID: 8304606163710592214}
   - {fileID: 3690214286366099921}
   m_Father: {fileID: 1030076083}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -26923,7 +26923,7 @@ PrefabInstance:
       objectReference: {fileID: 5419070313392522975, guid: 2cf6de8ea4a91fe46bacef01ec688247, type: 2}
     - target: {fileID: 5621659452311769278, guid: 4b70ff31675739040babc2926682a1a9, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4292076520
+      value: 2564023272
       objectReference: {fileID: 0}
     - target: {fileID: 5621659452311769278, guid: 4b70ff31675739040babc2926682a1a9, type: 3}
       propertyPath: m_hasFontAssetChanged
@@ -31654,7 +31654,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6059031157653245602}
   m_HandleRect: {fileID: 6985643401093614523}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

@@ -269,6 +269,10 @@ public class ControladorCombate : MonoBehaviour
     {
         targeting.BuscarSegunDireccionDeMirada(InputJugador.instance.moverse);
     }
+    public void DesplazamientoDash(Vector2? inputDireccion)
+    {
+        targeting.EjecutarDash();
+    }
     public void ReproducirVFX(int indexVFX, int indexPivot = 0)
     {
         eventosAnimacion.ReproducirVFX(indexVFX, indexPivot);

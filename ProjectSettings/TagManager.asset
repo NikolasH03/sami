@@ -12,6 +12,7 @@ TagManager:
   - audio
   - Habilidades
   - Totem
+  - PW - Nature
   layers:
   - Default
   - TransparentFX
@@ -24,9 +25,9 @@ TagManager:
   - Player
   - Arma
   - EnemigoInvulnerable
-  - 
-  - 
-  - 
+  - Suimono_Water
+  - Suimono_Depth
+  - Suimono_Screen
   - 
   - 
   - 

@@ -8,24 +8,24 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Water Material
-  m_Shader: {fileID: 4800000, guid: bcb8ab61b454e43759e4aed562a63ef0, type: 3}
-  m_Parent: {fileID: 2100000, guid: ac0ca205b533ff240a252aa9c22da83f, type: 2}
+  m_Shader: {fileID: -6465566751694194690, guid: 0ba09e3043034d64eba4c886a0dc5959, type: 3}
+  m_Parent: {fileID: 2100000, guid: 2e7fa2e78657b1e429472827526c75ea, type: 2}
   m_ModifiedSerializedProperties: 16
-  m_ValidKeywords:
-  - _PW_SF_SSS_ON
+  m_ValidKeywords: []
   m_InvalidKeywords:
   - _DISABLE_DECALS
   - _DISABLE_SSR
   - _DISABLE_SSR_TRANSPARENT
   - _DOUBLESIDED_ON
   - _ENABLE_FOG_ON_TRANSPARENT
+  - _PW_SF_SSS_ON
   - _PW_SF_WAVE_PEAK_ON
   - _PW_SSS_ON
   - _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2998
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses:
   - TransparentDepthPrepass
@@ -42,6 +42,7 @@ Material:
     - _NormalLayer1Scale: 0
     - _NormalTile: 0
     - _PW_MainLightIntensity: 1.29
+    - _QueueControl: 0
     - _WaveLength: 0
     - _WaveSpeed: 0
     - _WaveSteepness: 0
@@ -50,6 +51,19 @@ Material:
     - _PW_MainLightColor: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
     - _PW_MainLightDir: {r: 0.3213938, g: 0.76604444, b: -0.5566705, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &3706040435445737419
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
 --- !u!114 &5267755227249607481
 MonoBehaviour:
   m_ObjectHideFlags: 11
