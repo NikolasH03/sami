@@ -1,8 +1,17 @@
-# SAMI
+# Siecha: A 3D Colombian Roguelike
 
-> 🎮 **SAMI** es un juego de acción y combate en tercera persona desarrollado en Unity, con combates cuerpo a cuerpo y a distancia, cambio de personaje, IA de enemigos, sistema de stamina/guard-break, navegación con NavMesh, y un control general de escenas, UI, VFX, etc.
-![Exploración en Siecha](Docs/Gameplay1.jpeg)
-![Combate en Siecha](Docs/Gameplay2.png)
+> 🎮 **Siecha** es un juego de acción y combate en tercera persona desarrollado en Unity, con combates cuerpo a cuerpo y a distancia, cambio de personaje, IA de enemigos, sistema de stamina/guard-break, navegación con NavMesh, y un control general de escenas, UI, VFX, etc.
+<table>
+  <tr>
+    <td><img src="Docs/Gameplay1.jpeg" alt="Screenshot 1" width="300"/></td>
+    <td><img src="Docs/Cinematica1.png" alt="Screenshot 2" width="300"/></td>
+  </tr>
+  <tr>
+    <td><img src="Docs/Interfaz.png" alt="Screenshot 3" width="300"/></td>
+    <td><img src="Docs/Gameplay2.png" alt="Screenshot 4" width="300"/></td>
+  </tr>
+</table>
+
 
 ---
 
@@ -41,8 +50,8 @@ Este README sirve como punto de partida para entender la base de código, su org
 - Combate a distancia con armas (arco, arcabuz, proyectiles).
 - Cambio de personaje (Muisca ↔ Español). 
 - Gestión de estadísticas, salud y stamina tanto de jugador como de enemigos. 
-- IA de enemigos con lógica de decisión (utility-AI), máquinas de estado independientes, con estados proactivos y reactivos. {index=6}  
-- Navegación por NavMesh, con agentes de navegación para personajes y enemigos. 
+- IA de enemigos con lógica de decisión (utility-AI), máquinas de estado independientes, con estados proactivos y reactivos. 
+- Navegación por NavMesh, con agentes de navegación para enemigos. 
 - Sistemas de UI / menú / navegación, incluyendo menú principal, tutoriales, configuración, video playback, etc.
 - Arquitectura de datos mediante ScriptableObjects para armas, estadísticas, configuración de personajes/enemigos.
 
@@ -54,17 +63,17 @@ Este README sirve como punto de partida para entender la base de código, su org
 
 | Dominio del sistema       | Propósito principal                                                                 | Componentes clave |
 |--------------------------|--------------------------------------------------------------------------------------|------------------|
-| Player Combat            | Gestiona ataques, combos, bloqueos, esquive, cambio de armas/personaje             | `ControladorCombate`, `CombatStateMachine`, `InputJugador` :contentReference[oaicite:10]{index=10} |
-| Enemy AI                 | Controla comportamiento de enemigos, decisiones, combates                          | `Enemigo`, `MaquinaDeEstados`, `UtilityAI_Grupal`, `UtilityAI_Tactico` :contentReference[oaicite:11]{index=11} |
-| Health & Damage          | Maneja salud, stamina, guard-break, stun para jugador y enemigos                   | `HealthComp`, `EstadisticasCombate`, `DetectorImpactoMelee` :contentReference[oaicite:12]{index=12} |
-| Navigation               | Proporciona pathfinding y restricciones de movimiento                             | Unity NavMesh, `NavMeshAgent`, `ControladorMovimiento` :contentReference[oaicite:13]{index=13} |
-| UI & Menús               | Manejo de menús, configuración, tutoriales, videos, navegación UI                | `ComboNavigator`, `VolumeSettings`, `VideoPlayer`, escenas de menú :contentReference[oaicite:14]{index=14} |
+| Player Combat            | Gestiona ataques, combos, bloqueos, esquive, cambio de armas/personaje             | `ControladorCombate`, `CombatStateMachine`, `InputJugador` |
+| Enemy AI                 | Controla comportamiento de enemigos, decisiones, combates                          | `Enemigo`, `MaquinaDeEstados`, `UtilityAI_Grupal`, `UtilityAI_Tactico` |
+| Health & Damage          | Maneja salud, stamina, guard-break, stun para jugador y enemigos                   | `HealthComp`, `EstadisticasCombate`, `DetectorImpactoMelee`|
+| Navigation               | Proporciona pathfinding y restricciones de movimiento                             | Unity NavMesh, `NavMeshAgent`, `ControladorMovimiento`|
+| UI & Menús               | Manejo de menús, configuración, tutoriales, videos, navegación UI                | `ComboNavigator`, `VolumeSettings`, `VideoPlayer`, escenas de menú |
 
 ---
 
 ## Estructura del proyecto
 
-El repositorio sigue la organización estándar de Unity, estructurando scripts por área funcional. :contentReference[oaicite:15]{index=15}  
+El repositorio sigue la organización estándar de Unity, estructurando scripts por área funcional. 
 
 Por ejemplo:  
 - `Assets/Scripts/_Player/` — Todo lo relacionado con jugador (movimiento, combate, entrada, estados).  
@@ -96,7 +105,7 @@ Por ejemplo:
 
 ## Patrones de diseño y decisiones técnicas
 
-- **Singleton**: para sistemas globales como `InputJugador`, `EnemyManager`, `ControladorCambiarPersonaje`, `CameraShakeManager`, `GameDataManager`. :contentReference[oaicite:18]{index=18}  
+- **Singleton**: para sistemas globales como `InputJugador`, `EnemyManager`, `ControladorCambiarPersonaje`, `CameraShakeManager`, `GameDataManager`.
 - **State Pattern (máquinas de estados)**:  
   - Para el combate del jugador: `CombatStateMachine` + clases derivadas de `CombatState`.  
   - Para IA enemiga: `MaquinaDeEstados` + `EstadoBase`, con transiciones normales e interrupciones globales (`DesdeCualquier`). 
@@ -105,13 +114,21 @@ Por ejemplo:
 - **Observer / Event-Driven (para animaciones)**: se usan eventos de animación para activar colliders de armas, volver a estado idle, temporizadores para recuperación luego de guard-break, etc. 
 
 ---
+### Requerimientos
+- Android device compatible with mobile VR headsets (e.g., Google Cardboard).
+- Android 7.0 or newer.
 
-## Cómo empezar / Uso
+### Instalación
+1. Descargar el ultimo [release](https://github.com/NikolasH03/Siecha/releases/latest).
+2. Ejecutar el archivo Gameplay_Siecha.exe
+3. ¡Juega!
+
+## Descargar proyecto de Unity
 
 1. Clona el repositorio.  
 2. Abre el proyecto en Unity (versión compatible con URP + Input System + Cinemachine + DOTween).  
-3. Carga la escena `Menu.unity`.  
-4. Desde el menú puedes acceder a la demo de combate o al primer capítulo.  
+3. Carga la escena `Introduccion.unity`.  
+4. Desde el menú puedes acceder a la escena de gameplay.
 5. Si quieres probar o modificar datos (armas, estadísticas, enemigos), edita los correspondientes **ScriptableObjects** en `Assets/Scripts/ScriptableObjects/`.  
 
 > ⚠️ Asegúrate de tener instalado **DOTween**, **Cinemachine**, y que tu proyecto esté configurado con **Universal Render Pipeline (URP)**.  
@@ -120,7 +137,7 @@ Por ejemplo:
 
 ## Planes futuros / Próximos pasos
 
-- Expandir árbol de habilidades, colección de objetos, inventario y sistema de coleccionables (como ya planeaste).  
+- Expandir árbol de habilidades y sistema de coleccionables.  
 - Integrar animaciones UI y 3D para selección de habilidades, menú de inventario, etc.  
 - Refinar sistema de combate y comportamiento de enemigos: esquives, parry, revivir, sistema de intentos.  
 - Añadir más escenas, narrativa, cinemáticas para capítulos del juego completo.  
@@ -130,7 +147,37 @@ Por ejemplo:
 
 ## Licencia
 
-*(Aquí indica la licencia que elijas: MIT, GPL, o la que decidas definir — por ejemplo:)*  
+Este proyecto está bajo la **Licencia MIT**:
 
-Este proyecto está bajo la licencia **MIT** — ver archivo `LICENSE` para más detalles.  
+```
+MIT License
+
+Copyright (c) [AÑO] [TU NOMBRE / EQUIPO]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+## Licencia de Assets y Propiedad Intelectual
+
+Aunque el **código del proyecto está bajo Licencia MIT**, todos los **assets visuales, modelos 3D, animaciones, texturas, música, sonidos, narrativa, guion, cinemáticas, arte conceptual y cualquier otro contenido creativo asociado a *Siecha*** están protegidos por derechos de autor y **NO** están cubiertos por la Licencia MIT.
+
+**No se permite** copiar, redistribuir, modificar, vender o reutilizar estos assets en otros proyectos sin permiso explícito del equipo desarrollador.
+
+Si deseas usar algún asset o contenido creativo de *Siecha*, contáctanos para obtener autorización.
+
 
