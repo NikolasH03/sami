@@ -119,13 +119,13 @@ Por ejemplo:
 
 | Integrante                 | Rol                                                   | GitHub                                 |
 | -------------------------- | ----------------------------------------------------- | -------------------------------------- |
-| **Ricardo López Murcia**   | Tester / Documentador                                 | [GitHub]([https://github.com/R1ckLop]) |
-| **Stefany López**          | Personajes 3D, animación, shaders, UI/UX              | [GitHub]([https://github.com/StefanyLopez]) |
+| **Ricardo López Murcia**   | Tester / Documentador                                 | [GitHub](https://github.com/[R1ckLop]) |
+| **Stefany López**          | Personajes 3D, animación, shaders, UI/UX              | [GitHub](https://github.com/[StefanyLopez]) |
 | **Leidy Katerine Pinzón**  | Diseño de personajes, animación, shaders, cinemáticas | [GitHub](https://github.com/[usuario]) |
-| **Gian Luis Osorio**       | Environments 3D                                       | [GitHub]([https://github.com/SAGIDO7M3L0]) |
-| **Juliana María Deaza**    | Environments 3D                                       | [GitHub]([https://github.com/JuliDeaza]) |
-| **Juan José Camacho**      | Programador de IA                                     | [GitHub]([https://github.com/JuanJoII]) |
-| **David José Gutiérrez**   | Guionista                                             | [GitHub]([https://github.com/DajoGutierrezHernandez]) |
+| **Gian Luis Osorio**       | Environments 3D                                       | [GitHub](https://github.com/[SAGIDO7M3L0]) |
+| **Juliana María Deaza**    | Environments 3D                                       | [GitHub](https://github.com/[JuliDeaza]) |
+| **Juan José Camacho**      | Programador de IA                                     | [GitHub](https://github.com/[JuanJoII]) |
+| **David José Gutiérrez**   | Guionista                                             | [GitHub](https://github.com/[DajoGutierrezHernandez]) |
 | **Nicolás Hurtado Vargas** | Programador principal / Mecánicas                     | [GitHub](https://github.com/[usuario]) |
 
 ---
